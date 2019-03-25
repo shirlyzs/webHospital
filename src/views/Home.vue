@@ -1,8 +1,9 @@
 <template>
   <div class="home">
-    <el-container>
-      <el-header>欢迎来到山东省立医院</el-header>
-    </el-container>
+    <div class="container classfloat">
+      <div class="wel">欢迎来到山东省立医院</div>
+      <div class="login">登录</div>
+    </div>
     <div class="nav">
       <el-menu
         :default-active="activeIndex"
@@ -55,8 +56,7 @@
             <a href="https://www.ele.me">更多</a>
           </span>
         </div>
-        <div class="kongbai "></div>
-        <el-carousel height="150px">
+        <el-carousel height="250px">
           <el-carousel-item class="imga" v-for="(imga,index) in imgaList" :key="index">
             <img :src="imga.url">
           </el-carousel-item>
@@ -75,24 +75,57 @@
         <div>
           <h2 class="daohang">科室导航</h2>
         </div>
-        <!-- <el-menu
-          :default-active="activeIndex"
-          class="el-menu-demo3"
-          mode="vertical"
-          @select="handleSelect"
-          text-align="center"
-        >-->
         <div v-for="item in roomList" :key="item.id" :index="item.id">
-          <div class="room-name" @click="showSub(item.id)" slot="title">{{item.name}}</div>
+          <div class="room-name" @mouseenter="showSub(item.id)" slot="title">{{item.name}}</div>
           <div class="room-sub">
             <div class="sub-name" v-for="itam in item.subList" :key="itam.id" v-show="item.isShow">
               <div>{{itam.name}}</div>
             </div>
           </div>
         </div>
-        <!-- </el-menu> -->
       </div>
-
+      <div class="clearfloat">
+        <div class="jiuyi">
+          <div>
+            <h2 class="zhinan">就医指南</h2>
+          </div>
+          <div class="neirong">
+            <div class="ming" v-for="ming in mingList" :key="ming.id">{{ming.name}}</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="jiuyi">
+          <div>
+            <h2 class="zhinan">专家介绍</h2>
+          </div>
+          <div class="flex-row">
+            <div class="zhuanjia" v-for="item in roomList" :key="item.id">
+              <div slot="title">{{item.name}}</div>
+            </div>
+          </div>
+          <div class="zhuanjia-content">
+            <div class="zhuanjia-item" v-for="item in docList" :key="item.id">
+              <div class="flex-row">
+                <img :src="item.pic" alt>
+                <div style="text-align:left">
+                  <span>{{item.name}}</span>
+                  <br>
+                  <span>职称：</span>
+                  {{item.level}}
+                  <br>
+                  <span>科室：</span>
+                  {{item.room}}
+                </div>
+              </div>
+              <div>
+                <span>简介：</span>
+                <p>{{item.desc}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- <Map></Map> -->
     </div>
   </div>
@@ -127,16 +160,13 @@ export default {
         },
         {
           url: require("../assets/a7.jpg")
-        },
-        {
-          url: require("../assets/a8.jpg")
         }
       ],
       roomList: [
         {
           name: "内科系统",
           id: "1",
-          isShow: true,
+          isShow: false,
           subList: [
             {
               name: "消化内科",
@@ -202,6 +232,88 @@ export default {
             }
           ]
         }
+      ],
+      mingList: [
+        {
+          name: "预约挂号",
+          id: "1"
+        },
+        {
+          name: "出诊信息",
+          id: "2"
+        },
+        {
+          name: "患者服务",
+          id: "3"
+        },
+        {
+          name: "百年省医",
+          id: "4"
+        },
+        {
+          name: "引领",
+          id: "5"
+        },
+        {
+          name: "健康讲堂",
+          id: "6"
+        },
+        {
+          name: "检验查询",
+          id: "7"
+        },
+        {
+          name: "健康体检",
+          id: "8"
+        }
+      ],
+      docList: [
+        {
+          pic:
+            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
+          name: "王大大",
+          level: "主任医师",
+          room: "专科",
+          
+          desc:
+            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+        },
+        {
+          pic:
+            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
+          name: "王大大",
+          level: "主任医师",
+          room: "专科",
+          desc:
+            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+        },
+        {
+          pic:
+            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
+          name: "王大大",
+          level: "主任医师",
+          room: "专科",
+          desc:
+            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+        },
+        {
+          pic:
+            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
+          name: "王大大",
+          level: "主任医师",
+          room: "专科",
+          desc:
+            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+        },
+        {
+          pic:
+            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
+          name: "王大大",
+          level: "主任医师",
+          room: "专科",
+          desc:
+            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+        }
       ]
     };
   },
@@ -214,17 +326,32 @@ export default {
     },
     showSub(id) {
       console.log(id);
+      this.roomList.forEach(i => {
+        i.isShow = false;
+      });
       this.roomList[id - 1].isShow = !this.roomList[id - 1].isShow;
     }
   },
   created() {
     // 接口初始化数据
+    this.roomList[0].isShow = true;
   }
 };
 </script>
-<style scoped>
-.el-container {
+<style scoped lang="less">
+.container {
   height: 20px;
+  background-color: #0087cd;
+  .wel{
+    margin-left: 50px;
+    display: inline-block;
+    float: left;
+  }
+  .login{
+    display: inline-block;
+    float: right;
+    margin-right: 50px;
+  }
 }
 .nav {
   position: relative;
@@ -247,10 +374,10 @@ export default {
   height: 400px;
   width: 100%;
 }
-.el-carousel__item.imga {
+.imga {
   position: absolute;
   width: 100%;
-  height: 200px;
+  height: 250px;
 }
 .el-menu--horizontal > .el-menu {
   line-height: 80px;
@@ -263,24 +390,19 @@ export default {
   border-radius: 3px;
   width: 300px;
   margin: 50px 0 30px 50px;
-  height: fit-content;
+  height: 300px;
   padding: 10px;
   float: left;
   display: flex;
   flex-direction: column;
-  min-height: 300px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
-}
-.kongbai{
-  height: 25px;
 }
 .rightnews {
   border-radius: 3px;
   width: 850px;
   margin: 50px 50px 30px 0;
-  height: fit-content;
+  height: 300px;
   padding: 10px;
-  min-height: 300px;
   float: right;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
 }
@@ -297,6 +419,31 @@ export default {
   flex-direction: column;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
 }
+.jiuyi {
+  border-radius: 3px;
+  width: 1230px;
+  margin: 50px;
+  min-height: 450px;
+  padding: 10px;
+  float: right;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+}
+.zhinan {
+  float: left;
+  margin-bottom: 50px;
+}
+.zhuanjia {
+  background-color: #0087cd;
+  height: 80px;
+  width: 200px;
+  line-height: 80px;
+  text-align: center;
+  color: #ffffff;
+  margin: 5px 15px;
+}
 .el-menu-demo3 {
   float: left;
   text-align: left !important;
@@ -307,9 +454,11 @@ export default {
 .daohang {
   margin-bottom: 30px;
 }
-/* .tt1{
+.tt1 {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #dcdcdc;
-} */
+}
 .pic {
   float: left;
 }
@@ -334,7 +483,7 @@ export default {
   line-height: 30px;
   color: #ffffff;
   padding: 8px 10px;
-  margin: 10px 0;
+  margin: 10px 20px;
   border-radius: 10px;
   background: #0087cd;
 }
@@ -345,7 +494,7 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.sub-name{
+.sub-name {
   background: #ddebf6;
   width: 220px;
   height: 48px;
@@ -357,6 +506,20 @@ export default {
   border-radius: 5px;
   position: relative;
 }
+.neirong {
+  margin: 30px 80px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.ming {
+  height: 150px;
+  width: 260px;
+  background-color: #0087cd;
+  line-height: 150px;
+  font-size: 25px;
+  margin-right: 5px;
+  margin-bottom: 3px;
+}
 .el-row {
   padding: 30px 20px;
 }
@@ -366,5 +529,30 @@ export default {
 .grid-content {
   border-radius: 2px;
   min-height: 36px;
+}
+.zhuanjia-content {
+  margin: 100px 0;
+  width: 100%;
+  white-space: nowrap;
+  overflow: scroll;
+}
+.zhuanjia-item {
+  width: 350px;
+  padding: 10px;
+  display: block;
+  padding: 20px 20px;
+  box-sizing: border-box;
+  margin: 0 20px;
+  border: 1px solid #ddd;
+  background: #fff;
+  display: inline-block;
+  span {
+    color: #0087cd;
+    font-size: 12px;
+    margin-left: 10px;
+  }
+  p {
+    white-space: normal;
+  }
 }
 </style>

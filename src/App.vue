@@ -30,4 +30,16 @@
     }
   }
 }
+.clearfloat:after {
+  display: block;
+  clear: both;
+  content: "";
+  visibility: hidden;
+  height: 0;
+}
+.flex-row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 </style>
