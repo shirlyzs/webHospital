@@ -1,8 +1,12 @@
 <template>
   <div class="home">
-    <div class="container classfloat">
-      <div class="wel">欢迎来到山东省立医院</div>
-      <div class="login">登录</div>
+    <div class="clearfloat">
+      <div class="container">
+        <div class="wel">欢迎来到山东省立医院</div>
+        <div class="login">
+          <router-link to="/Login">登录 / 注册</router-link>
+        </div>
+      </div>
     </div>
     <div class="nav">
       <el-menu
@@ -10,22 +14,34 @@
         class="el-menu-demo2"
         mode="horizontal"
         @select="handleSelect"
-        background-color="rgba(24, 116, 205,0.3)"
+        background-color="rgba(24, 116, 205,0.2)"
         text-color="#fff"
         text-align="center"
       >
         <el-menu-item index="1">网站首页</el-menu-item>
         <el-submenu index="2">
           <template slot="title">医院概况</template>
-          <el-menu-item index="2-1">医院简介</el-menu-item>
-          <el-menu-item index="2-2">历任领导</el-menu-item>
-          <el-menu-item index="2-3">医院文化</el-menu-item>
+          <el-menu-item index="2-1">
+            <router-link to="/intro">医院简介</router-link>
+          </el-menu-item>
+          <el-menu-item index="2-2">
+            <router-link to="/leader">历任领导</router-link>
+          </el-menu-item>
+          <el-menu-item index="2-3">
+            <router-link to="/culture">医院文化</router-link>
+          </el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title">新闻动态</template>
-          <el-menu-item index="3-1">医院要闻</el-menu-item>
-          <el-menu-item index="3-2">科室动态</el-menu-item>
-          <el-menu-item index="3-3">医院公告</el-menu-item>
+          <el-menu-item index="3-1">
+            <router-link to="/news">医院要闻</router-link>
+          </el-menu-item>
+          <el-menu-item index="3-2">
+            <router-link to="/room">科室动态</router-link>
+          </el-menu-item>
+          <el-menu-item index="3-3">
+            <router-link to="notice">医院公告</router-link>
+          </el-menu-item>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title">就诊指南</template>
@@ -56,9 +72,10 @@
             <a href="https://www.ele.me">更多</a>
           </span>
         </div>
-        <el-carousel height="250px">
+        <el-carousel class="imga-all" height="250px">
           <el-carousel-item class="imga" v-for="(imga,index) in imgaList" :key="index">
             <img :src="imga.url">
+            <div class="imga-name">{{imga.name}}</div>
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -69,7 +86,9 @@
             <a href="https://www.ele.me">更多</a>
           </span>
         </div>
-        <div height="15px"></div>
+        <div class="new" v-for="news in newsList" :key="news.id">
+          <div class="news-name">{{news.name}}</div>
+        </div>
       </div>
       <div class="navi">
         <div>
@@ -94,39 +113,70 @@
           </div>
         </div>
       </div>
-      <div>
-        <div class="jiuyi">
-          <div>
-            <h2 class="zhinan">专家介绍</h2>
+      <div class="jiuyi">
+        <div>
+          <h2 class="zhinan">专家介绍</h2>
+        </div>
+        <div class="flex-row">
+          <div class="zhuanjia" v-for="item in roomList" :key="item.id">
+            <div slot="title">{{item.name}}</div>
           </div>
-          <div class="flex-row">
-            <div class="zhuanjia" v-for="item in roomList" :key="item.id">
-              <div slot="title">{{item.name}}</div>
+        </div>
+        <div class="zhuanjia-content">
+          <div class="zhuanjia-item" v-for="item in docList" :key="item.id">
+            <div class="flex-row">
+              <img :src="item.pic" alt>
+              <div style="text-align:left">
+                <span>{{item.name}}</span>
+                <br>
+                <span>职称：</span>
+                {{item.level}}
+                <br>
+                <span>科室：</span>
+                {{item.room}}
+              </div>
             </div>
-          </div>
-          <div class="zhuanjia-content">
-            <div class="zhuanjia-item" v-for="item in docList" :key="item.id">
-              <div class="flex-row">
-                <img :src="item.pic" alt>
-                <div style="text-align:left">
-                  <span>{{item.name}}</span>
-                  <br>
-                  <span>职称：</span>
-                  {{item.level}}
-                  <br>
-                  <span>科室：</span>
-                  {{item.room}}
-                </div>
-              </div>
-              <div>
-                <span>简介：</span>
-                <p>{{item.desc}}</p>
-              </div>
+            <div>
+              <span>简介：</span>
+              <p>{{item.desc}}</p>
             </div>
           </div>
         </div>
       </div>
-      <!-- <Map></Map> -->
+    </div>
+    <div class="clearfloat">
+      <div class="jiuyi">
+        <div>
+          <h2 class="zhinan">健康科普</h2>
+        </div>
+        <div v-for="item in healtList" :key="item.id" :index="item.id">
+          <div class="health-name" @mouseenter="showHealth(item.id)" slot="title">{{item.name}}</div>
+          <div class="hea-name">
+            <div class="vid" v-for="vide in item.videoList" :key="vide.id" v-show="item.isShow">
+              <video id="myvideo" width="300px" height="250px" controls="controls">
+                <source :src="vide.src" type="video/mp4">
+              </video>
+              <div class="vid-name">{{vide.name}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer-R">
+        <p>ICP备案：鲁ICP备11021200号</p>
+        <p>
+          工信部连接：
+          <a
+            href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action"
+          >http://www.miitbeian.gov.cn</a>
+        </p>
+        <p>山东省立医院地址：山东财经大学燕山校区 邮编地址：250014</p>
+        <p>
+          山东省立医院版权所有
+          <span>Copyrights © 2009 sph.com.cn All Rights Reserved</span>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -153,13 +203,39 @@ export default {
       ],
       imgaList: [
         {
-          url: require("../assets/a5.jpg")
+          url: require("../assets/a5.jpg"),
+          name:
+            "第一医学中心普通外科成功举办第三届3D腹腔镜胃肠癌手术演示会暨腹腔镜手术前沿技术高级研讨会"
         },
         {
-          url: require("../assets/a6.jpg")
+          url: require("../assets/a6.jpg"),
+          name: "第五届“301论健”隆重召开"
         },
         {
-          url: require("../assets/a7.jpg")
+          url: require("../assets/a7.jpg"),
+          name: "为治愈肾病，她追梦四十年"
+        }
+      ],
+      newsList: [
+        {
+          name: "又快又稳柳叶刀 江湖留名“闪电王”||心内科专家王勇心里装着家人，所以随时准备冲上手术台",
+          id: "1",
+          content: "内容"
+        },
+        {
+          name: "山东省立医院泌尿外科： 攻克疑难杂症，以精湛医术解患者病痛",
+          id: "2",
+          content: "内容"
+        },
+        {
+          name: "山东青年报：防治泌尿系结石 从日常习惯做起——访山东省立医院泌尿外科副主任医师陈修德",
+          id: "3",
+          content: "内容"
+        },
+        {
+          name: "省立医院青光眼周活动，早筛查刻不容缓",
+          id: "4",
+          content: "内容"
         }
       ],
       roomList: [
@@ -274,7 +350,7 @@ export default {
           name: "王大大",
           level: "主任医师",
           room: "专科",
-          
+
           desc:
             "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
         },
@@ -314,6 +390,74 @@ export default {
           desc:
             "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
         }
+      ],
+      healtList: [
+        {
+          name: "健康讲堂",
+          id: "1",
+          isShow: false,
+          videoList: [
+            {
+              id: "1",
+              name: "《名医话健康》 左常婷：如何科学备孕二胎",
+              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            },
+            {
+              id: "2",
+              name: "山东农科频道《名医话健康》：辨体质 谈养生",
+              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            },
+            {
+              id: "3",
+              name: "山东农科频道《名医话健康》：高血压的常见误区",
+              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            }
+          ]
+        },
+        {
+          name: "科普文章",
+          id: "2",
+          isShow: false,
+          videoList: [
+            {
+              id: "1",
+              name: "《名医话健康》 左常婷：如何科学备孕二胎",
+              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            },
+            {
+              id: "2",
+              name: "山东农科频道《名医话健康》：辨体质 谈养生",
+              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            },
+            {
+              id: "3",
+              name: "山东农科频道《名医话健康》：高血压的常见误区",
+              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            }
+          ]
+        },
+        {
+          name: "相关疾病",
+          id: "3",
+          isShow: false,
+          videoList: [
+            {
+              id: "1",
+              name: "《名医话健康》 左常婷：如何科学备孕二胎",
+              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            },
+            {
+              id: "2",
+              name: "山东农科频道《名医话健康》：辨体质 谈养生",
+              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            },
+            {
+              id: "3",
+              name: "山东农科频道《名医话健康》：高血压的常见误区",
+              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            }
+          ]
+        }
       ]
     };
   },
@@ -330,27 +474,40 @@ export default {
         i.isShow = false;
       });
       this.roomList[id - 1].isShow = !this.roomList[id - 1].isShow;
+    },
+    showHealth(id) {
+      console.log(id);
+      this.healtList.forEach(i => {
+        i.isShow = false;
+      });
+      this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow;
     }
   },
   created() {
     // 接口初始化数据
     this.roomList[0].isShow = true;
+    this.healtList[0].isShow = true;
   }
 };
 </script>
 <style scoped lang="less">
 .container {
-  height: 20px;
-  background-color: #0087cd;
-  .wel{
+  height: 50px;
+  line-height: 50px;
+  background-color: #078ed4;
+  .wel {
     margin-left: 50px;
-    display: inline-block;
     float: left;
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: 1000;
   }
-  .login{
-    display: inline-block;
+  .login {
     float: right;
+    font-size: 16px;
     margin-right: 50px;
+    color: #ffffff;
+    font-weight: 300;
   }
 }
 .nav {
@@ -365,6 +522,10 @@ export default {
   height: 20px !important;
 }
 .el-menu-demo2 {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   z-index: 3;
@@ -374,10 +535,24 @@ export default {
   height: 400px;
   width: 100%;
 }
+.img-all{
+  position: relative;
+}
 .imga {
   position: absolute;
   width: 100%;
   height: 250px;
+}
+.imga-name {
+  position: absolute;
+  bottom: 0;
+  height: 36px;
+  width: 100%;
+  font-size: 15px;
+  color: black;
+  background: #beb8b8;
+  opacity: 0.8;
+  // overflow: hidden;
 }
 .el-menu--horizontal > .el-menu {
   line-height: 80px;
@@ -388,7 +563,7 @@ export default {
 }
 .leftnews {
   border-radius: 3px;
-  width: 300px;
+  width: 400px;
   margin: 50px 0 30px 50px;
   height: 300px;
   padding: 10px;
@@ -399,12 +574,23 @@ export default {
 }
 .rightnews {
   border-radius: 3px;
-  width: 850px;
+  width: 750px;
   margin: 50px 50px 30px 0;
   height: 300px;
   padding: 10px;
   float: right;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+}
+.new {
+  margin-top: 50px;
+  height: 10px;
+  margin-left: 30px;
+  text-align: left;
+  line-height: 20px;
+}
+.news-name{
+  border-bottom: #ded6d685 0.8px solid;
+  padding-bottom: 5px;
 }
 .navi {
   border-radius: 3px;
@@ -474,9 +660,6 @@ export default {
 .daohang {
   float: left;
 }
-/* .roomname{
-  border-right: #ddebf6;
-} */
 .room-name {
   width: 140px;
   height: 30px;
@@ -486,6 +669,13 @@ export default {
   margin: 10px 20px;
   border-radius: 10px;
   background: #0087cd;
+}
+.health-sub {
+  position: absolute;
+  top: 50px;
+  left: 200px;
+  display: flex;
+  flex-direction: row;
 }
 .room-sub {
   position: absolute;
@@ -506,6 +696,18 @@ export default {
   border-radius: 5px;
   position: relative;
 }
+.hea-name {
+  position: absolute;
+  top: 50px;
+  left: 200px;
+  display: flex;
+  .vid {
+    margin: 20px;
+  }
+  .vid-name {
+    margin: 20px;
+  }
+}
 .neirong {
   margin: 30px 80px;
   display: flex;
@@ -514,7 +716,7 @@ export default {
 .ming {
   height: 150px;
   width: 260px;
-  background-color: #0087cd;
+  background-color: #1da3e9;
   line-height: 150px;
   font-size: 25px;
   margin-right: 5px;
@@ -554,5 +756,27 @@ export default {
   p {
     white-space: normal;
   }
+}
+.health-name {
+  width: 140px;
+  height: 30px;
+  line-height: 30px;
+  color: #ffffff;
+  padding: 8px 10px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  background: #0087cd;
+}
+.footer {
+  padding: 60px 0px;
+  display: flex;
+  height: 150px;
+  line-height: 28px;
+  width: 100%;
+  color: #ffffff;
+  justify-content: center;
+  margin-top: 20px;
+  background: url(../assets/a1.jpg);
+  // no-repeat center
 }
 </style>
