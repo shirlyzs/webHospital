@@ -8,6 +8,9 @@ import Culture from "./views/Culture.vue";
 import News from "./views/News.vue";
 import Room from "./views/Room.vue";
 import Notice from "./views/Notice.vue";
+import Know from "./views/Know.vue";
+import Process from "./views/Process.vue";
+
 
 Vue.use(Router);
 
@@ -61,6 +64,16 @@ export default new Router({
       path:"/notice",
       name:"notice",
       component:Notice
+    },
+    {
+      path:"/know",
+      name:"know",
+      component:Know
+    },
+    {
+      path:"/process",
+      name:"process",
+      component:Process
     }
   ]
 });
