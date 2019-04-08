@@ -39,7 +39,9 @@
           <el-menu-item index="3-2">
             <router-link to="/room">科室动态</router-link>
           </el-menu-item>
-          <el-menu-item index="3-3">医院公告</el-menu-item>
+          <el-menu-item index="3-3">
+            <router-link to="/notice">医院公告</router-link>
+          </el-menu-item>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title">就诊指南</template>
@@ -99,11 +101,13 @@
 </template>
 
 <script>
-import Map from "@/components/Map.vue";
+// import Map from "@/components/Map.vue";
+// import{Menu,Submenu,MenuItem}from"element-ui";
+
 export default {
   data() {
     return {
-      // activeIndex: "1",
+      activeIndex: "1",
       artList: [
         {
           name: "就诊须知",
@@ -113,7 +117,8 @@ export default {
             {
               name: "就诊须知",
               id: "11",
-              content:"尊敬的患者朋友：感谢您对我院的信任，为使您在门诊就医顺利，减少不必要的麻烦，现将门诊就诊需要注意的有关事项介绍如下：一、门诊病人就医应先到门诊挂号室挂号，领取病历和就诊卡（初诊病人）， 根据自己病情选择相应专业：内科、外科、康复科、妇产科、老年病科、肝病专科、皮肤病专科、口腔专科、耳鸣耳聋专科。如您不知道挂哪个专业的号，可向咨询台分诊导诊工作人员咨询。二、 你选择医师看病，请你到挂号室前专家宣传栏选择你满意的医师，并记好医师的科室和姓名，向挂号员讲明。"
+              content:
+                "尊敬的患者朋友：感谢您对我院的信任，为使您在门诊就医顺利，减少不必要的麻烦，现将门诊就诊需要注意的有关事项介绍如下：一、门诊病人就医应先到门诊挂号室挂号，领取病历和就诊卡（初诊病人）， 根据自己病情选择相应专业：内科、外科、康复科、妇产科、老年病科、肝病专科、皮肤病专科、口腔专科、耳鸣耳聋专科。如您不知道挂哪个专业的号，可向咨询台分诊导诊工作人员咨询。二、 你选择医师看病，请你到挂号室前专家宣传栏选择你满意的医师，并记好医师的科室和姓名，向挂号员讲明。"
             }
           ]
         },

@@ -40,16 +40,26 @@
             <router-link to="/room">科室动态</router-link>
           </el-menu-item>
           <el-menu-item index="3-3">
-            <router-link to="notice">医院公告</router-link>
+            <router-link to="/notice">医院公告</router-link>
           </el-menu-item>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title">就诊指南</template>
-          <el-menu-item index="4-1">就诊须知</el-menu-item>
-          <el-menu-item index="4-2">就医流程</el-menu-item>
-          <el-menu-item index="4-3">专家门诊</el-menu-item>
-          <el-menu-item index="4-4">医院布局</el-menu-item>
-          <el-menu-item index="4-5">交通指南</el-menu-item>
+          <el-menu-item index="4-1">
+            <router-link to="/know">就诊须知</router-link>
+          </el-menu-item>
+          <el-menu-item index="4-2">
+            <router-link to="/process">就医流程</router-link>
+          </el-menu-item>
+          <el-menu-item index="4-3">
+            <router-link to="/professor">专家门诊</router-link>
+          </el-menu-item>
+          <el-menu-item index="4-4">
+            <router-link to="/location">医院布局</router-link>
+          </el-menu-item>
+          <el-menu-item index="4-5">
+            <router-link to="/transport">交通指南</router-link>
+          </el-menu-item>
         </el-submenu>
         <el-menu-item index="5">
           <a href="https://www.ele.me" target="_blank">科室介绍</a>
@@ -104,12 +114,14 @@
         </div>
       </div>
       <div class="clearfloat">
-        <div class="jiuyi">
+        <div class="jiuyii">
           <div>
-            <h2 class="zhinan">就医指南</h2>
+            <h2 class="zhinann">就医指南</h2>
           </div>
           <div class="neirong">
-            <div class="ming" v-for="ming in mingList" :key="ming.id">{{ming.name}}</div>
+            <div class="ming" v-for="ming in mingList" :key="ming.id">
+              <router-link :to="ming.url">{{ming.name}}</router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -182,7 +194,9 @@
 </template>
 
 <script>
-import Map from "@/components/Map.vue";
+// import Map from "@/components/Map.vue";
+import{Menu,Submenu,MenuItem,Carousel,CarouselItem}from"element-ui";
+
 export default {
   data() {
     return {
@@ -218,7 +232,8 @@ export default {
       ],
       newsList: [
         {
-          name: "又快又稳柳叶刀 江湖留名“闪电王”||心内科专家王勇心里装着家人，所以随时准备冲上手术台",
+          name:
+            "又快又稳柳叶刀 江湖留名“闪电王”||心内科专家王勇心里装着家人，所以随时准备冲上手术台",
           id: "1",
           content: "内容"
         },
@@ -228,7 +243,8 @@ export default {
           content: "内容"
         },
         {
-          name: "山东青年报：防治泌尿系结石 从日常习惯做起——访山东省立医院泌尿外科副主任医师陈修德",
+          name:
+            "山东青年报：防治泌尿系结石 从日常习惯做起——访山东省立医院泌尿外科副主任医师陈修德",
           id: "3",
           content: "内容"
         },
@@ -312,35 +328,33 @@ export default {
       mingList: [
         {
           name: "预约挂号",
-          id: "1"
+          id: "1",
+          url: "/reserve"
         },
         {
           name: "出诊信息",
-          id: "2"
+          id: "2",
+          url: "/hmessage"
         },
         {
           name: "患者服务",
-          id: "3"
+          id: "3",
+          url:"/know"
         },
         {
           name: "百年省医",
-          id: "4"
+          id: "4",
+          url:"/hundred"
         },
         {
           name: "引领",
-          id: "5"
+          id: "5",
+          url:"/show"
         },
         {
           name: "健康讲堂",
-          id: "6"
-        },
-        {
-          name: "检验查询",
-          id: "7"
-        },
-        {
-          name: "健康体检",
-          id: "8"
+          id: "6",
+          url:"/study"
         }
       ],
       docList: [
@@ -535,7 +549,11 @@ export default {
   height: 400px;
   width: 100%;
 }
-.img-all{
+a{
+  text-decoration: none;
+  color:#ffffff;
+}
+.img-all {
   position: relative;
 }
 .imga {
@@ -588,7 +606,7 @@ export default {
   text-align: left;
   line-height: 20px;
 }
-.news-name{
+.news-name {
   border-bottom: #ded6d685 0.8px solid;
   padding-bottom: 5px;
 }
@@ -609,7 +627,19 @@ export default {
   border-radius: 3px;
   width: 1230px;
   margin: 50px;
-  min-height: 450px;
+  min-height: 400px;
+  padding: 10px;
+  float: right;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+}
+.jiuyii{
+  border-radius: 3px;
+  width: 1230px;
+  margin: 50px;
+  min-height: 300px;
   padding: 10px;
   float: right;
   display: flex;
@@ -620,6 +650,10 @@ export default {
 .zhinan {
   float: left;
   margin-bottom: 50px;
+}
+.zhinann {
+  float: left;
+  margin-bottom: 40px;
 }
 .zhuanjia {
   background-color: #0087cd;
@@ -709,15 +743,16 @@ export default {
   }
 }
 .neirong {
-  margin: 30px 80px;
+  margin: 10px auto 30px auto;
   display: flex;
   flex-wrap: wrap;
 }
 .ming {
-  height: 150px;
-  width: 260px;
-  background-color: #1da3e9;
-  line-height: 150px;
+  height: 160px;
+  width: 170px;
+  // background: url(../assets/a2.jpg);
+  background-color:#0087cd;
+  line-height: 170px;
   font-size: 25px;
   margin-right: 5px;
   margin-bottom: 3px;

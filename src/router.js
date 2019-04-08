@@ -10,6 +10,14 @@ import Room from "./views/Room.vue";
 import Notice from "./views/Notice.vue";
 import Know from "./views/Know.vue";
 import Process from "./views/Process.vue";
+import Professor from "./views/Professor.vue";
+import Location from "./views/Location.vue";
+import Transport from "./views/Transport.vue";
+import Reserve from "./views/Reserve.vue";
+import Hmessage from "./views/Hmessage.vue";
+import Hundred from "./views/Hundred.vue";
+import Show from "./views/Show.vue";
+import Study from "./views/Study.vue";
 
 
 Vue.use(Router);
@@ -74,6 +82,46 @@ export default new Router({
       path:"/process",
       name:"process",
       component:Process
+    },
+    {
+      path:"/professor",
+      name:"professor",
+      component:Professor
+    },
+    {
+      path:"/location",
+      name:"location",
+      component:Location
+    },
+    {
+      path:"/transport",
+      name:"transport",
+      component:Transport
+    },
+    {
+      path:"/reserve",
+      name:"reserve",
+      component:Reserve
+    },
+    {
+      path:"/hmessage",
+      name:"hmessage",
+      component:Hmessage
+    },
+    {
+      path:"/hundred",
+      name:"hundred",
+      component:Hundred
+    },
+    {
+      path:"/show",
+      name:"show",
+      component:Show
+    },
+    {
+      path:"/study",
+      name:"study",
+      component:Study
     }
   ]
 });

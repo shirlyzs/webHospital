@@ -89,11 +89,12 @@
 </template>
 
 <script>
-import Map from "@/components/Map.vue";
+// import Map from "@/components/Map.vue";
+import{Menu,Submenu,MenuItem}from"element-ui";
 export default {
   data() {
     return {
-      // activeIndex: "1",
+      activeIndex: "1",
       artList: [
         {
           name: "医院简介",

@@ -41,4 +41,8 @@
   flex-direction: row;
   align-items: center;
 }
+a{
+  text-decoration: none;
+  color: #ffffff;
+}
 </style>
