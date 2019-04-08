@@ -8,9 +8,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="linkmap">
-      <button @click="goback">返回</button>
-    </div> -->
     <div class="nav">
       <el-menu
         :default-active="activeIndex"
@@ -121,19 +118,24 @@ export default {
       activeIndex: 1,
       test: [
         {
-          part: "1",
-          depart: "11",
-          Monday: "wangddd"
+          part: "内科",
+          depart: "消化内科",
+          Monday: "王可可"
         },
         {
-          part: "1",
-          depart: "12",
-          Tuesday: "wangddd"
+          part: "外科",
+          depart: "胸外科",
+          Tuesday: "张一一"
         },
         {
-          part: "12",
-          depart: "11",
-          Monday: "wangddd"
+          part: "内科",
+          depart: "血液内科",
+          Thursday: "刘长春"
+        },
+        {
+          part: "妇产科",
+          depart: "妇科",
+          Monday: "刘翠翠"
         }
       ]
     };
