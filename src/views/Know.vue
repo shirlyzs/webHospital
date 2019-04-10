@@ -1,73 +1,8 @@
 <template>
   <div class="home">
-    <div class="container">
-      <div class="wel">欢迎来到山东省立医院</div>
-      <div class="login">
-        <router-link to="/Login">登录 / 注册</router-link>
-      </div>
-    </div>
-    <div class="nav">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo2"
-        mode="horizontal"
-        @select="handleSelect"
-        background-color="rgba(24, 116, 205)"
-        text-color="#fff"
-        text-align="center"
-      >
-        <el-menu-item index="1">
-          <router-link to="/">网站首页</router-link>
-        </el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">医院概况</template>
-          <el-menu-item index="2-1">
-            <router-link to="/intro">医院简介</router-link>
-          </el-menu-item>
-          <el-menu-item index="2-2">
-            <router-link to="/leader">历任领导</router-link>
-          </el-menu-item>
-          <el-menu-item index="2-3">
-            <router-link to="/culture">医院文化</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="3">
-          <template slot="title">新闻动态</template>
-          <el-menu-item index="3-1">
-            <router-link to="/news">医院要闻</router-link>
-          </el-menu-item>
-          <el-menu-item index="3-2">
-            <router-link to="/room">科室动态</router-link>
-          </el-menu-item>
-          <el-menu-item index="3-3">
-            <router-link to="/notice">医院公告</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="4">
-          <template slot="title">就诊指南</template>
-          <el-menu-item index="4-1">
-            <router-link to="/know">就诊须知</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-2">
-            <router-link to="/process">就医流程</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-3">
-            <router-link to="/professor">专家门诊</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-4">
-            <router-link to="/location">医院布局</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-5">
-            <router-link to="/transport">交通指南</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-menu-item index="5">
-          <a href="https://www.ele.me" target="_blank">科室介绍</a>
-        </el-menu-item>
-        <el-menu-item index="6">
-          <a href="https://www.ele.me" target="_blank">专家介绍</a>
-        </el-menu-item>
-      </el-menu>
+    <menuNav></menuNav>
+    <div class="backTo">
+      <span v-on:click="back">>>返回上一页</span>
     </div>
     <div class="navi">
       <div class="daohang">就诊指南</div>
@@ -101,16 +36,15 @@
 </template>
 
 <script>
-// import Map from "@/components/Map.vue";
-// import{Menu,Submenu,MenuItem}from"element-ui";
+import menuNav from "@/components/menuNav.vue";
 
 export default {
   data() {
     return {
-      activeIndex: "1",
       artList: [
         {
           name: "就诊须知",
+          eng: "know",
           id: "1",
           isShow: false,
           subList: [
@@ -124,6 +58,7 @@ export default {
         },
         {
           name: "就医流程",
+          eng: "process",
           id: "2",
           isShow: false,
           subList: [
@@ -137,6 +72,7 @@ export default {
         },
         {
           name: "专家门诊",
+          eng: "professor",
           id: "3",
           isShow: false,
           subList: [
@@ -150,6 +86,7 @@ export default {
         },
         {
           name: "医院布局",
+          eng: "location",
           id: "4",
           isShow: false,
           subList: [
@@ -163,6 +100,7 @@ export default {
         },
         {
           name: "交通指南",
+          eng: "transport",
           id: "5",
           isShow: false,
           subList: [
@@ -178,18 +116,18 @@ export default {
     };
   },
   components: {
-    Map
+    menuNav
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
     showArt(id) {
       console.log(id);
       this.artList.forEach(i => {
         i.isShow = false;
       });
       this.artList[id - 1].isShow = !this.artList[id - 1].isShow;
+    },
+    back() {
+      this.$router.go(-1); //返回上一层
     }
     // showHealth(id) {
     //   console.log(id);
@@ -199,63 +137,29 @@ export default {
     //   this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow;
     // }
   },
+  watch: {
+    $route() {
+      this.artList.forEach(i => {
+        i.isShow = false;
+        if (i.eng == this.$route.params.name) {
+          i.isShow = true;
+        }
+      });
+    }
+  },
   created() {
     // 接口初始化数据
     this.artList[0].isShow = true;
-    this.healtList[0].isShow = true;
   }
 };
 </script>
 <style scoped lang="less">
-.container {
-  height: 50px;
-  line-height: 50px;
-  background-color: #078ed4;
-  .wel {
-    margin-left: 50px;
-    float: left;
-    font-size: 15px;
-    color: #ffffff;
-    font-weight: 1000;
-  }
-  .login {
-    float: right;
-    font-size: 16px;
-    margin-right: 50px;
-    color: #ffffff;
-    font-weight: 300;
-  }
-}
-.nav {
-  display: block;
-  margin-top: 50px;
-  height: fit-content;
-}
-.el-header {
-  background-color: #1874cd;
-  color: #333;
-  text-align: left;
-  height: 20px !important;
-}
-.el-menu-demo2 {
-  width: 100%;
+.backTo {
   position: absolute;
-  top: 50px;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  z-index: 3;
-  border: none !important;
-}
-.el-menu--horizontal > .el-menu {
-  line-height: 80px;
-}
-.el-menu-demo3 {
-  float: left;
-  text-align: left !important;
-}
-.el-submenu__title {
-  font-size: 20px;
+  top: 120px;
+  left: 180px;
+  font-size: 13px;
+  color: #0087cd;
 }
 .navi {
   border-radius: 3px;

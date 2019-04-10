@@ -1,79 +1,6 @@
 <template>
   <div class="home">
-    <div class="clearfloat">
-      <div class="container">
-        <div class="wel">欢迎来到山东省立医院</div>
-        <div class="login">
-          <router-link to="/Login">登录 / 注册</router-link>
-        </div>
-      </div>
-    </div>
-    <div class="nav">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo2"
-        mode="horizontal"
-        @select="handleSelect"
-        background-color="rgba(24, 116, 205,0.2)"
-        text-color="#fff"
-        text-align="center"
-      >
-        <el-menu-item index="1">网站首页</el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">医院概况</template>
-          <el-menu-item index="2-1">
-            <router-link to="/intro">医院简介</router-link>
-          </el-menu-item>
-          <el-menu-item index="2-2">
-            <router-link to="/leader">历任领导</router-link>
-          </el-menu-item>
-          <el-menu-item index="2-3">
-            <router-link to="/culture">医院文化</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="3">
-          <template slot="title">新闻动态</template>
-          <el-menu-item index="3-1">
-            <router-link to="/news">医院要闻</router-link>
-          </el-menu-item>
-          <el-menu-item index="3-2">
-            <router-link to="/room">科室动态</router-link>
-          </el-menu-item>
-          <el-menu-item index="3-3">
-            <router-link to="/notice">医院公告</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="4">
-          <template slot="title">就诊指南</template>
-          <el-menu-item index="4-1">
-            <router-link to="/know">就诊须知</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-2">
-            <router-link to="/process">就医流程</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-3">
-            <router-link to="/professor">专家门诊</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-4">
-            <router-link to="/location">医院布局</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-5">
-            <router-link to="/transport">交通指南</router-link>
-          </el-menu-item>
-        </el-submenu>
-        <el-menu-item index="5">
-          <a href="https://www.ele.me" target="_blank">科室介绍</a>
-        </el-menu-item>
-        <el-menu-item index="6">
-          <a href="https://www.ele.me" target="_blank">专家介绍</a>
-        </el-menu-item>
-      </el-menu>
-      <el-carousel :interval="4000" indicator-position="none" height="400px">
-        <el-carousel-item v-for="(img,index) in imgList" :key="index">
-          <img v-bind:src="img.url">
-        </el-carousel-item>
-      </el-carousel>
-    </div>
+    <menuNav></menuNav>
     <div class="xinwen">
       <div class="leftnews">
         <div class="tt1">
@@ -194,13 +121,11 @@
 </template>
 
 <script>
-// import Map from "@/components/Map.vue";
-import{Menu,Submenu,MenuItem,Carousel,CarouselItem}from"element-ui";
+import menuNav from "@/components/menuNav.vue";
 
 export default {
   data() {
     return {
-      activeIndex: "1",
       imgList: [
         {
           url: require("../assets/a1.jpg")
@@ -339,7 +264,7 @@ export default {
         {
           name: "患者服务",
           id: "3",
-          url:"/know"
+          url:"/guide/know"
         },
         {
           name: "百年省医",
@@ -476,12 +401,9 @@ export default {
     };
   },
   components: {
-    Map
+    menuNav
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
     showSub(id) {
       console.log(id);
       this.roomList.forEach(i => {
@@ -505,46 +427,6 @@ export default {
 };
 </script>
 <style scoped lang="less">
-.container {
-  height: 50px;
-  line-height: 50px;
-  background-color: #078ed4;
-  .wel {
-    margin-left: 50px;
-    float: left;
-    font-size: 15px;
-    color: #ffffff;
-    font-weight: 1000;
-  }
-  .login {
-    float: right;
-    font-size: 16px;
-    margin-right: 50px;
-    color: #ffffff;
-    font-weight: 300;
-  }
-}
-.nav {
-  position: relative;
-  display: block;
-  height: 400px;
-}
-.el-header {
-  background-color: #1874cd;
-  color: #333;
-  text-align: left;
-  height: 20px !important;
-}
-.el-menu-demo2 {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  z-index: 3;
-  border: none !important;
-}
 .el-carousel__item img {
   height: 400px;
   width: 100%;

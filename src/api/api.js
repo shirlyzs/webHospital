@@ -2,9 +2,9 @@ import axios from '@/api/index'
 
 // post new URLSearchParams(..)
 
-export const methods = page => {
+export const login = () => {
   return axios.request({
     method: 'get',
-    url: ''
+    url: `adminLoginVerify/news/3`
   })
 }
