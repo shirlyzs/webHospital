@@ -1,38 +1,16 @@
 <template>
   <div class="login-container">
     <div class="login-box" v-show="showLogin">
-      <h3 class="title">用户登录</h3>
-      <input
-        class="input"
-        type="text"
-        placeholder="用户名"
-        placeholder-style="color: #8a8a8a;"
-        v-model="userName"
-      >
-      <input
-        class="input"
-        type="text"
-        placeholder="登录密码"
-        placeholder-style="color: #8a8a8a;"
-        v-model="password"
-      >
+      <h3 class="title">{{userType}}登录</h3>
+      <input class="input" type="text" placeholder="用户名" placeholder-style="color: #8a8a8a;" v-model="userName">
+      <input class="input" type="text" placeholder="登录密码" placeholder-style="color: #8a8a8a;" v-model="password">
       <button class="btn" @click="login">登录</button>
       <span v-on:click="ToRegister">没有账号？马上注册</span>
     </div>
     <div class="register-box" v-show="showRegister">
       <h3 class="title">用户注册</h3>
-      <input
-        type="text"
-        placeholder="请输入用户名"
-        placeholder-style="color: #8a8a8a;"
-        v-model="newUsername"
-      >
-      <input
-        type="password"
-        placeholder="请输入密码"
-        placeholder-style="color: #8a8a8a;"
-        v-model="newPassword"
-      >
+      <input type="text" placeholder="请输入用户名" placeholder-style="color: #8a8a8a;" v-model="newUsername">
+      <input type="password" placeholder="请输入密码" placeholder-style="color: #8a8a8a;" v-model="newPassword">
       <button class="btn" v-on:click="register">注册</button>
       <span v-on:click="ToRegister">已有账号？马上登录</span>
     </div>
@@ -40,45 +18,52 @@
 </template>
 
 <script>
-import { login } from "@/api/api";
-import axios from "@/api/index";
+import { login } from '@/api/api'
+import axios from '@/api/index'
 
 export default {
   data() {
     return {
       showLogin: true,
       showRegister: false,
-      userName: "",
-      password: "",
-      newUsername: "",
-      newPassword: ""
-    };
+      userName: '',
+      password: '',
+      newUsername: '',
+      newPassword: '',
+      userType: '用户'
+    }
   },
   methods: {
     register() {},
     ToRegister() {
-      this.showRegister = true;
-      this.showLogin = false;
+      this.showRegister = true
+      this.showLogin = false
     },
     ToLogin() {
-      this.showRegister = false;
-      this.showLogin = true;
+      this.showRegister = false
+      this.showLogin = true
     },
     login() {
-      let info = { userName: this.userName, password: this.password };
-      console.log(info);
+      let info = { userName: this.userName, password: this.password }
+      console.log(info)
 
       login().then(
         res => {
-          console.log(res);
+          console.log(res)
         },
         rej => {
-          console.log(rej);
+          console.log(rej)
         }
-      );
+      )
+    }
+  },
+  created() {
+    console.log(this.$route.query)
+    if (this.$route.query.type == 'admin') {
+      this.userType = '管理员'
     }
   }
-};
+}
 </script>
 
 
@@ -100,6 +85,7 @@ export default {
   right: 8%;
   top: 10%;
   flex-direction: column;
+  border-radius: 10px;
 }
 .register-box {
   display: flex;
