@@ -10,6 +10,8 @@ import Hmessage from "./views/Hmessage.vue";
 import Hundred from "./views/Hundred.vue";
 import Show from "./views/Show.vue";
 import Study from "./views/Study.vue";
+import Roomintro from "./views/Roomintro.vue";
+// import Detail from "./views/Detail.vue";
 
 
 Vue.use(Router);
@@ -69,5 +71,15 @@ export default new Router({
       name: "study",
       component: Study
     },
+    {
+      path: "/roomintro",
+      name: "roomintro",
+      component: Roomintro
+    },
+    // {
+    //   path: "/detail",
+    //   name: "detail",
+    //   component: Detail
+    // }
   ]
 });

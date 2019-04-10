@@ -56,11 +56,12 @@
         <div>
           <h2 class="zhinan">专家介绍</h2>
         </div>
-        <div class="flex-row">
+        <!-- <div class="flex-row">
           <div class="zhuanjia" v-for="item in roomList" :key="item.id">
             <div slot="title">{{item.name}}</div>
           </div>
-        </div>
+        </div> -->
+        <div style="overflow:hidden height:380px">
         <div class="zhuanjia-content">
           <div class="zhuanjia-item" v-for="item in docList" :key="item.id">
             <div class="flex-row">
@@ -117,6 +118,7 @@
         </p>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -572,6 +574,7 @@ a{
 }
 .right2 {
   float: right;
+  color: black!important;
 }
 .daohang {
   float: left;
@@ -653,7 +656,8 @@ a{
   margin: 100px 0;
   width: 100%;
   white-space: nowrap;
-  overflow: scroll;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 .zhuanjia-item {
   width: 350px;
@@ -667,8 +671,9 @@ a{
   display: inline-block;
   span {
     color: #0087cd;
-    font-size: 12px;
+    font-size: 14px;
     margin-left: 10px;
+    line-height: 21px;
   }
   p {
     white-space: normal;

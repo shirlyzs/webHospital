@@ -61,7 +61,7 @@
           </el-menu-item>
         </el-submenu>
         <el-menu-item index="5">
-          <a href="https://www.ele.me" target="_blank">科室介绍</a>
+          <router-link to="/roomintro">科室介绍</router-link>
         </el-menu-item>
         <el-menu-item index="6">
           <a href="https://www.ele.me" target="_blank">专家介绍</a>
@@ -112,7 +112,7 @@ export default {
   height: fit-content;
 }
 .el-header {
-  background-color: #1874cd;
+  background-color: #00a1e9;
   color: #333;
   text-align: left;
   height: 20px !important;
