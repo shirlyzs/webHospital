@@ -64,7 +64,7 @@
         <div class="zhuanjia-content">
           <div class="zhuanjia-item" v-for="item in docList" :key="item.id">
             <div class="flex-row">
-              <img :src="item.pic" alt>
+              <img :src="item.pic">
               <div style="text-align:left">
                 <span>{{item.name}}</span>
                 <br>
@@ -75,7 +75,7 @@
                 {{item.room}}
               </div>
             </div>
-            <div>
+            <div style="text-align:left;margin-top:15px">
               <span>简介：</span>
               <p>{{item.desc}}</p>
             </div>
@@ -106,9 +106,7 @@
         <p>ICP备案：鲁ICP备11021200号</p>
         <p>
           工信部连接：
-          <a
-            href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action"
-          >http://www.miitbeian.gov.cn</a>
+          <a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action">http://www.miitbeian.gov.cn</a>
         </p>
         <p>山东省立医院地址：山东财经大学燕山校区 邮编地址：250014</p>
         <p>
@@ -121,319 +119,319 @@
 </template>
 
 <script>
-import menuNav from "@/components/menuNav.vue";
+import menuNav from '@/components/menuNav.vue'
 
 export default {
   data() {
     return {
       imgList: [
         {
-          url: require("../assets/a1.jpg")
+          url: require('../assets/a1.jpg')
         },
         {
-          url: require("../assets/a2.jpg")
+          url: require('../assets/a2.jpg')
         },
         {
-          url: require("../assets/a3.jpg")
+          url: require('../assets/a3.jpg')
         },
         {
-          url: require("../assets/a4.jpg")
+          url: require('../assets/a4.jpg')
         }
       ],
       imgaList: [
         {
-          url: require("../assets/a5.jpg"),
+          url: require('../assets/a5.jpg'),
           name:
-            "第一医学中心普通外科成功举办第三届3D腹腔镜胃肠癌手术演示会暨腹腔镜手术前沿技术高级研讨会"
+            '第一医学中心普通外科成功举办第三届3D腹腔镜胃肠癌手术演示会暨腹腔镜手术前沿技术高级研讨会'
         },
         {
-          url: require("../assets/a6.jpg"),
-          name: "第五届“301论健”隆重召开"
+          url: require('../assets/a6.jpg'),
+          name: '第五届“301论健”隆重召开'
         },
         {
-          url: require("../assets/a7.jpg"),
-          name: "为治愈肾病，她追梦四十年"
+          url: require('../assets/a7.jpg'),
+          name: '为治愈肾病，她追梦四十年'
         }
       ],
       newsList: [
         {
           name:
-            "又快又稳柳叶刀 江湖留名“闪电王”||心内科专家王勇心里装着家人，所以随时准备冲上手术台",
-          id: "1",
-          content: "内容"
+            '又快又稳柳叶刀 江湖留名“闪电王”||心内科专家王勇心里装着家人，所以随时准备冲上手术台',
+          id: '1',
+          content: '内容'
         },
         {
-          name: "山东省立医院泌尿外科： 攻克疑难杂症，以精湛医术解患者病痛",
-          id: "2",
-          content: "内容"
+          name: '山东省立医院泌尿外科： 攻克疑难杂症，以精湛医术解患者病痛',
+          id: '2',
+          content: '内容'
         },
         {
           name:
-            "山东青年报：防治泌尿系结石 从日常习惯做起——访山东省立医院泌尿外科副主任医师陈修德",
-          id: "3",
-          content: "内容"
+            '山东青年报：防治泌尿系结石 从日常习惯做起——访山东省立医院泌尿外科副主任医师陈修德',
+          id: '3',
+          content: '内容'
         },
         {
-          name: "省立医院青光眼周活动，早筛查刻不容缓",
-          id: "4",
-          content: "内容"
+          name: '省立医院青光眼周活动，早筛查刻不容缓',
+          id: '4',
+          content: '内容'
         }
       ],
       roomList: [
         {
-          name: "内科系统",
-          id: "1",
+          name: '内科系统',
+          id: '1',
           isShow: false,
           subList: [
             {
-              name: "消化内科",
-              id: "11"
+              name: '消化内科',
+              id: '11'
             },
             {
-              name: "血液内科",
-              id: "12"
+              name: '血液内科',
+              id: '12'
             },
             {
-              name: "内分泌科",
-              id: "13"
+              name: '内分泌科',
+              id: '13'
             },
             {
-              name: "心内科",
-              id: "14"
+              name: '心内科',
+              id: '14'
             }
           ]
         },
         {
-          name: "外科系统",
-          id: "2",
+          name: '外科系统',
+          id: '2',
           isShow: false,
           subList: [
             {
-              name: "骨科",
-              id: "21"
+              name: '骨科',
+              id: '21'
             },
             {
-              name: "脊柱外科",
-              id: "22"
+              name: '脊柱外科',
+              id: '22'
             },
             {
-              name: "胃肠外科",
-              id: "23"
+              name: '胃肠外科',
+              id: '23'
             },
             {
-              name: "整形美容外科",
-              id: "24"
+              name: '整形美容外科',
+              id: '24'
             }
           ]
         },
         {
-          name: "妇产五官系统",
-          id: "3",
+          name: '妇产五官系统',
+          id: '3',
           isShow: false,
           subList: [
             {
-              name: "产科",
-              id: "31"
+              name: '产科',
+              id: '31'
             },
             {
-              name: "妇科",
-              id: "32"
+              name: '妇科',
+              id: '32'
             },
             {
-              name: "口腔科",
-              id: "33"
+              name: '口腔科',
+              id: '33'
             },
             {
-              name: "特诊科",
-              id: "34"
+              name: '特诊科',
+              id: '34'
             }
           ]
         }
       ],
       mingList: [
         {
-          name: "预约挂号",
-          id: "1",
-          url: "/reserve"
+          name: '预约挂号',
+          id: '1',
+          url: '/reserve'
         },
         {
-          name: "出诊信息",
-          id: "2",
-          url: "/hmessage"
+          name: '出诊信息',
+          id: '2',
+          url: '/hmessage'
         },
         {
-          name: "患者服务",
-          id: "3",
-          url:"/guide/know"
+          name: '患者服务',
+          id: '3',
+          url: '/guide/know'
         },
         {
-          name: "百年省医",
-          id: "4",
-          url:"/hundred"
+          name: '百年省医',
+          id: '4',
+          url: '/hundred'
         },
         {
-          name: "引领",
-          id: "5",
-          url:"/show"
+          name: '引领',
+          id: '5',
+          url: '/show'
         },
         {
-          name: "健康讲堂",
-          id: "6",
-          url:"/study"
+          name: '健康讲堂',
+          id: '6',
+          url: '/study'
         }
       ],
       docList: [
         {
           pic:
-            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
-          name: "王大大",
-          level: "主任医师",
-          room: "专科",
+            'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2617758923,3715511605&fm=26&gp=0.jpg',
+          name: '王大大',
+          level: '主任医师',
+          room: '内科',
 
           desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+            '医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项'
         },
         {
           pic:
-            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
-          name: "王大大",
-          level: "主任医师",
-          room: "专科",
+            'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2082650960,1060844831&fm=26&gp=0.jpg',
+          name: '张天',
+          level: '副主任医师',
+          room: '内科',
           desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+            '医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项'
         },
         {
           pic:
-            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
-          name: "王大大",
-          level: "主任医师",
-          room: "专科",
+            'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2117666733,1868760746&fm=26&gp=0.jpg',
+          name: '李天',
+          level: '主任医师',
+          room: '内科',
           desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+            '医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项'
         },
         {
           pic:
-            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
-          name: "王大大",
-          level: "主任医师",
-          room: "专科",
+            'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2617758923,3715511605&fm=26&gp=0.jpg',
+          name: '任然',
+          level: '主任医师',
+          room: '专科',
           desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+            '医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项'
         },
         {
           pic:
-            "http://www.sph.com.cn/Sites/Uploaded/UserUpLoad/20160704/20160704093321.jpg",
-          name: "王大大",
-          level: "主任医师",
-          room: "专科",
+            'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2617758923,3715511605&fm=26&gp=0.jpg',
+          name: '王大大',
+          level: '主任医师',
+          room: '专科',
           desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+            '医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项'
         }
       ],
       healtList: [
         {
-          name: "健康讲堂",
-          id: "1",
+          name: '健康讲堂',
+          id: '1',
           isShow: false,
           videoList: [
             {
-              id: "1",
-              name: "《名医话健康》 左常婷：如何科学备孕二胎",
-              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+              id: '1',
+              name: '《名医话健康》 左常婷：如何科学备孕二胎',
+              src: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
             },
             {
-              id: "2",
-              name: "山东农科频道《名医话健康》：辨体质 谈养生",
-              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+              id: '2',
+              name: '山东农科频道《名医话健康》：辨体质 谈养生',
+              src: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
             },
             {
-              id: "3",
-              name: "山东农科频道《名医话健康》：高血压的常见误区",
-              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+              id: '3',
+              name: '山东农科频道《名医话健康》：高血压的常见误区',
+              src: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
             }
           ]
         },
         {
-          name: "科普文章",
-          id: "2",
+          name: '科普文章',
+          id: '2',
           isShow: false,
           videoList: [
             {
-              id: "1",
-              name: "《名医话健康》 左常婷：如何科学备孕二胎",
-              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+              id: '1',
+              name: '《名医话健康》 左常婷：如何科学备孕二胎',
+              src: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
             },
             {
-              id: "2",
-              name: "山东农科频道《名医话健康》：辨体质 谈养生",
-              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+              id: '2',
+              name: '山东农科频道《名医话健康》：辨体质 谈养生',
+              src: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
             },
             {
-              id: "3",
-              name: "山东农科频道《名医话健康》：高血压的常见误区",
-              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+              id: '3',
+              name: '山东农科频道《名医话健康》：高血压的常见误区',
+              src: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
             }
           ]
         },
         {
-          name: "相关疾病",
-          id: "3",
+          name: '相关疾病',
+          id: '3',
           isShow: false,
           videoList: [
             {
-              id: "1",
-              name: "《名医话健康》 左常婷：如何科学备孕二胎",
-              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+              id: '1',
+              name: '《名医话健康》 左常婷：如何科学备孕二胎',
+              src: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
             },
             {
-              id: "2",
-              name: "山东农科频道《名医话健康》：辨体质 谈养生",
-              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+              id: '2',
+              name: '山东农科频道《名医话健康》：辨体质 谈养生',
+              src: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
             },
             {
-              id: "3",
-              name: "山东农科频道《名医话健康》：高血压的常见误区",
-              src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+              id: '3',
+              name: '山东农科频道《名医话健康》：高血压的常见误区',
+              src: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
             }
           ]
         }
       ]
-    };
+    }
   },
   components: {
     menuNav
   },
   methods: {
     showSub(id) {
-      console.log(id);
+      console.log(id)
       this.roomList.forEach(i => {
-        i.isShow = false;
-      });
-      this.roomList[id - 1].isShow = !this.roomList[id - 1].isShow;
+        i.isShow = false
+      })
+      this.roomList[id - 1].isShow = !this.roomList[id - 1].isShow
     },
     showHealth(id) {
-      console.log(id);
+      console.log(id)
       this.healtList.forEach(i => {
-        i.isShow = false;
-      });
-      this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow;
+        i.isShow = false
+      })
+      this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow
     }
   },
   created() {
     // 接口初始化数据
-    this.roomList[0].isShow = true;
-    this.healtList[0].isShow = true;
+    this.roomList[0].isShow = true
+    this.healtList[0].isShow = true
   }
-};
+}
 </script>
 <style scoped lang="less">
 .el-carousel__item img {
   height: 400px;
   width: 100%;
 }
-a{
+a {
   text-decoration: none;
-  color:#ffffff;
+  color: #ffffff;
 }
 .img-all {
   position: relative;
@@ -517,7 +515,7 @@ a{
   flex-direction: column;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
 }
-.jiuyii{
+.jiuyii {
   border-radius: 3px;
   width: 1230px;
   margin: 50px;
@@ -633,7 +631,7 @@ a{
   height: 160px;
   width: 170px;
   // background: url(../assets/a2.jpg);
-  background-color:#0087cd;
+  background-color: #0087cd;
   line-height: 170px;
   font-size: 25px;
   margin-right: 5px;
@@ -650,10 +648,11 @@ a{
   min-height: 36px;
 }
 .zhuanjia-content {
-  margin: 100px 0;
+  margin: 50px 0;
+  padding-bottom: 15px;
   width: 100%;
   white-space: nowrap;
-  overflow: scroll;
+  overflow-x: scroll;
 }
 .zhuanjia-item {
   width: 350px;
@@ -668,11 +667,34 @@ a{
   span {
     color: #0087cd;
     font-size: 12px;
-    margin-left: 10px;
   }
   p {
     white-space: normal;
   }
+  img {
+    width: 120px;
+    height: 120px;
+    margin-right: 10px;
+  }
+}
+.zhuanjia-content::-webkit-scrollbar-track-piece {
+  //滚动条凹槽的颜色，还可以设置边框属性
+  background-color: #f8f8f8;
+}
+.zhuanjia-content::-webkit-scrollbar {
+  //滚动条的宽度
+  width: 9px;
+  height: 9px;
+}
+.zhuanjia-content::-webkit-scrollbar-thumb {
+  //滚动条的设置
+  background-color: #dddddd;
+  background-clip: padding-box;
+  border-radius: 20px;
+  min-height: 28px;
+}
+.zhuanjia-content::-webkit-scrollbar-thumb:hover {
+  background-color: #bbb;
 }
 .health-name {
   width: 140px;

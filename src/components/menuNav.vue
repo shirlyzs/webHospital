@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="nav">
-      <el-menu :default-active="activeIndex" class="el-menu-demo2" mode="horizontal" @select.capture="handleSelect" background-color="rgba(24, 116, 205)" text-color="#fff" text-align="center">
+      <el-menu :default-active="activeIndex" class="el-menu-demo2" mode="horizontal" @select.capture="handleSelect" background-color="rgba(24, 116, 205)" text-color="#fff" active-text-color="#fff" text-align="center">
         <el-menu-item index="1">
           <router-link to="/">网站首页</router-link>
         </el-menu-item>
