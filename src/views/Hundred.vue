@@ -75,13 +75,6 @@ export default {
     back() {
       this.$router.go(-1); //返回上一层
     }
-    // showHealth(id) {
-    //   console.log(id);
-    //   this.healtList.forEach(i => {
-    //     i.isShow = false;
-    //   });
-    //   this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow;
-    // }
   },
   created() {
     // 接口初始化数据

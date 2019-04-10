@@ -4,18 +4,11 @@
       <div class="wel">欢迎来到山东省立医院</div>
       <div class="login">
         <router-link to="/Login">登录 / 注册</router-link>
+        <router-link :to="{name:'login',query:{type:'admin'}}" style="margin-left:20px;">管理员</router-link>
       </div>
     </div>
     <div class="nav">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo2"
-        mode="horizontal"
-        @select.capture="handleSelect"
-        background-color="rgba(24, 116, 205)"
-        text-color="#fff"
-        text-align="center"
-      >
+      <el-menu :default-active="activeIndex" class="el-menu-demo2" mode="horizontal" @select.capture="handleSelect" background-color="rgba(24, 116, 205)" text-color="#fff" active-text-color="#fff" text-align="center">
         <el-menu-item index="1">
           <router-link to="/">网站首页</router-link>
         </el-menu-item>
@@ -40,7 +33,8 @@
             <router-link to="/news/room">科室动态</router-link>
           </el-menu-item>
           <el-menu-item index="3-3">
-            <router-link to="/news/notice">医院公告</router-link></el-menu-item>
+            <router-link to="/news/notice">医院公告</router-link>
+          </el-menu-item>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title">就诊指南</template>
@@ -75,15 +69,15 @@
 export default {
   data() {
     return {
-      activeIndex: "1"
-    };
+      activeIndex: '1'
+    }
   },
   methods: {
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+      console.log(key, keyPath)
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

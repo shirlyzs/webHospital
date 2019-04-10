@@ -43,6 +43,7 @@
 }
 a{
   text-decoration: none;
-  color: #ffffff;
+  color: #464040;
+  // color: #ffffff;
 }
 </style>

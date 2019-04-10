@@ -11,7 +11,7 @@
         <div class="art-sub">
           <div class="sub-con" v-for="itam in item.subList" :key="itam.id" v-show="item.isShow">
             <div class="align">{{itam.name}}</div>
-            <!-- <div>{{itam.content}}</div> -->
+            <div>{{itam.content}}</div>
           </div>
         </div>
       </div>
