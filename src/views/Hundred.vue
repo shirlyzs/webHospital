@@ -10,27 +10,13 @@
         <div class="news-name"><span>【医院专栏】</span>{{news.name}}</div>
       </div>
     </div>
-    <div class="footer">
-      <div class="footer-R">
-        <p>ICP备案：鲁ICP备11021200号</p>
-        <p>
-          工信部连接：
-          <a
-            href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action"
-          >http://www.miitbeian.gov.cn</a>
-        </p>
-        <p>山东省立医院地址：山东财经大学燕山校区 邮编地址：250014</p>
-        <p>
-          山东省立医院版权所有
-          <span>Copyrights © 2009 sph.com.cn All Rights Reserved</span>
-        </p>
-      </div>
-    </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import menuNav from "@/components/menuNav.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   data() {
@@ -62,7 +48,7 @@ export default {
     };
   },
   components: {
-    menuNav
+    menuNav,Footer
   },
   methods: {
     showArt(id) {
@@ -147,17 +133,5 @@ export default {
   font-size: 25px;
   text-align: center;
   margin-bottom: 10px;
-}
-.footer {
-  padding: 60px 0px;
-  display: flex;
-  height: 150px;
-  line-height: 28px;
-  width: 100%;
-  color: #ffffff;
-  justify-content: center;
-  margin-top: 20px;
-  background: url(../assets/a1.jpg);
-  // no-repeat center
 }
 </style>

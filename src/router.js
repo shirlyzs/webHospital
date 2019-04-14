@@ -12,6 +12,8 @@ import Show from "./views/Show.vue";
 import Study from "./views/Study.vue";
 import Roomintro from "./views/Roomintro.vue";
 import Detail from "./views/Detail.vue";
+import Master from "./views/Master.vue";
+import Roomdetail from "./views/Roomdetail.vue";
 
 
 Vue.use(Router);
@@ -77,9 +79,25 @@ export default new Router({
       component: Roomintro
     },
     {
+      path: "/master",
+      name: "master",
+      component: Master
+    },
+    {
       path: "/detail",
       name: "detail",
       component: Detail
+    },
+    {
+      path: "/roomdetail",
+      name: "roomdetail",
+      component: Roomdetail
+    },
+    // 管理员系列
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('@/views/admin/admin.vue')
     }
   ]
 });

@@ -20,15 +20,7 @@
   text-align: center;
   color: #2c3e50;
 }
-#nav {
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+
 .clearfloat:after {
   display: block;
   clear: both;
@@ -36,12 +28,12 @@
   visibility: hidden;
   height: 0;
 }
-.flex-row{
+.flex-row {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-a{
+a {
   text-decoration: none;
   color: #464040;
   // color: #ffffff;

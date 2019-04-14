@@ -17,11 +17,22 @@ module.exports = {
     host: 'localhost',
     https: false, // https:{type:Boolean}
     open: true, //配置自动启动浏览器
-    // proxy: 'http://localhost:4000'
+    // proxy: 'http://localhost:8080'
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
-        changeOrigin: true
+        // target: 'https://www.easy-mock.com/mock/5cadf50329a8d421825174fd/example',
+        target: 'http://192.168.1.143:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+      '/mock': {
+        target: 'https://www.easy-mock.com/mock/5cadf50329a8d421825174fd/example',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/mock': ''
+        }
       }
     }
   }

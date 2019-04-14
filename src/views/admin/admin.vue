@@ -3,7 +3,7 @@
     <div class="container">
       <div class="wel">欢迎来到山东省立医院</div>
       <div class="login">
-        <router-link to="/home">退出登录</router-link>
+        <router-link to="/">退出登录</router-link>
       </div>
     </div>
     <div style="margin:50px">

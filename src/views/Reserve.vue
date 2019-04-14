@@ -13,71 +13,65 @@
       :row-class-name="tableRowClassName"
     >
       <el-table-column label="科室">
-        <el-table-column prop="part" label="主科室" width="120"></el-table-column>
-        <el-table-column prop="depart" label="分科室" width="120"></el-table-column>
+        <el-table-column prop="department" label="主科室" width="120"></el-table-column>
+        <el-table-column prop="keShi" label="分科室" width="120"></el-table-column>
       </el-table-column>
-      <el-table-column prop="Monday" label="星期一"></el-table-column>
-      <el-table-column prop="Tuesday" label="星期二"></el-table-column>
-      <el-table-column prop="Wednesday" label="星期三"></el-table-column>
-      <el-table-column prop="Thursday" label="星期四"></el-table-column>
-      <el-table-column prop="Friday" label="星期五"></el-table-column>
-      <el-table-column prop="Saturday" label="星期六"></el-table-column>
-      <el-table-column prop="Sunday" label="星期日"></el-table-column>
+      <el-table-column prop="Monday" :label="nowDay.first"></el-table-column>
+      <el-table-column prop="Tuesday" :label="nowDay.second"></el-table-column>
+      <el-table-column prop="Wednesday" :label="nowDay.third"></el-table-column>
+      <el-table-column prop="Thursday" :label="nowDay.fourth"></el-table-column>
+      <el-table-column prop="Friday" :label="nowDay.fifth"></el-table-column>
+      <el-table-column prop="Saturday" :label="nowDay.sixth"></el-table-column>
+      <el-table-column prop="Sunday" :label="nowDay.seventh"></el-table-column>
     </el-table>
-    <div class="footer">
-      <div class="footer-R">
-        <p>ICP备案：鲁ICP备11021200号</p>
-        <p>
-          工信部连接：
-          <a
-            href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action"
-          >http://www.miitbeian.gov.cn</a>
-        </p>
-        <p>山东省立医院地址：山东财经大学燕山校区 邮编地址：250014</p>
-        <p>
-          山东省立医院版权所有
-          <span>Copyrights © 2009 sph.com.cn All Rights Reserved</span>
-        </p>
-      </div>
-    </div>
+    <div @click="yuyue">张三</div>
+    <Footer></Footer>
   </div>
 </template>
 
 
 <script>
 import menuNav from "@/components/menuNav.vue";
+import Footer from "@/components/Footer.vue";
+import { reserve } from "@/api/reserve";
+import nowTime from "@/utils/time";
 
 export default {
   data() {
     return {
-      test: [
-        {
-          part: "内科",
-          depart: "消化内科",
-          Monday: "王可可"
-        },
-        {
-          part: "外科",
-          depart: "胸外科",
-          Tuesday: "张一一"
-        },
-        {
-          part: "内科",
-          depart: "血液内科",
-          Thursday: "刘长春"
-        },
-        {
-          part: "妇产科",
-          depart: "妇科",
-          Monday: "刘翠翠"
-        }
-      ]
+      test: [],
+      nowDay: {
+        first: "",
+        second: "",
+        third: "",
+        fourth: "",
+        fifth: "",
+        sixth: "",
+        seventh: ""
+      }
     };
   },
-  components:{
-    menuNav
+  components: {
+    menuNav,
+    Footer
   },
   methods: {
+    getReserve() {
+      let doctor = {
+        doctorName: "",
+        department: "",
+        keShi: "",
+        ranks: ""
+      };
+      reserve(doctor).then(res => {
+        // console.log(res);
+        // this.test=res
+        this.test = res.result[0].content;
+      });
+    },
+    yuyue() {
+      alert("预约成功,前面有  人");
+    },
     tableRowClassName(row, index) {
       if (index === 1) {
         return "info-row";
@@ -89,18 +83,23 @@ export default {
     back() {
       this.$router.go(-1); //返回上一层
     }
+  },
+  created() {
+    this.getReserve();
+    console.log(nowTime.init().getAll());
+    
   }
 };
 </script>
 <style lang="less" scoped>
 .page {
-  height: 1000px;
+  height: 600px;
   position: relative;
 }
 .backTo {
   position: absolute;
   top: 120px;
-  left:30px;
+  left: 30px;
   font-size: 13px;
   color: #0087cd;
 }
@@ -118,19 +117,5 @@ export default {
 .el-table tr {
   border: solid 1px black;
   border: 1px solid #b0b6c6;
-}
-.footer {
-  padding: 60px 0px;
-  display: flex;
-  height: 150px;
-  position: absolute;
-  bottom: 0;
-  line-height: 28px;
-  width: 100%;
-  color: #ffffff;
-  justify-content: center;
-  margin-top: 20px;
-  background: url(../assets/a1.jpg);
-  // no-repeat center
 }
 </style>

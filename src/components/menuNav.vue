@@ -2,13 +2,23 @@
   <div>
     <div class="container">
       <div class="wel">欢迎来到山东省立医院</div>
-      <div class="login">
+      <div class="login" v-if="!loginName">
         <router-link to="/Login">登录 / 注册</router-link>
         <router-link :to="{name:'login',query:{type:'admin'}}" style="margin-left:20px;">管理员</router-link>
       </div>
+      <div class="login" v-else>欢迎您，{{loginName}}</div>
     </div>
     <div class="nav">
-      <el-menu :default-active="activeIndex" class="el-menu-demo2" mode="horizontal" @select.capture="handleSelect" background-color="rgba(24, 116, 205)" text-color="#fff" active-text-color="#fff" text-align="center">
+      <el-menu
+        :default-active="activeIndex"
+        class="el-menu-demo2"
+        mode="horizontal"
+        @select.capture="handleSelect"
+        background-color="rgba(24, 116, 205)"
+        text-color="#fff"
+        active-text-color="#fff"
+        text-align="center"
+      >
         <el-menu-item index="1">
           <router-link to="/">网站首页</router-link>
         </el-menu-item>
@@ -35,17 +45,20 @@
           <el-menu-item index="3-3">
             <router-link to="/news/notice">医院公告</router-link>
           </el-menu-item>
+          <el-menu-item index="3-4">
+            <router-link to="/study">健康讲堂</router-link>
+          </el-menu-item>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title">就诊指南</template>
           <el-menu-item index="4-1">
-            <router-link to="/guide/know">就诊须知</router-link>
+            <router-link to="/reserve">预约挂号</router-link>
           </el-menu-item>
           <el-menu-item index="4-2">
-            <router-link to="/guide/process">就医流程</router-link>
+            <router-link to="/guide/know">就诊须知</router-link>
           </el-menu-item>
           <el-menu-item index="4-3">
-            <router-link to="/guide/professor">专家门诊</router-link>
+            <router-link to="/guide/process">就医流程</router-link>
           </el-menu-item>
           <el-menu-item index="4-4">
             <router-link to="/guide/location">医院布局</router-link>
@@ -58,7 +71,7 @@
           <router-link to="/roomintro">科室介绍</router-link>
         </el-menu-item>
         <el-menu-item index="6">
-          <a href="https://www.ele.me" target="_blank">专家介绍</a>
+          <router-link to="/master">专家介绍</router-link>
         </el-menu-item>
       </el-menu>
     </div>
@@ -69,15 +82,22 @@
 export default {
   data() {
     return {
-      activeIndex: '1'
-    }
+      activeIndex: "1",
+      loginName: ""
+    };
   },
   methods: {
     handleSelect(key, keyPath) {
-      console.log(key, keyPath)
+      console.log(key, keyPath);
     }
+  },
+  created() {
+    if (window.sessionStorage["loginKey"]) {
+      this.loginName = window.sessionStorage["loginKey"];
+    }
+    console.log(window.sessionStorage["loginKey"], 666);
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -104,6 +124,9 @@ export default {
   display: block;
   margin-top: 50px;
   height: fit-content;
+  a {
+    color: #fff !important;
+  }
 }
 .el-header {
   background-color: #00a1e9;

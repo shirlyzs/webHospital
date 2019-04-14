@@ -5,6 +5,6 @@ import axios from '@/api/index'
 export const AdminLogin = (adminName, password) => {
   return axios.request({
     method: 'get',
-    url: `adminLoginVerify?adminNme=${adminName}&password=${password}`
+    url: `adminLoginVerify?adminName=${adminName}&password=${password}`
   })
 }

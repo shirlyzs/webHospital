@@ -1,6 +1,6 @@
 import axios from 'axios'
 const service = axios.create({
-  baseURL: '/api',
+  baseURL: '/mock',
   timeout: 5000
 })
 
