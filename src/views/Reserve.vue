@@ -4,14 +4,7 @@
     <div class="backTo">
       <span v-on:click="back">>>返回上一页</span>
     </div>
-    <el-table
-      class="table"
-      :data="test"
-      stripe
-      border
-      style="width: 100%"
-      :row-class-name="tableRowClassName"
-    >
+    <el-table class="table" :data="test" stripe border style="width: 100%" :row-class-name="tableRowClassName">
       <el-table-column label="科室">
         <el-table-column prop="department" label="主科室" width="120"></el-table-column>
         <el-table-column prop="keShi" label="分科室" width="120"></el-table-column>
@@ -31,25 +24,25 @@
 
 
 <script>
-import menuNav from "@/components/menuNav.vue";
-import Footer from "@/components/Footer.vue";
-import { reserve } from "@/api/reserve";
-import nowTime from "@/utils/time";
+import menuNav from '@/components/menuNav.vue'
+import Footer from '@/components/Footer.vue'
+import { reserve } from '@/api/reserve'
+import { getWeek } from '@/utils/time'
 
 export default {
   data() {
     return {
       test: [],
       nowDay: {
-        first: "",
-        second: "",
-        third: "",
-        fourth: "",
-        fifth: "",
-        sixth: "",
-        seventh: ""
+        first: '',
+        second: '',
+        third: '',
+        fourth: '',
+        fifth: '',
+        sixth: '',
+        seventh: ''
       }
-    };
+    }
   },
   components: {
     menuNav,
@@ -58,38 +51,37 @@ export default {
   methods: {
     getReserve() {
       let doctor = {
-        doctorName: "",
-        department: "",
-        keShi: "",
-        ranks: ""
-      };
+        doctorName: '',
+        department: '',
+        keShi: '',
+        ranks: ''
+      }
       reserve(doctor).then(res => {
         // console.log(res);
         // this.test=res
-        this.test = res.result[0].content;
-      });
+        this.test = res.result[0].content
+      })
     },
     yuyue() {
-      alert("预约成功,前面有  人");
+      alert('预约成功,前面有  人')
     },
     tableRowClassName(row, index) {
       if (index === 1) {
-        return "info-row";
+        return 'info-row'
       } else if (index === 9) {
-        return "positive-row";
+        return 'positive-row'
       }
-      return "";
+      return ''
     },
     back() {
-      this.$router.go(-1); //返回上一层
+      this.$router.go(-1) //返回上一层
     }
   },
   created() {
-    this.getReserve();
-    console.log(nowTime.init().getAll());
-    
+    this.getReserve()
+    this.nowDay = getWeek()
   }
-};
+}
 </script>
 <style lang="less" scoped>
 .page {
