@@ -42,7 +42,7 @@ export const delUser = userId => {
 export const updateUser = (userId, password, tel, info, balance) => {
   return axios.request({
     method: 'get',
-    url: `/adminLoginUpdateUser/?userId=${userId}&password=${password}&tel=${tel}&info=${info}&balance=${balance}`
+    url: `/adminLoginUpdateUser?userId=${userId}&password=${password}&tel=${tel}&info=${info}&balance=${balance}`
   })
 }
 
@@ -76,7 +76,7 @@ export const updateDoctor = (
 ) => {
   return axios.request({
     method: 'get',
-    url: `/adminLoginAddDoctor/?doctorName=${doctorName}&password=${password}&resume=${resume}&department=${department}&keShi=${keShi}&ranks=${ranks}$price=${price}`
+    url: `/adminLoginAddDoctor?doctorName=${doctorName}&password=${password}&resume=${resume}&department=${department}&keShi=${keShi}&ranks=${ranks}$price=${price}`
   })
 }
 
@@ -123,7 +123,7 @@ export const updateNews = (
 ) => {
   return axios.request({
     method: 'get',
-    url: `/adminLoginAddNews/?author=${author}&title=${title}&content=${content}`
+    url: `/adminLoginAddNews?author=${author}&title=${title}&content=${content}`
   })
 }
 // 删除新闻
