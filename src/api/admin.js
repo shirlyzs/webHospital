@@ -1,11 +1,13 @@
 import axios from '@/api/index'
-
+// 登录
 export const AdminLogin = (adminName, password) => {
   return axios.request({
     method: 'get',
     url: `adminLoginVerify?adminName=${adminName}&password=${password}`
   })
 }
+
+
 // 查询管理员列表 其余参数adminId，adminName，password
 export const findAdmin = (pageNum, pageSize) => {
   return axios.request({
@@ -82,7 +84,7 @@ export const updateDoctor = (
 
 
 
-/* 预约 */
+
 // 查询订单  其余参数 orderId，userName，doctorName，tel
 export const findOrders = (
   pageNum, pageSize
@@ -92,7 +94,13 @@ export const findOrders = (
     url: `/adminLoginVerify/getOrders/${pageNum}/${pageSize}`
   })
 }
-
+// 删除订单
+export const delOrders = (orderId) => {
+  return axios.request({
+    method: 'get',
+    url: `/adminLoginVerify/orders/delete/${orderId}`
+  })
+}
 
 
 
