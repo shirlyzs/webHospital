@@ -14,6 +14,12 @@ import Roomintro from "./views/Roomintro.vue";
 import Detail from "./views/Detail.vue";
 import Master from "./views/Master.vue";
 import Roomdetail from "./views/Roomdetail.vue";
+import Personal from "./views/Personal.vue";
+import More from "./views/More.vue";
+import Prodetail from "./views/Prodetail.vue";
+import Showdetail from "./views/Showdetail.vue";
+
+
 
 
 Vue.use(Router);
@@ -92,6 +98,26 @@ export default new Router({
       path: "/roomdetail",
       name: "roomdetail",
       component: Roomdetail
+    },
+    {
+      path: "/personal",
+      name: "personal",
+      component: Personal
+    },
+    {
+      path: "/more",
+      name: "more",
+      component: More
+    },
+    {
+      path: "/prodetail",
+      name: "prodetail",
+      component: Prodetail
+    },
+    {
+      path: "/showdetail",
+      name: "showdetail",
+      component: Showdetail
     },
     // 管理员系列
     {

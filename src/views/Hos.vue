@@ -10,8 +10,9 @@
         <div class="art-name" @click="showArt(item.id)" slot="title">{{item.name}}</div>
         <div class="art-sub">
           <div class="sub-con" v-for="itam in item.subList" :key="itam.id" v-show="item.isShow">
-            <div class="align">{{itam.name}}</div>
-            <div>&nbsp;&nbsp;&nbsp;{{itam.content}}</div>
+            <div class="align">{{itam.name}}</div> 
+            <img v-if="item.name=='历任领导'" style="width:500px;height:800px;" :src="itam.content" alt="历任领导" />
+            <div class="content" v-else v-html="itam.content"></div>
           </div>
         </div>
       </div>
@@ -124,6 +125,6 @@ export default {
 .align {
   font-size: 25px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 </style>

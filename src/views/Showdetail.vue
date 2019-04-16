@@ -5,12 +5,12 @@
       <span v-on:click="back">>>返回上一页</span>
     </div>
     <div class="navi">
-      <div class="title">{{roomList.keShiName}}</div>
-      <!-- <div class="author">{{roomList.author}}</div> -->
-      <div class="image">
-      <img :src="roomList.image"/>
-      </div>
-      <div class="content">{{roomList.info}}</div>
+      <div class="title">{{newsList.title}}</div>
+      <div class="author">{{newsList.type}}</div>
+      <!-- <div class="image">
+        <img  v-for="(item,index) in newsList.image" :key="index" :src="item">
+      </div> -->
+      <div class="content">{{newsList.content}}</div>
     </div>
     <Footer></Footer>
   </div>
@@ -19,12 +19,12 @@
 <script>
 import menuNav from "@/components/menuNav.vue";
 import Footer from "@/components/Footer.vue";
-import { room,roomdetail } from "@/api/api";
+import { artdetail } from "@/api/api";
 
 export default {
   data() {
     return {
-      roomList: []
+      newsList: []
     };
   },
   components: {
@@ -32,31 +32,28 @@ export default {
     Footer
   },
   methods: {
-    getId(keShiId) {
-      let roomInfo = {
-        // keShiName:"",
-        // department: "",
-        keShiId: keShiId,
-        // info: ""
+    getId(newsId) {
+      let articleInfo = {
+        articleId: newsId
       };
-      roomdetail(roomInfo).then(res => {
-        this.roomList = res.result;
+      artdetail(articleInfo).then(res => {
+        // res.result.image = res.result.image.split("||");
+        this.newsList = res.result;
       });
     },
     back() {
-      this.$router.go(-1); //返回上一层 
+      this.$router.go(-1); //返回上一层
     }
   },
   created() {
-    this.getId(this.$route.query.newId);
-  }
+    this.getId(this.$route.query.newId);  }
 };
 </script>
 
 <style scoped lang="less">
 .navi {
   border-radius: 3px;
-  width: 1000px;
+  width: 800px;
   margin: 50px auto;
   text-align: left;
   height: fit-content;
@@ -87,9 +84,9 @@ export default {
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
-  img {
-    height: 300px;
-    width: 800px;
+  img{
+    height: 400px;
+    width: 400px;
     margin: 10px;
   }
 }

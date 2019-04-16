@@ -5,22 +5,9 @@
       <span v-on:click="back">>>返回上一页</span>
     </div>
     <div class="navi">
-      <div class="daohang">就诊指南</div>
-      <div v-for="item in artList" :key="item.id">
-        <div class="art-name" @click="showArt(item.id)" slot="title">{{item.name}}</div>
-        <div class="art-sub">
-          <div class="sub-con" v-for="itam in item.subList" :key="itam.id" v-show="item.isShow">
-            <div class="align">{{itam.name}}</div>
-            <img v-if="itam.name=='医院布局'" :src="itam.content" alt="医院布局" />
-            <div v-else-if="itam.name=='交通指南'">
-              <div v-html="itam.content"></div>
-              <Map></Map>
-            </div>
-            <!-- <div v-else>&nbsp;&nbsp;&nbsp;{{itam.content}}</div> -->
-            <div class="content" v-else v-html="itam.content"></div>
-
-          </div>
-        </div>
+      <div class="daohang">医院新闻</div>
+      <div class="new" v-for="(news,index) in newsList" :key="index">
+        <div class="news-name" @click="toNewsDetail(news)">{{news.title}}</div>
       </div>
     </div>
     <Footer></Footer>
@@ -30,57 +17,55 @@
 <script>
 import menuNav from "@/components/menuNav.vue";
 import Footer from "@/components/Footer.vue";
-import Map from "@/components/Map.vue";
-
-import { know } from "@/api/api";
+import { xinwen } from "@/api/api";
 
 export default {
   data() {
     return {
-      artList: []
+      newsList: []
     };
   },
   components: {
     menuNav,
-    Footer,
-    Map
+    Footer
   },
   methods: {
-    getKnow() {
-      know().then(res => {
-        this.artList = res.data.artList;
-        this.artList[0].isShow = true;
+    getNews() {
+      let newInfo = {
+        newsId: "",
+        title: "",
+        author: "",
+        content: ""
+      };
+      xinwen(newInfo).then(res => {
+        this.newsList = res.result[0].content;
       });
     },
-    showArt(id) {
-      console.log(id);
-      this.artList.forEach(i => {
-        i.isShow = false;
-      });
-      this.artList[id - 1].isShow = !this.artList[id - 1].isShow;
+    toNewsDetail(item) {
+      this.$router.push({ path: "/detail", query: { newId: item.newsId } });
     },
     back() {
       this.$router.go(-1); //返回上一层
     }
   },
-  watch: {
-    $route() {
-      this.artList.forEach(i => {
-        i.isShow = false;
-        if (i.eng == this.$route.params.name) {
-          i.isShow = true;
-        }
-      });
-    }
-  },
   created() {
     // 接口初始化数据
-    this.getKnow();
-    // this.artList[0].isShow = true;
+    this.getNews();
   }
 };
 </script>
 <style scoped lang="less">
+.new {
+  margin-top: 50px;
+  height: 10px;
+  margin-left: 30px;
+  text-align: left;
+  line-height: 20px;
+}
+.news-name {
+  border-bottom: #ded6d685 1px dashed;
+  padding-bottom: 15px;
+}
 .backTo {
   position: absolute;
   top: 120px;
@@ -118,7 +103,6 @@ export default {
   top: 100px;
   right: 100px;
   display: flex;
-  margin-bottom: 50px;
   flex-direction: row;
 }
 .sub-con {
@@ -130,17 +114,10 @@ export default {
   box-sizing: border-box;
   border-radius: 5px;
   position: relative;
-  img{
-    height: 700px;
-    width: 500px;
-  }
 }
 .align {
   font-size: 25px;
   text-align: center;
   margin-bottom: 10px;
 }
-// .content{
-//   text-indent: 2em;
-// }
 </style>

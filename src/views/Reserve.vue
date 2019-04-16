@@ -9,20 +9,20 @@
         <el-table-column prop="department" label="主科室" width="120"></el-table-column>
         <el-table-column prop="keShi" label="分科室" width="120"></el-table-column>
       </el-table-column>
-      <el-table-column prop="Monday" :label="nowDay.first"></el-table-column>
-      <el-table-column prop="Tuesday" :label="nowDay.second"></el-table-column>
-      <el-table-column prop="Wednesday" :label="nowDay.third"></el-table-column>
-      <el-table-column prop="Thursday" :label="nowDay.fourth"></el-table-column>
-      <el-table-column prop="Friday" :label="nowDay.fifth"></el-table-column>
-      <el-table-column prop="Saturday" :label="nowDay.sixth"></el-table-column>
-      <el-table-column prop="Sunday" :label="nowDay.seventh"></el-table-column>
+      <el-table-column prop="doctorName" :label="nowDay.first"></el-table-column>
+      <el-table-column prop="doctorName" :label="nowDay.second"></el-table-column>
+      <el-table-column prop="doctorName" :label="nowDay.third"></el-table-column>
+      <el-table-column prop="doctorName" :label="nowDay.fourth"></el-table-column>
+      <el-table-column prop="doctorName" :label="nowDay.fifth"></el-table-column>
+      <el-table-column prop="doctorName" :label="nowDay.sixth"></el-table-column>
+      <el-table-column prop="doctorName" :label="nowDay.seventh"></el-table-column>
     </el-table>
-    <div @click="yuyue">张三</div>
+    <!-- <div @click="yuyue">张三</div> -->
     <Footer></Footer>
   </div>
 </template>
 
-
+  
 <script>
 import menuNav from '@/components/menuNav.vue'
 import Footer from '@/components/Footer.vue'

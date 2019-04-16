@@ -6,7 +6,10 @@
         <router-link to="/Login">登录 / 注册</router-link>
         <router-link :to="{name:'login',query:{type:'admin'}}" style="margin-left:20px;">管理员</router-link>
       </div>
-      <div class="login" v-else>欢迎您，{{loginName}}</div>
+      <div class="login" v-else>
+        <router-link to="/personal" style="color:#ffffff;margin-right:20px;">欢迎您，{{loginName}}</router-link>
+        <div @click="shanchu">退出登录</div>
+      </div>
     </div>
     <div class="nav">
       <el-menu
@@ -37,15 +40,12 @@
         <el-submenu index="3">
           <template slot="title">新闻动态</template>
           <el-menu-item index="3-1">
-            <router-link to="/news/hos">医院要闻</router-link>
+            <router-link to="/more">医院要闻</router-link>
           </el-menu-item>
+          <!-- <el-menu-item index="3-2">
+            <router-link to="/notice">医院公告</router-link>
+          </el-menu-item> -->
           <el-menu-item index="3-2">
-            <router-link to="/news/room">科室动态</router-link>
-          </el-menu-item>
-          <el-menu-item index="3-3">
-            <router-link to="/news/notice">医院公告</router-link>
-          </el-menu-item>
-          <el-menu-item index="3-4">
             <router-link to="/study">健康讲堂</router-link>
           </el-menu-item>
         </el-submenu>
@@ -89,6 +89,10 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    shanchu() {
+      window.sessionStorage.clear();
+      this.loginName="";
     }
   },
   created() {
@@ -118,6 +122,7 @@ export default {
     margin-right: 50px;
     color: #ffffff;
     font-weight: 300;
+    display: flex;
   }
 }
 .nav {

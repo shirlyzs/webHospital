@@ -1,7 +1,7 @@
 export const getWeek = () => {
   // 今天
   let now = new Date()
-  now.setDate(30)
+  // now.setDate(30)
   let month = now.getMonth() + 1
   let date = now.getDate()
   let weekday = now.getDay()

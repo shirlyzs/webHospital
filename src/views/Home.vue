@@ -10,27 +10,23 @@
       <div class="leftnews">
         <div class="tt1">
           <h4 class="pic">图片新闻</h4>
-          <!-- <span class="right">
-            <a href="https://www.ele.me">更多</a>
-          </span>-->
         </div>
         <el-carousel class="imga-all" height="250px">
           <el-carousel-item class="imga" v-for="(imga,index) in imgaList" :key="index">
-            <img :src="imga.url">
-            <div class="imga-name">
-              <router-link to="/imgdetail">{{imga.name}}</router-link>
-            </div>
+            <img :src="imga.image">
+            <div class="imga-name" @click="toImgdetail(imga)">{{imga.title}}</div>
           </el-carousel-item>
         </el-carousel>
       </div>
       <div class="rightnews">
         <div class="tt2">
           <h4 class="word">医院新闻</h4>
-          <!-- <span class="right2">
-            <a href="https://www.ele.me">更多</a>
-          </span>-->
+          <span class="right2">
+            <router-link to="/more">更多</router-link>
+          </span>
         </div>
         <div class="new" v-for="(news, index) in newsList" :key="index">
+          <div class="news-left"></div>
           <div class="news-name" @click="toNewsDetail(news)">{{news.title}}</div>
         </div>
       </div>
@@ -42,9 +38,13 @@
       <div v-for="item in roomList" :key="item.id">
         <div class="room-name" @mouseenter="showSub(item.id)" slot="title">{{item.name}}</div>
         <div class="room-sub">
-          <div class="sub-name" v-for="itam in item.subList" :key="itam.id" v-show="item.isShow">
-            <router-link to="/roomdetail">{{itam.name}}</router-link>
-          </div>
+          <div
+            class="sub-name"
+            v-for="(itam,index) in subList"
+            :key="index"
+            @click="toRoomdetail(itam)"
+            v-show="item.isShow && itam.department === item.name"
+          >{{itam.keShiName}}</div>
         </div>
       </div>
     </div>
@@ -66,22 +66,22 @@
         <h2 class="zhinann">专家介绍</h2>
       </div>
       <div class="zhuanjia-content">
-        <div class="zhuanjia-item" v-for="(itom,index) in docList" :key="index">
+        <div class="zhuanjia-item" @click="toProdetail(item)" v-for="(item,index) in docList" :key="index">
           <div class="flex-row">
-            <img :src="itom.pic">
+            <img :src="item.image">
             <div style="text-align:left">
-              <span>{{itom.name}}</span>
+              <span>{{item.doctorName}}</span>
               <br>
               <span>职称：</span>
-              {{itom.level}}
+              {{item.ranks}}
               <br>
               <span>科室：</span>
-              {{itom.room}}
+              {{item.keShi}}
             </div>
           </div>
-          <div style="text-align:left;margin-top:15px">
+          <div style="text-align:left;margin-top:15px;">
             <span>简介：</span>
-            <p>{{itom.desc}}</p>
+            <p>{{item.resume}}</p>
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@
 import menuNav from "@/components/menuNav.vue";
 import Footer from "@/components/Footer.vue";
 
-import { video, news, ming, room } from "@/api/api";
+import { video, news, ming, room, doctor } from "@/api/api";
 
 export default {
   data() {
@@ -131,71 +131,33 @@ export default {
           url: require("../assets/a4.jpg")
         }
       ],
-      imgaList: [
-        {
-          url: require("../assets/a5.jpg"),
-          name:
-            "第一医学中心普通外科成功举办第三届3D腹腔镜胃肠癌手术演示会暨腹腔镜手术前沿技术高级研讨会"
-        },
-        {
-          url: require("../assets/a6.jpg"),
-          name: "第五届“301论健”隆重召开"
-        },
-        {
-          url: require("../assets/a7.jpg"),
-          name: "为治愈肾病，她追梦四十年"
-        }
-      ],
+      imgaList: [],
       newsList: [],
-      roomList: [],
-      mingList: [],
-      docList: [
+      roomList: [
         {
-          pic:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2617758923,3715511605&fm=26&gp=0.jpg",
-          name: "王大大",
-          level: "主任医师",
-          room: "内科",
-          desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+          name: "内科",
+          id: 1,
+          isShow: false
         },
         {
-          pic:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2082650960,1060844831&fm=26&gp=0.jpg",
-          name: "张天",
-          level: "副主任医师",
-          room: "内科",
-          desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+          name: "外科",
+          isShow: false,
+          id: 2
         },
         {
-          pic:
-            "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2117666733,1868760746&fm=26&gp=0.jpg",
-          name: "李天",
-          level: "主任医师",
-          room: "内科",
-          desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+          name: "医技",
+          isShow: false,
+          id: 3
         },
         {
-          pic:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2617758923,3715511605&fm=26&gp=0.jpg",
-          name: "任然",
-          level: "主任医师",
-          room: "专科",
-          desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
-        },
-        {
-          pic:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2617758923,3715511605&fm=26&gp=0.jpg",
-          name: "王大大",
-          level: "主任医师",
-          room: "专科",
-          desc:
-            "医学博士，山东大学教授、博士研究生导师，副主任。主要从事临床免疫学和疾病相关基因研究，近年来作为项目(课题)负责人承担和完成国家“ 863 ”计划1项目、“973”计划子课题2项、国家科技支撑计划1项"
+          name: "其他",
+          isShow: false,
+          id: 4
         }
       ],
+      subList: [],
+      mingList: [],
+      docList: [],
       healtList: []
     };
   },
@@ -204,9 +166,40 @@ export default {
     Footer
   },
   methods: {
+    getImage() {
+      let newInfo = {
+        newsId: "",
+        title: "",
+        author: "",
+        content: ""
+      };
+      news(newInfo).then(res => {
+        res.result[0].content.forEach(ele => {
+          ele.image = ele.image.split("||")[0];
+        });
+        this.imgaList = res.result[0].content;
+      });
+    },
+    getDoctor() {
+      let doctorInfo = {
+        doctorName: "",
+        department: "",
+        keShi: "",
+        ranks: ""
+      };
+      doctor(doctorInfo).then(res => {
+        this.docList = res.result[0].content;
+      });
+    },
     getRoom() {
-      room().then(res => {
-        this.roomList = res.data.roomList;
+      let roomInfo = {
+        keShiName: "",
+        department: "",
+        keShiId: "",
+        info: ""
+      };
+      room(roomInfo).then(res => {
+        this.subList = res.result[0].content;
         this.roomList[0].isShow = true;
       });
     },
@@ -241,8 +234,23 @@ export default {
     toNewsDetail(item) {
       this.$router.push({ path: "/detail", query: { newId: item.newsId } });
     },
+    toImgdetail(item) {
+      this.$router.push({ path: "/detail", query: { newId: item.newsId } });
+    },
+    toRoomdetail(keshi) {
+      this.$router.push({
+        path: "/roomdetail",
+        query: { newId: keshi.keShiId }
+      });
+    },
+    toProdetail(zhuanjia){
+      this.$router.push({
+        path: "/prodetail",
+        query: { newId: zhuanjia.doctorId }
+      });
+    },
     showSub(id) {
-      console.log(id);
+      // console.log(id);
       this.roomList.forEach(i => {
         i.isShow = false;
       });
@@ -262,6 +270,8 @@ export default {
     this.getNews();
     this.getMing();
     this.getRoom();
+    this.getDoctor();
+    this.getImage();
 
     // this.roomList[0].isShow = true;
   }
@@ -326,30 +336,31 @@ a {
   margin-left: 30px;
   text-align: left;
   line-height: 20px;
+  display: flex;
 }
 .news-name {
-  border-bottom: #ded6d685 0.8px solid;
+  // border-bottom: #ded6d685 0.8px solid;
   padding-bottom: 5px;
-  div {
-    border-left: 10px solid rgba(0, 0, 0, 0.3);
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-    width: 0px;
-    height: 0px;
-    position: relative;
-    display: inline-block;
-  }
-  div:before {
-    border-left: 10px solid #fff;
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-    width: 0px;
-    height: 0px;
-    content: " ";
-    position: absolute;
-    left: -11px;
-    top: -7px;
-  }
+}
+.news-left {
+  border-left: 10px solid rgba(0, 0, 0, 0.3);
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  width: 0px;
+  height: 0px;
+  position: relative;
+  display: inline-block;
+}
+.news-left:before {
+  border-left: 10px solid #fff;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  width: 0px;
+  height: 0px;
+  content: " ";
+  position: absolute;
+  left: -11px;
+  top: -7px;
 }
 .navi {
   border-radius: 3px;
@@ -523,7 +534,7 @@ a {
   min-height: 36px;
 }
 .zhuanjia-content {
-  margin: 50px 0;
+  // margin: 50px 0;
   padding-bottom: 15px;
   width: 100%;
   white-space: nowrap;
@@ -532,11 +543,13 @@ a {
 }
 .zhuanjia-item {
   width: 350px;
+  height: 325px;
   padding: 10px;
   display: block;
   padding: 20px 20px;
   box-sizing: border-box;
   margin: 0 20px;
+  overflow: hidden;
   border: 1px solid #ddd;
   background: #fff;
   display: inline-block;
@@ -551,7 +564,7 @@ a {
   }
   img {
     width: 120px;
-    height: 120px;
+    height: 160px;
     margin-right: 10px;
   }
 }

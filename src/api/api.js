@@ -15,34 +15,66 @@ export const register = (info) => {
     url: `/userLoginRegister?userName=${info.userName}&password=${info.password}&password2=${info.password2}`
   })
 }
-// export const article = (newsInfo) => {
-//   return axios.request({
-//     method: 'get',
-//     url: `/userLoginVerify/getArticle/0/2?articleId=${newsInfo.articleId}&title&author=${newsInfo.author}&type`
-//   })
-// }
-
-  export const news = (newInfo) => {
-    return axios.request({
-      method: 'get',
-      url: `/adminLoginVerify/getNews/0/5?newsId=${newInfo.newsId}&title=${newInfo.title}&author=${newInfo.author}&content=${newInfo.content}`,
-      // data: new URLSearchParams(newInfo)
-    })
-  }
-  export const detail = (detailInfo) => {
-    return axios.request({
-      method: 'get',
-      url: `/adminLoginVerify/news/newsId=${detailInfo.newsId}`,
-    })
-  }
-
+export const article = (articleInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/userLoginVerify/getArticle/0/15?articleId=${articleInfo.articleId}&title=${articleInfo.title}&author=${articleInfo.author}&type=${articleInfo.type}`
+  })
+}
+export const artdetail = (articleInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/userLoginVerify/article/${articleInfo.articleId}`
+  })
+}
+export const news = (newInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/adminLoginVerify/getNews/0/5?newsId=${newInfo.newsId}&title=${newInfo.title}&author=${newInfo.author}&content=${newInfo.content}`,
+  })
+}
+export const xinwen = (newInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/adminLoginVerify/getNews/0/15?newsId=${newInfo.newsId}&title=${newInfo.title}&author=${newInfo.author}&content=${newInfo.content}`,
+  })
+}
+export const detail = (detailInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/adminLoginVerify/news/${detailInfo.newsId}`,
+  })
+}
+export const doctor = (doctorInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/userLoginVerify/getDoctor/0/10?doctorName=${doctorInfo.doctorName}&department=${doctorInfo.department}&keShi=${doctorInfo.keShi}&ranks=${doctorInfo.ranks}`,
+  })
+}
+export const doctordetail = (doctorInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/doctorLoginVerify/doctor/${doctorInfo.doctorId}`,
+  })
+}
+export const room = (roomInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/userLoginVerify/getKeShi/0/20?department=${roomInfo.department}`,
+  })
+}
+export const roomdetail = (roomInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/userLoginVerify/keShi/${roomInfo.keShiId}`,
+  })
+}
 export const video = () => {
   return Mock.request({
     method: 'get',
     url: `/video`
   })
 }
-
 export const hos = () => {
   return Mock.request({
     method: 'get',
@@ -61,17 +93,9 @@ export const know = () => {
     url: `/know`
   })
 }
-
 export const ming = () => {
   return Mock.request({
     method: 'get',
     url: `/ming`
-  })
-}
-
-export const room = () => {
-  return Mock.request({
-    method: 'get',
-    url: `/room`
   })
 }
