@@ -23,11 +23,11 @@
             @click="changeType('Doctor')"
             :class="type=='Doctor'?'is-on':''"
           >医生管理</div>
-          <div
+          <!-- <div
             class="item-control"
             @click="changeType('Department')"
             :class="type=='Department'?'is-on':''"
-          >科室管理</div>
+          >科室管理</div>-->
           <div
             class="item-control"
             @click="changeType('News')"
@@ -52,7 +52,7 @@
           </div>-->
           <!-- 用户 -->
           <div v-if="type == 'User'">
-            <el-table :data="tableData1" style="width: 100%" height="650" border>
+            <el-table :data="tableData1" style="width: 100%" border>
               <el-table-column prop="userName" label="用户名"></el-table-column>
               <el-table-column prop="tel" label="手机号"></el-table-column>
               <el-table-column prop="balance" label="余额" width="120"></el-table-column>
@@ -75,64 +75,18 @@
           </div>
           <!-- 医生 -->
           <div v-if="type === 'Doctor'">
-            <el-button @click="showAdd=true" type="primary" icon="el-icon-plus" circle style="float:right"></el-button>
-            <el-form ref="form" :model="from" label-width="80px" v-if="showAdd">
-              <el-form-item label="医生名字">
-                <el-input v-model="from.doctorName"></el-input>
-              </el-form-item>
-              <el-form-item label="职称">
-                <el-select v-model="from.ranks" placeholder="请选择">
-                  <el-option label="主任医师" value="主任医师"></el-option>
-                  <el-option label="副主任医师" value="副主任医师"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="主科室">
-                <el-select v-model="from.department" placeholder="请选择" size="mini">
-                  <el-option label="内科" value="内科"></el-option>
-                  <el-option label="外科" value="外科"></el-option>
-                  <el-option label="医技" value="医技"></el-option>
-                  <el-option label="其他" value="其他"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="分科室">
-                <el-select v-model="from.keShi" placeholder="请选择" size="mini">
-                  <div v-if="from.department=='内科'">
-                    <el-option label="消化内科" value="消化内科"></el-option>
-                    <el-option label="肾脏病科" value="肾脏病科"></el-option>
-                    <el-option label="肿瘤科" value="肿瘤科"></el-option>
-                    <el-option label="呼吸内科" value="呼吸内科"></el-option>
-                    <el-option label="内分泌科" value="内分泌科"></el-option>
-                    <el-option label="神经内科" value="神经内科"></el-option>
-                  </div>
-                  <div v-if="from.department=='外科'">
-                    <el-option label="肝胆病科" value="肝胆病科"></el-option>
-                    <el-option label="耳鼻喉科" value="耳鼻喉科"></el-option>
-                    <el-option label="胃肠病科" value="胃肠病科"></el-option>
-                    <el-option label="皮肤科" value="皮肤科"></el-option>
-                    <el-option label="骨科" value="骨科"></el-option>
-                    <el-option label="泌尿外科" value="泌尿外科"></el-option>
-                    <el-option label="神经外科" value="神经外科"></el-option>
-                  </div>
-                  <div v-if="from.department=='医技'">
-                    <el-option label="麻醉科" value="麻醉科"></el-option>
-                    <el-option label="核医学科" value="核医学科"></el-option>
-                  </div>
-                  <div v-if="from.department=='其他'">
-                    <el-option label="急诊科" value="急诊科"></el-option>
-                    <el-option label="病理科" value="病理科"></el-option>
-                  </div>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="简介">
-                <el-input type="textarea" v-model="from.resume"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="upDoctor(1,from,'添加')">立即创建</el-button>
-                <el-button @click="showAdd=false">取消</el-button>
-              </el-form-item>
-            </el-form>
-            <el-table :data="tableData2" style="width: 100%" ref="filterTable">
+            <el-button
+              @click="showAdd=true"
+              type="primary"
+              icon="el-icon-plus"
+              circle
+              style="float:right"
+            ></el-button>
+            <!-- // 添加 -->
+            <addForm :showAdd="showAdd" @cancelAdd="changeShow" @toUP="upDoctor"></addForm>
+            <el-table :data="tableData2" style="width: 100%">
               <el-table-column type="expand" key="doctor1" v-if="type == 'Doctor'">
+                <!-- 扩展信息 -->
                 <template slot-scope="props">
                   <el-button
                     @click="props.row.isEdit=!props.row.isEdit"
@@ -196,7 +150,6 @@
                         </div>
                       </el-select>
                     </el-form-item>
-
                     <el-form-item label="简介：">
                       <p v-if="!props.row.isEdit" style="width:800px">{{ props.row.resume }}</p>
                       <el-input
@@ -233,59 +186,121 @@
               <el-table-column prop="ordersNum" label="预约数" sortable></el-table-column>
               <el-table-column prop="price" label="门诊费" sortable></el-table-column>
               <el-table-column label="操作" v-if="type == 'Doctor'" key="doctor">
-                <!-- 用户密码重置 -->
+                <!-- 操作 -->
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
                     type="danger"
                     @click="delDoctor(scope.$index, scope.row)"
-                  >删除医生</el-button>
+                  >删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
           <!-- 科室 -->
-          <div v-if="type === 'Department'">
-            <el-table :data="tableData" style="width: 100%" height="650" border>
+          <!-- <div v-if="type === 'Department'">
+            <el-button
+              @click="showAdd=true"
+              type="primary"
+              icon="el-icon-plus"
+              circle
+              style="float:right"
+            ></el-button>
+       
+            <addForm :showAdd="showAdd" @cancelAdd="changeShow" @toUP="upDoctor"></addForm>
+            <el-table :data="tableData" style="width: 100%" height="650">
               <el-table-column prop="departme" label="主科室"></el-table-column>
               <el-table-column prop="keShiName" label="分科室"></el-table-column>
               <el-table-column prop="info" label="简介"></el-table-column>
             </el-table>
-          </div>
+          </div>-->
           <!-- 新闻 -->
           <div v-if="type === 'News'">
-            <el-table :data="tableData" style="width: 100%" height="650" border>
+            <el-button
+              @click="showAdd=true"
+              type="primary"
+              icon="el-icon-plus"
+              circle
+              style="float:right"
+            ></el-button>
+            <newsForm
+              :showAdd="showAdd"
+              :form="addContent"
+              :hasType="false"
+              @cancelAdd="changeShow"
+              @toUP="upNews"
+            ></newsForm>
+            <el-table :data="tableData" style="width: 100%" height="650">
               <el-table-column prop="title" label="标题"></el-table-column>
-              <el-table-column label="创建时间" v-if="type === 'News'" key="news">
+              <el-table-column label="创建时间" v-if="type === 'News'" key="news1" sortable>
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
                   <span style="margin-left: 10px">{{ scope.row.createTime }}</span>
                 </template>
               </el-table-column>
               <el-table-column prop="author" label="来源"></el-table-column>
-              <el-table-column prop="content" label="内容"></el-table-column>
+              <el-table-column prop="content" label="内容" :formatter="formatterContent"></el-table-column>
+              <el-table-column label="操作" v-if="type == 'News'" key="news2">
+                <!-- 操作 -->
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="showEdit=true">编辑</el-button>
+                  <el-button size="mini" type="danger" @click="delNews(scope.$index, scope.row)">删除</el-button>
+                  <newsForm
+                    :showAdd="showEdit"
+                    :form="scope.row"
+                    :hasType="false"
+                    @cancelAdd="changeShow"
+                    @toUP="upNews"
+                  ></newsForm>
+                </template>
+              </el-table-column>
             </el-table>
           </div>
           <!-- 文章 -->
           <div v-if="type === 'Article'">
-            <el-table
-              :data="tableData"
-              style="width: 100%"
-              height="650"
-              fit
-              border
-              :default-sort="{prop: 'date', order: 'descending'}"
-            >
+            <el-button
+              @click="showAdd=true"
+              type="primary"
+              icon="el-icon-plus"
+              circle
+              style="float:right"
+            ></el-button>
+            <newsForm
+              :showAdd="showAdd"
+              :form="addContent"
+              :hasType="false"
+              @cancelAdd="changeShow"
+              @toUP="upNews"
+            ></newsForm>
+            <el-table :data="tableData" style="width: 100%" height="650">
               <el-table-column prop="title" label="标题"></el-table-column>
-              <el-table-column label="创建时间" v-if="type=='Article'" key="article">
+              <el-table-column label="创建时间" v-if="type=='Article'" key="article1" sortable>
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
                   <span style="margin-left: 10px">{{ scope.row.createTime }}</span>
                 </template>
               </el-table-column>
               <el-table-column prop="author" label="来源"></el-table-column>
-              <el-table-column prop="content" label="类型"></el-table-column>
-              <el-table-column prop="content" label="内容"></el-table-column>
+              <el-table-column prop="type" label="类型"></el-table-column>
+              <el-table-column prop="content" label="内容" :formatter="formatterContent"></el-table-column>
+              <el-table-column label="操作" v-if="type == 'Article'" key="article2">
+                <!-- 操作 -->
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="showAdd=true">编辑</el-button>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="delArticle(scope.$index, scope.row)"
+                  >删除</el-button>
+                  <newsForm
+                    :showAdd="showEdit"
+                    :form="scope.row"
+                    :hasType="true"
+                    @cancelAdd="changeShow"
+                    @toUP="upArticle"
+                  ></newsForm>
+                </template>
+              </el-table-column>
             </el-table>
           </div>
           <!-- 预约统计 -->
@@ -293,14 +308,11 @@
             <el-table
               :data="tableData"
               style="width: 100%"
-              height="650"
-              fit
               border
-              :default-sort="{prop: 'date', order: 'descending'}"
             >
               <el-table-column prop="doctorName" label="医生名字"></el-table-column>
               <el-table-column prop="userName" label="用户名"></el-table-column>
-              <el-table-column label="创建时间" v-if="type=='Orders'" key="orders">
+              <el-table-column label="创建时间" v-if="type=='Orders'" key="orders1">
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
                   <span style="margin-left: 10px">{{ scope.row.createTime }}</span>
@@ -343,10 +355,17 @@ import {
   findDepartment
 } from "@/api/admin";
 import axios from "axios";
+import addForm from "@/components/addForm";
+import newsForm from "@/components/newsForm";
 
 export default {
+  components: {
+    addForm,
+    newsForm
+  },
   data() {
     return {
+      addContent: { title: "", author: "", type: "", content: "" },
       //用户模拟
       tableData1: [
         {
@@ -430,47 +449,58 @@ export default {
           doctorId: 4
         }
       ],
-      // 科室模拟
+      // 新闻模拟
+      // createTime: "2018-05-19",
+      //         title: "fem,omgzo",
+      //         author: "zzz",
+      //         content:
+      //           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      //         type: "科训动态"
       tableData: [
         {
-          departme: "mingzi",
-          keShiName: "fem,omgzo",
-          info:
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          createTime: "2018-05-19",
+          doctorName: "医生",
+          userName: "zzz",
+          price: "50",
+          tel: "178"
         },
         {
-          departme: "mingzi",
-          keShiName: "fem,omgzo",
-          info:
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          createTime: "2018-05-19",
+          doctorName: "医生",
+          userName: "zzz",
+          price: "50",
+          tel: "178"
         },
         {
-          departme: "mingzi",
-          keShiName: "fem,omgzo",
-          info:
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          createTime: "2018-05-19",
+          doctorName: "医生",
+          userName: "zzz",
+          price: "50",
+          tel: "178"
         },
         {
-          departme: "mingzi",
-          keShiName: "fem,omgzo",
-          info:
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          createTime: "2018-05-19",
+          doctorName: "医生",
+          userName: "zzz",
+          price: "50",
+          tel: "178"
         }
       ],
-      type: "Department",
+      type: "Orders",
       showAdd: false,
-      from: {
-        doctorName: "",
-        password: "",
-        keShi: "",
-        department: "",
-        resume: "",
-        ranks: "",
-        ordersNum: "",
-        price: "",
-        image: "",
-        isEdit: false
-      }
+      showEdit: false
+      // from: {
+      //   doctorName: "",
+      //   password: "",
+      //   keShi: "",
+      //   department: "",
+      //   resume: "",
+      //   ranks: "",
+      //   ordersNum: "",
+      //   price: "",
+      //   image: "",
+      //   isEdit: false
+      // }
     };
   },
   methods: {
@@ -479,9 +509,9 @@ export default {
       const property = column["property"];
       return row[property] === value;
     },
-    // formatter(row, column) {
-    //   return row.resume.substring(0, 6) + "...";
-    // },
+    formatterContent(row, column) {
+      return row.content.substring(0, 10) + "...";
+    },
     // 切换
     changeType(type) {
       this.type = type;
@@ -499,6 +529,11 @@ export default {
       //   this.getOrders();
       // }
     },
+    // dialog
+    changeShow(e) {
+      this.showAdd = e;
+      this.showEdit = e;
+    },
     // 登录登出
     toLoginOut() {
       this.$confirm("确认退出登录?", "提示", {
@@ -510,12 +545,13 @@ export default {
         this.$router.push("./");
       });
     },
-    getAdmin() {
-      findAdmin(0, 20, 1).then(res => {
-        this.tableData = res.result[0].content;
-      });
-    },
+    // getAdmin() {
+    //   findAdmin(0, 20, 1).then(res => {
+    //     this.tableData = res.result[0].content;
+    //   });
+    // },
     // 接口
+
     getUser() {
       findUser(0, 20).then(res => {
         this.tableData = res.result[0].content;
@@ -621,7 +657,6 @@ export default {
         row.price == "30";
       }
       console.log(row);
-
       this.$confirm("确认" + text + "医生信息?", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确定",
@@ -652,14 +687,14 @@ export default {
           row.isEdit = false;
         });
     },
-    getDepartment() {
-      findDepartment(0, 20).then(res => {
-        this.tableData = res.result[0].content;
-        this.tableData.forEach(item => {
-          item.info = item.info.substring(0, 20) + "...";
-        });
-      });
-    },
+    // getDepartment() {
+    //   findDepartment(0, 20).then(res => {
+    //     this.tableData = res.result[0].content;
+    //     this.tableData.forEach(item => {
+    //       item.info = item.info.substring(0, 20) + "...";
+    //     });
+    //   });
+    // },
     getNews() {
       findNews(0, 20).then(res => {
         this.tableData = res.result[0].content;
@@ -668,12 +703,81 @@ export default {
         });
       });
     },
+    upNews(row) {
+      console.log(row);
+      this.changeShow(false);
+      (this.addContent = { title: "", author: "", type: "", content: "" }),
+        // author, title, content
+        updateNews(row.author, row.title, row.content).then(res => {});
+    },
+    delNews(index, row) {
+      this.$confirm("确认删除?", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        delNews(row.newsId)
+          .then(res => {
+            if (res.code == 200) {
+              // this.tableData.shift();
+              // 友好，扩展
+              this.getNews();
+              this.$message({
+                message: res.message,
+                type: "success"
+              });
+            }
+          })
+          .catch(err => {
+            this.$message({
+              message: err.message,
+              type: "error"
+            });
+          });
+      });
+    },
     getArticle() {
       findArticle(0, 20).then(res => {
         this.tableData = res.result[0].content;
         this.tableData.forEach(item => {
           item.content = item.content.substring(0, 20) + "...";
         });
+      });
+    },
+    upArticle(row) {
+      console.log(row);
+      this.changeShow();
+      //author, title, content, type
+      updateArticle(row.author, row.title, row.content, row.type).then(
+        res => {}
+      );
+    },
+    delArticle(index, row) {
+      this.$confirm("确认删除?", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        delArticle(row.articleId)
+          .then(res => {
+            if (res.code == 200) {
+              // this.tableData.shift();
+              // 友好，扩展
+              this.getArticle();
+              this.$message({
+                message: res.message,
+                type: "success"
+              });
+            }
+          })
+          .catch(err => {
+            this.$message({
+              message: err.message,
+              type: "error"
+            });
+          });
       });
     },
     getOrders() {
