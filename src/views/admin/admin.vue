@@ -353,6 +353,7 @@ export default {
     // 切换
     changeType(type) {
       this.type = type;
+      this.changeShow(false);
       if (type == "User") {
         this.getUser();
       } else if (type == "Doctor") {
@@ -495,6 +496,7 @@ export default {
         row.price == "30";
       }
       console.log(row);
+      this.changeShow(false)
       this.$confirm("确认" + text + "医生信息?", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确定",
