@@ -63,7 +63,7 @@ export const findDoctor = (pageNum, pageSize) => {
 export const delDoctor = doctorId => {
   return axios.request({
     method: 'get',
-    url: `/userLoginVerify/doctor/delete/${doctorId}`
+    url: `/doctorLoginVerify/doctor/delete/${doctorId}`
   })
 }
 // 修改医生信息

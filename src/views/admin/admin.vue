@@ -395,7 +395,14 @@ export default {
           cancelButtonText: "取消",
           inputPattern: /\d/
         }).then(({ value }) => {
-          updateUser(info.userId, "", "", "", value).then(
+          // userId，password，tel，info，balance
+          updateUser(
+            info.userId,
+            info.password,
+            info.tel,
+            info.info,
+            value
+          ).then(
             res => {
               if (res.code == 200) {
                 // 友好
