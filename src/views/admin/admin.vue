@@ -12,7 +12,6 @@
       <el-row>
         <!-- 左侧选择栏 -->
         <el-col :span="4">
-          <!-- <div class="item-control" @click="changeType('Admin')" :class="type=='Admin'?'is-on':''">管理员管理</div> -->
           <div
             class="item-control"
             @click="changeType('User')"
@@ -23,11 +22,6 @@
             @click="changeType('Doctor')"
             :class="type=='Doctor'?'is-on':''"
           >医生管理</div>
-          <!-- <div
-            class="item-control"
-            @click="changeType('Department')"
-            :class="type=='Department'?'is-on':''"
-          >科室管理</div>-->
           <div
             class="item-control"
             @click="changeType('News')"
@@ -46,13 +40,9 @@
         </el-col>
         <!-- 右侧表格 -->
         <el-col :span="20" class="navi">
-          <!-- 管理员 -->
-          <!-- <div v-if="type == 'Admin'">
-              <el-table-column prop="adminName" label="管理员名"></el-table-column>
-          </div>-->
           <!-- 用户 -->
           <div v-if="type == 'User'">
-            <el-table :data="tableData1" style="width: 100%" border>
+            <el-table :data="tableData" style="width: 100%" border>
               <el-table-column prop="userName" label="用户名"></el-table-column>
               <el-table-column prop="tel" label="手机号"></el-table-column>
               <el-table-column prop="balance" label="余额" width="120"></el-table-column>
@@ -82,9 +72,9 @@
               circle
               style="float:right"
             ></el-button>
-            <!-- // 添加 -->
+            <!-- 添加 -->
             <addForm :showAdd="showAdd" @cancelAdd="changeShow" @toUP="upDoctor"></addForm>
-            <el-table :data="tableData2" style="width: 100%">
+            <el-table :data="tableData" style="width: 100%">
               <el-table-column type="expand" key="doctor1" v-if="type == 'Doctor'">
                 <!-- 扩展信息 -->
                 <template slot-scope="props">
@@ -197,23 +187,6 @@
               </el-table-column>
             </el-table>
           </div>
-          <!-- 科室 -->
-          <!-- <div v-if="type === 'Department'">
-            <el-button
-              @click="showAdd=true"
-              type="primary"
-              icon="el-icon-plus"
-              circle
-              style="float:right"
-            ></el-button>
-       
-            <addForm :showAdd="showAdd" @cancelAdd="changeShow" @toUP="upDoctor"></addForm>
-            <el-table :data="tableData" style="width: 100%" height="650">
-              <el-table-column prop="departme" label="主科室"></el-table-column>
-              <el-table-column prop="keShiName" label="分科室"></el-table-column>
-              <el-table-column prop="info" label="简介"></el-table-column>
-            </el-table>
-          </div>-->
           <!-- 新闻 -->
           <div v-if="type === 'News'">
             <el-button
@@ -305,11 +278,7 @@
           </div>
           <!-- 预约统计 -->
           <div v-if="type === 'Orders'">
-            <el-table
-              :data="tableData"
-              style="width: 100%"
-              border
-            >
+            <el-table :data="tableData" style="width: 100%" border>
               <el-table-column prop="doctorName" label="医生名字"></el-table-column>
               <el-table-column prop="userName" label="用户名"></el-table-column>
               <el-table-column label="创建时间" v-if="type=='Orders'" key="orders1">
@@ -366,141 +335,10 @@ export default {
   data() {
     return {
       addContent: { title: "", author: "", type: "", content: "" },
-      //用户模拟
-      tableData1: [
-        {
-          userName: "zhaa",
-          tel: "ddd",
-          balance: "40"
-        },
-        {
-          userName: "sddd",
-          tel: "8888",
-          balance: "30"
-        },
-        {
-          userName: "www",
-          tel: "ffff",
-          balance: "20"
-        },
-        {
-          userName: "fgg",
-          tel: "sss",
-          balance: "10"
-        }
-      ],
-      //医生模拟
-      tableData2: [
-        {
-          doctorName: "1",
-          password: "2",
-          keShi: "2",
-          department: "外科",
-          resume:
-            "好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字好多字",
-          ranks: "主任医师",
-          ordersNum: "s",
-          price: "2",
-          image:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=530763801,912059783&fm=27&gp=0.jpg",
-          isEdit: false,
-          doctorId: 1
-        },
-        {
-          doctorName: "a",
-          password: "1",
-          keShi: "2",
-          department: "内科",
-          resume: "好多字好多字好多字好多字好多字",
-          ranks: "主任医师",
-          ordersNum: "2",
-          price: "3",
-          image:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=530763801,912059783&fm=27&gp=0.jpg",
-          isEdit: false,
-          doctorId: 2
-        },
-        {
-          doctorName: "a",
-          password: "1",
-          keShi: "2",
-          department: "其他",
-          resume: "好多字好多字好多字好多字好多字",
-          ranks: "副主任医师",
-          ordersNum: "1",
-          price: "1",
-          image:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=530763801,912059783&fm=27&gp=0.jpg",
-          isEdit: false,
-          doctorId: 3
-        },
-        {
-          doctorName: "a",
-          password: "1",
-          keShi: "2",
-          department: "外科",
-          resume: "好多字好多字好多字好多字好多字",
-          ranks: "主任医师",
-          ordersNum: "6",
-          price: "7",
-          image:
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=530763801,912059783&fm=27&gp=0.jpg",
-          isEdit: false,
-          doctorId: 4
-        }
-      ],
-      // 新闻模拟
-      // createTime: "2018-05-19",
-      //         title: "fem,omgzo",
-      //         author: "zzz",
-      //         content:
-      //           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      //         type: "科训动态"
-      tableData: [
-        {
-          createTime: "2018-05-19",
-          doctorName: "医生",
-          userName: "zzz",
-          price: "50",
-          tel: "178"
-        },
-        {
-          createTime: "2018-05-19",
-          doctorName: "医生",
-          userName: "zzz",
-          price: "50",
-          tel: "178"
-        },
-        {
-          createTime: "2018-05-19",
-          doctorName: "医生",
-          userName: "zzz",
-          price: "50",
-          tel: "178"
-        },
-        {
-          createTime: "2018-05-19",
-          doctorName: "医生",
-          userName: "zzz",
-          price: "50",
-          tel: "178"
-        }
-      ],
+      tableData: [],
       type: "Orders",
       showAdd: false,
       showEdit: false
-      // from: {
-      //   doctorName: "",
-      //   password: "",
-      //   keShi: "",
-      //   department: "",
-      //   resume: "",
-      //   ranks: "",
-      //   ordersNum: "",
-      //   price: "",
-      //   image: "",
-      //   isEdit: false
-      // }
     };
   },
   methods: {
@@ -515,19 +353,17 @@ export default {
     // 切换
     changeType(type) {
       this.type = type;
-      // if (type == "User") {
-      //   this.getUser();
-      // } else if (type == "Doctor") {
-      //   this.getDoctor();
-      // } else if (type == "Department") {
-      //   this.getDepartment();
-      // } else if (type == "News") {
-      //   this.getNews();
-      // } else if (type == "Article") {
-      //   this.getArticle();
-      // } else if (type == "Orders") {
-      //   this.getOrders();
-      // }
+      if (type == "User") {
+        this.getUser();
+      } else if (type == "Doctor") {
+        this.getDoctor();
+      } else if (type == "News") {
+        this.getNews();
+      } else if (type == "Article") {
+        this.getArticle();
+      } else if (type == "Orders") {
+        this.getOrders();
+      }
     },
     // dialog
     changeShow(e) {
@@ -545,13 +381,8 @@ export default {
         this.$router.push("./");
       });
     },
-    // getAdmin() {
-    //   findAdmin(0, 20, 1).then(res => {
-    //     this.tableData = res.result[0].content;
-    //   });
-    // },
     // 接口
-
+    // 未完善添加和修改的展示信息
     getUser() {
       findUser(0, 20).then(res => {
         this.tableData = res.result[0].content;
@@ -567,6 +398,7 @@ export default {
           updateUser(info.userId, "", "", "", value).then(
             res => {
               if (res.code == 200) {
+                // 友好
                 this.getUser();
                 this.$message({
                   type: "success",
@@ -618,7 +450,6 @@ export default {
       findDoctor(0, 20).then(res => {
         this.tableData = res.result[0].content;
         this.tableData.forEach(item => {
-          item.resume = item.resume.substring(0, 20) + "...";
           item.isEdit = false;
         });
       });
@@ -687,20 +518,9 @@ export default {
           row.isEdit = false;
         });
     },
-    // getDepartment() {
-    //   findDepartment(0, 20).then(res => {
-    //     this.tableData = res.result[0].content;
-    //     this.tableData.forEach(item => {
-    //       item.info = item.info.substring(0, 20) + "...";
-    //     });
-    //   });
-    // },
     getNews() {
       findNews(0, 20).then(res => {
         this.tableData = res.result[0].content;
-        this.tableData.forEach(item => {
-          item.content = item.content.substring(0, 20) + "...";
-        });
       });
     },
     upNews(row) {
@@ -721,7 +541,7 @@ export default {
           .then(res => {
             if (res.code == 200) {
               // this.tableData.shift();
-              // 友好，扩展
+              // 友好
               this.getNews();
               this.$message({
                 message: res.message,
@@ -740,14 +560,11 @@ export default {
     getArticle() {
       findArticle(0, 20).then(res => {
         this.tableData = res.result[0].content;
-        this.tableData.forEach(item => {
-          item.content = item.content.substring(0, 20) + "...";
-        });
       });
     },
     upArticle(row) {
       console.log(row);
-      this.changeShow();
+      this.changeShow(false);
       //author, title, content, type
       updateArticle(row.author, row.title, row.content, row.type).then(
         res => {}
@@ -783,12 +600,13 @@ export default {
     getOrders() {
       findOrders(0, 20).then(res => {
         this.tableData = res.result[0].content;
+        // 不显示第一项
         this.tableData.shift();
       });
     }
   },
   created() {
-    // this.getUser();
+    this.getUser();
   }
 };
 </script>
