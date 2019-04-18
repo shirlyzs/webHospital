@@ -41,7 +41,7 @@ export default {
       type: Boolean,
       required: true
     },
-    form2: {
+    form: {
       type: Object,
       required: true
     },
@@ -53,7 +53,6 @@ export default {
   data() {
     return {
       no: false,
-      form: {},
       newAuthor: [
         '科训科',
         '骨科',
@@ -91,7 +90,6 @@ export default {
   },
   watch: {
     showAdd() {
-      this.form = this.form2
       console.log(this.form, 'watch')
     }
   }

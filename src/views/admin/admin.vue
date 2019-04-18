@@ -41,12 +41,13 @@
             <el-button @click="showAdd=true" type="primary" icon="el-icon-plus" circle style="float:right"></el-button>
             <!-- 添加 -->
             <addForm :showAdd="showAdd" @cancelAdd="changeShow(false)" @toUP="upDoctor"></addForm>
+            <!-- :expand-row-keys="editRow" :row-key="getRow"  -->
             <el-table :data="tableData" style="width: 100%" height="650">
               <el-table-column type="expand" key="doctor1" v-if="type == 'Doctor'">
                 <!-- 扩展信息 -->
                 <template slot-scope="props">
-                  <el-button @click="doctorShow(props.$index,props.row)" type="primary">{{props.row.isEdit?'取消':'编辑'}}</el-button>
-                  <el-button @click="upDoctor(props.$index,props.row,'修改')" v-if="props.row.isEdit" type="success">保存</el-button>
+                  <!-- <el-button @click="doctorShow(props.$index,props.row)" type="primary">{{props.row.isEdit?'取消':'编辑'}}</el-button>
+                  <el-button @click="upDoctor(props.$index,props.row,'修改')" v-if="props.row.isEdit" type="success">保存</el-button> -->
                   <el-form label-position="left" inline class="demo-table-expand">
                     <el-form-item label="职称：">
                       <span v-if="!props.row.isEdit">{{ props.row.ranks }}</span>
@@ -110,6 +111,8 @@
               <el-table-column label="操作" v-if="type == 'Doctor'" key="doctor">
                 <!-- 操作 -->
                 <template slot-scope="scope">
+                  <!-- <el-button @click="doctorShow(scope.$index,scope.row)" type="primary" size="mini">{{scope.row.isEdit?'取消':'编辑'}}</el-button>
+                  <el-button @click="upDoctor(scope.$index,scope.row,'修改')" size="mini" v-if="scope.row.isEdit" type="success">保存</el-button> -->
                   <el-button size="mini" type="danger" @click="delDoctor(scope.$index, scope.row)">删除</el-button>
                 </template>
               </el-table-column>
@@ -118,7 +121,7 @@
           <!-- 新闻 -->
           <div v-if="type === 'News'">
             <el-button @click.self="showAdd=true" type="primary" icon="el-icon-plus" circle style="float:right"></el-button>
-            <newsForm :showAdd="showAdd" :form2=" { title: '', author: '', type: '', content: '' }" :hasType="false" @cancelAdd="changeShow" @toUP="upNews"></newsForm>
+            <newsForm :showAdd="showAdd" :form="addContent" :hasType="false" @cancelAdd="changeShow" @toUP="upNews"></newsForm>
             <el-table :data="tableData" style="width: 100%" height="650">
               <el-table-column prop="title" label="标题"></el-table-column>
               <el-table-column label="创建时间" v-if="type === 'News'" key="news1">
@@ -142,7 +145,7 @@
           <!-- 文章 -->
           <div v-if="type === 'Article'">
             <el-button @click="showAdd=true" type="primary" icon="el-icon-plus" circle style="float:right"></el-button>
-            <newsForm :showAdd="showAdd" :form2=" { title: '', author: '', type: '', content: '' }" :hasType="true" @cancelAdd="changeShow" @toUP="upNews"></newsForm>
+            <newsForm :showAdd="showAdd" :form="addContent" :hasType="true" @cancelAdd="changeShow" @toUP="upNews"></newsForm>
             <el-table :data="tableData" style="width: 100%" height="650">
               <el-table-column prop="title" label="标题"></el-table-column>
               <el-table-column label="创建时间" v-if="type=='Article'" key="article1">
@@ -225,13 +228,24 @@ export default {
       tableData: [],
       type: 'User',
       showAdd: false,
-      showEdit: false
+      showEdit: false,
+      editRow: [],
+      addContent: { title: '', author: '', type: '', content: '' }
+      // getRow(row) {
+      //   console.log(row)
+      //   return row.doctorId
+      // }
     }
   },
+  // mounted() {
+  //   if (this.type == 'Doctor') {
+  //     this.editRow.push(this.tableData[0].doctorId)
+  //   }
+  // },
   methods: {
-    // 取消还有之前rule
-    // 文章新闻，编辑内容不对应，添加不稳定（要慢。。。），删除都可以
-    // 项展示不全。
+    // rule取消了
+    // 医生文章新闻，编辑问题
+    // 项展示不全。50
     // 表格相关
     filterHandler(value, row, column) {
       const property = column['property']
@@ -246,8 +260,8 @@ export default {
       console.log(index, row)
       this.tableData[index].isEdit = !this.tableData[index].isEdit
       console.log(this.tableData)
+      this.editRow = row.doctorId
     },
-
     // 切换
     changeType(type) {
       this.type = type
@@ -268,6 +282,7 @@ export default {
     changeShow(e) {
       this.showAdd = e
       this.showEdit = e
+      this.addContent = { title: '', author: '', type: '', content: '' }
     },
     // 登录登出
     toLoginOut() {
@@ -303,7 +318,6 @@ export default {
           ).then(
             res => {
               if (res.code == 200) {
-                // 友好
                 this.getUser()
                 this.$message({
                   type: 'success',
@@ -357,6 +371,7 @@ export default {
         this.tableData.forEach(item => {
           item.isEdit = false
         })
+        this.editRow.push(this.tableData[0].doctorId)
       })
     },
     delDoctor(index, row) {
@@ -369,8 +384,6 @@ export default {
         delDoctor(row.doctorId)
           .then(res => {
             if (res.code == 200) {
-              // this.tableData.shift();
-              // 友好，扩展
               this.getDoctor()
               this.$message({
                 message: res.message,
@@ -393,7 +406,6 @@ export default {
       } else if (row.ranks == '副主任医师') {
         row.price = '30'
       }
-      row.isEdit = false
       this.$confirm('确认' + text + '医生信息?', '提示', {
         distinguishCancelAndClose: true,
         confirmButtonText: '确定',
@@ -401,6 +413,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
+          row.isEdit = false
           // 参数doctorName,password,resume,department,keShi,ranks,price
           updateDoctor(
             row.doctorName,
@@ -423,7 +436,6 @@ export default {
         })
         .catch(() => {
           this.getDoctor()
-          row.isEdit = false
         })
     },
     getNews() {
@@ -459,7 +471,6 @@ export default {
           .then(res => {
             if (res.code == 200) {
               // this.tableData.shift();
-              // 友好
               this.getNews()
               this.$message({
                 message: res.message,
@@ -508,8 +519,6 @@ export default {
         delArticle(row.articleId)
           .then(res => {
             if (res.code == 200) {
-              // this.tableData.shift();
-              // 友好，扩展
               this.getArticle()
               this.$message({
                 message: res.message,

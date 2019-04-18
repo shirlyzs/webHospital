@@ -1,7 +1,8 @@
 <template>
   <div>
     <el-dialog title="添加" :visible.sync="showAdd" :show-close="no">
-      <el-form ref="form" :model="from" :rules="rules" label-width="80px">
+      <!-- :rules="rules" -->
+      <el-form ref="form" :model="from"  label-width="80px">
         <el-form-item label="医生名字" prop="doctorName">
           <el-input v-model="from.doctorName"></el-input>
         </el-form-item>
