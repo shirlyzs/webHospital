@@ -1,8 +1,10 @@
 <template>
   <div>
     <el-dialog title="添加" :visible.sync="showAdd" :show-close="no">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="标题" prop="title">
+      <!-- :rules="rules" -->
+      <el-form ref="form" :model="form" label-width="80px">
+        <!-- prop="title" -->
+        <el-form-item label="标题">
           <el-input v-model="form.title"></el-input>
         </el-form-item>
 
@@ -20,31 +22,28 @@
         </el-form-item>
 
         <el-form-item label="内容" prop="content">
-          <el-input type="textarea" v-model="form.content"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="toUP('form')">保存</el-button>
-          <el-button @click="cancelAdd">取消</el-button>
+          <el-input type="textarea" v-model="form.content" :autosize="{ minRows:7}"></el-input>
         </el-form-item>
       </el-form>
-      <!-- <div slot="footer" class="dialog-footer">
-        <el-button @click="showAdd = false">取 消</el-button>
-        <el-button type="primary" @click="showAdd = false">确 定</el-button>
-      </div>-->
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelAdd">取 消</el-button>
+        <el-button type="primary" @click="toUP('form')">确 定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
 export default {
-  name: "diaLog",
+  name: 'diaLog',
   props: {
     showAdd: {
       type: Boolean,
       required: true
     },
-    form: {
-      type: Object
+    form2: {
+      type: Object,
+      required: true
     },
     hasType: {
       type: Boolean,
@@ -54,41 +53,48 @@ export default {
   data() {
     return {
       no: false,
+      form: {},
       newAuthor: [
-        "科训科",
-        "骨科",
-        "输血科",
-        "原创",
-        "血液内科",
-        "解放军报",
-        "成都军区总医院",
-        "药学情报室",
-        "华西都市报"
+        '科训科',
+        '骨科',
+        '输血科',
+        '原创',
+        '血液内科',
+        '解放军报',
+        '成都军区总医院',
+        '药学情报室',
+        '华西都市报'
       ],
-      newType: ["科训动态", "特色医疗", "预防与保健", "医疗与保险", "大众健康"],
+      newType: ['科训动态', '特色医疗', '预防与保健', '医疗与保险', '大众健康'],
       rules: {
-        title: [{ required: true, message: "请输入医生名字", trigger: "blur" }],
-        author: [{ required: true, trigger: "blur", message: "请选择" }],
-        type: [{ required: true, trigger: "change", message: "请选择" }],
-        content: [{ required: true, trigger: "blur", message: "请选择" }]
+        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+        author: [{ required: true, trigger: 'blur', message: '请选择' }],
+        type: [{ required: true, trigger: 'change', message: '请选择' }],
+        content: [{ required: true, trigger: 'blur', message: '请选择' }]
       }
-    };
+    }
   },
   methods: {
     cancelAdd() {
-      this.$emit("cancelAdd", false);
+      this.$emit('cancelAdd', false)
     },
     toUP(e) {
       this.$refs[e].validate(valid => {
         if (valid) {
-          this.$emit("toUP", this.form);
+          console.log(this.form, '提交')
+          this.$emit('toUP', this.form)
         } else {
-          return false;
+          return false
         }
-      });
+      })
     }
   },
-  created() {}
-};
+  watch: {
+    showAdd() {
+      this.form = this.form2
+      console.log(this.form, 'watch')
+    }
+  }
+}
 </script>
 

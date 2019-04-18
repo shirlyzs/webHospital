@@ -12,7 +12,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="主科室" prop="department">
-          <el-select v-model="from.department" placeholder="请选择" size="mini">
+          <el-select v-model="from.department" placeholder="请选择" size="mini" @change="changeKeShi">
             <el-option label="内科" value="内科"></el-option>
             <el-option label="外科" value="外科"></el-option>
             <el-option label="医技" value="医技"></el-option>
@@ -66,7 +66,7 @@
 
 <script>
 export default {
-  name: "diaLog",
+  name: 'diaLog',
   props: {
     showAdd: {
       type: Boolean,
@@ -78,65 +78,83 @@ export default {
       no: false,
       rules: {
         doctorName: [
-          { required: true, message: "请输入医生名字", trigger: "blur" },
-          { min: 1, max: 5, message: "长度在 1 到 5 个字符", trigger: "blur" }
+          { required: true, message: '请输入医生名字', trigger: 'blur' },
+          { min: 1, max: 5, message: '长度在 1 到 5 个字符', trigger: 'blur' }
         ],
 
-        keShi: [{ required: true, trigger: "change", message: "请选择" }],
+        keShi: [{ required: true, trigger: 'change', message: '请选择' }],
         department: [
           {
             required: true,
-            trigger: "change",
-            message: "请选择"
+            trigger: 'change',
+            message: '请选择'
           }
         ],
         resume: [
           {
             required: true,
-            trigger: "blur",
-            message: "请选择"
+            trigger: 'blur',
+            message: '请选择'
           }
         ],
         ranks: [
           {
             required: true,
-            trigger: "change",
-            message: "请选择职称"
+            trigger: 'change',
+            message: '请选择职称'
           }
         ]
       },
       from: {
-        doctorName: "",
-        password: "",
-        keShi: "",
-        department: "",
-        resume: "",
-        ranks: "",
-        ordersNum: "",
-        price: "",
-        image: "",
+        doctorName: '',
+        password: '',
+        keShi: '',
+        department: '',
+        resume: '',
+        ranks: '',
+        ordersNum: '',
+        price: '',
+        image: '',
         isEdit: false
       }
-    };
+    }
   },
   methods: {
+    changeKeShi() {
+      this.from.keShi = ''
+    },
     cancelAdd() {
-      this.$emit("cancelAdd", false);
+      this.$emit('cancelAdd', false)
     },
     toUP(e) {
       this.$refs[e].validate(valid => {
         if (valid) {
-          this.$emit("toUP", {
-            index: 1,
-            row: this.from,
-            text: "添加"
-          });
+          console.log(this.from)
+
+          this.$emit('toUP', 1, this.from, '添加')
         } else {
-          return false;
+          return false
         }
-      });
+      })
+    }
+  },
+  watch: {
+    showAdd() {
+      console.log(33)
+      this.from = {
+        doctorName: '',
+        password: '',
+        keShi: '',
+        department: '',
+        resume: '',
+        ranks: '',
+        ordersNum: '',
+        price: '',
+        image: '',
+        isEdit: false
+      }
     }
   }
-};
+}
 </script>
 

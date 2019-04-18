@@ -7,7 +7,6 @@ export const AdminLogin = (adminName, password) => {
   })
 }
 
-
 // 查询管理员列表 其余参数adminId，adminName，password
 export const findAdmin = (pageNum, pageSize) => {
   return axios.request({
@@ -22,9 +21,6 @@ export const delAdmin = adminId => {
     url: `/adminLoginVerify/admin//delete/${adminId}`
   })
 }
-
-
-
 
 // 查询用户  其余参数userId，userName，info，tel
 export const findUser = (pageNum, pageSize) => {
@@ -47,10 +43,6 @@ export const updateUser = (userId, password, tel, info, balance) => {
     url: `/adminLoginUpdateUser?userId=${userId}&password=${password}&tel=${tel}&info=${info}&balance=${balance}`
   })
 }
-
-
-
-
 
 // 医生查询  doctorName，department，keShi，ranks
 export const findDoctor = (pageNum, pageSize) => {
@@ -78,57 +70,42 @@ export const updateDoctor = (
 ) => {
   return axios.request({
     method: 'get',
-    url: `/adminLoginAddDoctor?doctorName=${doctorName}&password=${password}&resume=${resume}&department=${department}&keShi=${keShi}&ranks=${ranks}$price=${price}`
+    url: `/adminLoginAddDoctor?doctorName=${doctorName}&password=${password}&resume=${resume}&department=${department}&keShi=${keShi}&ranks=${ranks}&price=${price}`
   })
 }
 
-
-
-
 // 查询订单  其余参数 orderId，userName，doctorName，tel
-export const findOrders = (
-  pageNum, pageSize
-) => {
+export const findOrders = (pageNum, pageSize) => {
   return axios.request({
     method: 'get',
     url: `/adminLoginVerify/getOrders/${pageNum}/${pageSize}`
   })
 }
 // 删除订单
-export const delOrders = (orderId) => {
+export const delOrders = orderId => {
   return axios.request({
     method: 'get',
     url: `/adminLoginVerify/orders/delete/${orderId}`
   })
 }
 
-
-
 // 科室查询 其他keShiName，department
-export const findDepartment = (
-  pageNum, pageSize
-) => {
+export const findDepartment = (pageNum, pageSize) => {
   return axios.request({
     method: 'get',
     url: `/userLoginVerify/getKeShi/${pageNum}/${pageSize}`
   })
 }
 
-
-
 // 查找新闻  其余参数newsId，title，author，content
-export const findNews = (
-  pageNum, pageSize
-) => {
+export const findNews = (pageNum, pageSize) => {
   return axios.request({
     method: 'get',
     url: `/adminLoginVerify/getNews/${pageNum}/${pageSize}`
   })
 }
 //添加新闻
-export const updateNews = (
-  author, title, content
-) => {
+export const updateNews = (author, title, content) => {
   return axios.request({
     method: 'get',
     url: `/adminLoginAddNews?author=${author}&title=${title}&content=${content}`
@@ -142,22 +119,15 @@ export const delNews = newsId => {
   })
 }
 
-
-
-
 // 查找文章 其余参数articleId，title，author，type
-export const findArticle = (
-  pageNum, pageSize
-) => {
+export const findArticle = (pageNum, pageSize) => {
   return axios.request({
     method: 'get',
     url: `/userLoginVerify/getArticle/${pageNum}/${pageSize}`
   })
 }
 //添加文章
-export const updateArticle = (
-  author, title, content, type
-) => {
+export const updateArticle = (author, title, content, type) => {
   return axios.request({
     method: 'get',
     url: `/adminLoginAddArticle?author=${author}&title=${title}&content=${content}&type=${type}`
