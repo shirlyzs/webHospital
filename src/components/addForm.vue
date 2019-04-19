@@ -2,7 +2,7 @@
   <div>
     <el-dialog title="添加" :visible.sync="showAdd" :show-close="no">
       <!-- :rules="rules" -->
-      <el-form ref="form" :model="from"  label-width="80px">
+      <el-form ref="form" :model="from" label-width="80px" :rules="rules">
         <el-form-item label="医生名字" prop="doctorName">
           <el-input v-model="from.doctorName"></el-input>
         </el-form-item>
@@ -52,25 +52,25 @@
         <el-form-item label="简介" prop="resume">
           <el-input type="textarea" v-model="from.resume"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="toUP('form')">立即创建</el-button>
-          <el-button @click="cancelAdd">取消</el-button>
-        </el-form-item>
       </el-form>
-      <!-- <div slot="footer" class="dialog-footer">
-        <el-button @click="showAdd = false">取 消</el-button>
-        <el-button type="primary" @click="showAdd = false">确 定</el-button>
-      </div>-->
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelAdd">取 消</el-button>
+        <el-button type="primary" @click="toUP('form')">确 定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'diaLog',
+  name: "diaLog",
   props: {
     showAdd: {
       type: Boolean,
+      required: true
+    },
+    from: {
+      type: Object,
       required: true
     }
   },
@@ -79,83 +79,55 @@ export default {
       no: false,
       rules: {
         doctorName: [
-          { required: true, message: '请输入医生名字', trigger: 'blur' },
-          { min: 1, max: 5, message: '长度在 1 到 5 个字符', trigger: 'blur' }
+          { required: true, message: "请输入医生名字", trigger: "blur" },
+          { min: 1, max: 5, message: "长度在 1 到 5 个字符", trigger: "blur" }
         ],
 
-        keShi: [{ required: true, trigger: 'change', message: '请选择' }],
+        keShi: [{ required: true, trigger: "change", message: "请选择" }],
         department: [
           {
             required: true,
-            trigger: 'change',
-            message: '请选择'
+            trigger: "change",
+            message: "请选择"
           }
         ],
         resume: [
           {
             required: true,
-            trigger: 'blur',
-            message: '请选择'
+            trigger: "blur",
+            message: "请输入简介"
           }
         ],
         ranks: [
           {
             required: true,
-            trigger: 'change',
-            message: '请选择职称'
+            trigger: "change",
+            message: "请选择职称"
           }
         ]
-      },
-      from: {
-        doctorName: '',
-        password: '',
-        keShi: '',
-        department: '',
-        resume: '',
-        ranks: '',
-        ordersNum: '',
-        price: '',
-        image: '',
-        isEdit: false
       }
-    }
+    };
   },
   methods: {
     changeKeShi() {
-      this.from.keShi = ''
+      this.from.keShi = "";
     },
     cancelAdd() {
-      this.$emit('cancelAdd', false)
+      this.$refs["form"].clearValidate();
+      this.$emit("cancelAdd", false, "NEW");
     },
     toUP(e) {
       this.$refs[e].validate(valid => {
         if (valid) {
-          console.log(this.from)
-
-          this.$emit('toUP', 1, this.from, '添加')
+          console.log(this.from, "dialog提交的");
+          this.$emit("toUP", this.from);
+          this.$refs["form"].clearValidate();
         } else {
-          return false
+          return false;
         }
-      })
-    }
-  },
-  watch: {
-    showAdd() {
-      console.log(33)
-      this.from = {
-        doctorName: '',
-        password: '',
-        keShi: '',
-        department: '',
-        resume: '',
-        ranks: '',
-        ordersNum: '',
-        price: '',
-        image: '',
-        isEdit: false
-      }
+      });
     }
   }
-}
+};
 </script>
 

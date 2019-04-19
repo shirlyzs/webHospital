@@ -1,13 +1,10 @@
 <template>
   <div>
     <el-dialog title="添加" :visible.sync="showAdd" :show-close="no">
-      <!-- :rules="rules" -->
-      <el-form ref="form" :model="form" label-width="80px">
-        <!-- prop="title" -->
-        <el-form-item label="标题">
+      <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+        <el-form-item label="标题" prop="title">
           <el-input v-model="form.title"></el-input>
         </el-form-item>
-
         <el-form-item label="来源" prop="author">
           <!-- <el-input v-model="form.author"></el-input> -->
           <el-select v-model="form.author" placeholder="请选择" size="mini">
@@ -35,7 +32,7 @@
 
 <script>
 export default {
-  name: 'diaLog',
+  name: "diaLog",
   props: {
     showAdd: {
       type: Boolean,
@@ -54,45 +51,42 @@ export default {
     return {
       no: false,
       newAuthor: [
-        '科训科',
-        '骨科',
-        '输血科',
-        '原创',
-        '血液内科',
-        '解放军报',
-        '成都军区总医院',
-        '药学情报室',
-        '华西都市报'
+        "科训科",
+        "骨科",
+        "输血科",
+        "原创",
+        "血液内科",
+        "解放军报",
+        "成都军区总医院",
+        "药学情报室",
+        "华西都市报"
       ],
-      newType: ['科训动态', '特色医疗', '预防与保健', '医疗与保险', '大众健康'],
+      newType: ["科训动态", "特色医疗", "预防与保健", "医疗与保险", "大众健康"],
       rules: {
-        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
-        author: [{ required: true, trigger: 'blur', message: '请选择' }],
-        type: [{ required: true, trigger: 'change', message: '请选择' }],
-        content: [{ required: true, trigger: 'blur', message: '请选择' }]
+        title: [{ required: true, message: "请输入标题", trigger: "blur" }],
+        author: [{ required: true, trigger: "blur", message: "请选择" }],
+        type: [{ required: true, trigger: "change", message: "请选择" }],
+        content: [{ required: true, trigger: "blur", message: "请输入内容" }]
       }
-    }
+    };
   },
   methods: {
     cancelAdd() {
-      this.$emit('cancelAdd', false)
+      this.$emit("cancelAdd", false, "NEW");
+      this.$refs["form"].clearValidate();
     },
     toUP(e) {
       this.$refs[e].validate(valid => {
         if (valid) {
-          console.log(this.form, '提交')
-          this.$emit('toUP', this.form)
+          console.log(this.form, "提交");
+          this.$emit("toUP", this.form);
+          this.$refs["form"].clearValidate();
         } else {
-          return false
+          return false;
         }
-      })
-    }
-  },
-  watch: {
-    showAdd() {
-      console.log(this.form, 'watch')
+      });
     }
   }
-}
+};
 </script>
 
