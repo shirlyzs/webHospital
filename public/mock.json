@@ -1,0 +1,125 @@
+{
+  "orders": [
+    {
+      "createTime": "2018-05-19",
+      "doctorName": "医1",
+      "userName": "zzz",
+      "price": "50",
+      "tel": "178"
+    },
+    {
+      "createTime": "2018-05-19",
+      "doctorName": "2",
+      "userName": "zzz",
+      "price": "50",
+      "tel": "178"
+    },
+    {
+      "createTime": "2018-05-19",
+      "doctorName": "叫啥",
+      "userName": "zzz",
+      "price": "50",
+      "tel": "178"
+    },
+    {
+      "createTime": "2018-05-19",
+      "doctorName": "试试",
+      "userName": "zzz",
+      "price": "50",
+      "tel": "178"
+    }
+  ],
+  "news": [
+    {
+      "createTime": "2018-05-19",
+      "title": "fem",
+      "author": "zzz",
+      "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "科训动态"
+    },
+    {
+      "createTime": "2018-05-19",
+      "title": "fem222222",
+      "author": "zzz",
+      "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "科训动态"
+    },
+    {
+      "createTime": "2018-05-19",
+      "title": "biaoqi",
+      "author": "zzz",
+      "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "科训动态"
+    },
+    {
+      "createTime": "2018-05-19",
+      "title": "标题",
+      "author": "zzz",
+      "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "科训动态"
+    },
+    {
+      "createTime": "2018-05-19",
+      "title": "标题",
+      "author": "zzz",
+      "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "科训动态"
+    }
+  ],
+  "doctor": [
+    {
+      "ranks": "主任",
+      "department": "内科",
+      "keShi": "科室",
+      "price": "50",
+      "ordersNum": "8",
+      "doctorName": "名字22222",
+      "resume": "简介好多字。。。。。"
+    },
+    {
+      "ranks": "主任",
+      "department": "外科",
+      "keShi": "科室",
+      "price": "50",
+      "ordersNum": "8",
+      "doctorName": "名字333333",
+      "resume": "简介好多字。。。。。"
+    },
+    {
+      "ranks": "主任",
+      "department": "其他",
+      "keShi": "科室",
+      "price": "50",
+      "ordersNum": "8",
+      "doctorName": "名字444444",
+      "resume": "简介好多字。。。。。"
+    },
+    {
+      "ranks": "主任",
+      "department": "医技",
+      "keShi": "科室",
+      "price": "50",
+      "ordersNum": "8",
+      "doctorName": "名字555555",
+      "resume": "简介好多字。。。。。"
+    },
+    {
+      "ranks": "主任",
+      "department": "内科",
+      "keShi": "科室",
+      "price": "50",
+      "ordersNum": "8",
+      "doctorName": "名字5666666",
+      "resume": "简介好多字。。。。。"
+    },
+    {
+      "ranks": "主任",
+      "department": "外科",
+      "keShi": "科室",
+      "price": "50",
+      "ordersNum": "8",
+      "doctorName": "名字777",
+      "resume": "简介好多字。。。。。"
+    }
+  ]
+}

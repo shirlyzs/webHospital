@@ -5,6 +5,7 @@
       <div class="login" v-if="!loginName">
         <router-link to="/Login">登录 / 注册</router-link>
         <router-link :to="{name:'login',query:{type:'admin'}}" style="margin-left:20px;">管理员</router-link>
+        <router-link :to="{name:'login',query:{type:'doctor'}}" style="margin-left:20px;">医生</router-link>
       </div>
       <div class="login" v-else>
         <router-link to="/personal" style="color:#ffffff;margin-right:20px;">欢迎您，{{loginName}}</router-link>
@@ -12,21 +13,22 @@
       </div>
     </div>
     <div class="nav">
+      <img :src="logoIMG" alt>
       <el-menu
         :default-active="activeIndex"
         class="el-menu-demo2"
         mode="horizontal"
         @select.capture="handleSelect"
-        background-color="rgba(24, 116, 205)"
-        text-color="#fff"
-        active-text-color="#fff"
+        text-color="#333"
+        active-text-color="#00a1e9"
         text-align="center"
       >
+        <!-- background-color="rgba(24, 116, 205)" -->
         <el-menu-item index="1">
           <router-link to="/">网站首页</router-link>
         </el-menu-item>
         <el-submenu index="2">
-          <template slot="title">医院概况</template>
+          <template slot="title" style="font-size:16px">医院概况</template>
           <router-link to="/hos/intro">
             <el-menu-item index="2-1">医院简介</el-menu-item>
           </router-link>
@@ -64,12 +66,12 @@
             <el-menu-item index="4-5">交通指南</el-menu-item>
           </router-link>
         </el-submenu>
-        <router-link to="/roomintro">
-          <el-menu-item index="5">科室介绍</el-menu-item>
-        </router-link>
-        <router-link to="/master">
-          <el-menu-item index="6">专家介绍</el-menu-item>
-        </router-link>
+        <el-menu-item index="5">
+          <router-link to="/roomintro">科室介绍</router-link>
+        </el-menu-item>
+        <el-menu-item index="6">
+          <router-link to="/master">专家介绍</router-link>
+        </el-menu-item>
       </el-menu>
     </div>
   </div>
@@ -80,7 +82,8 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      loginName: ""
+      loginName: "",
+      logoIMG: require("../assets/logo.png")
     };
   },
   methods: {
@@ -103,50 +106,46 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  height: 50px;
-  line-height: 50px;
-  background-color: #078ed4;
+  height: 42px;
+  line-height: 42px;
+  background-color: rgba(24, 116, 205);
+  padding: 0 220px;
+  // TODO: 首页左右120
   .wel {
-    margin-left: 50px;
     float: left;
     font-size: 15px;
     color: #ffffff;
-    font-weight: 1000;
+    font-weight: 600;
   }
   .login {
     float: right;
-    font-size: 16px;
-    margin-right: 50px;
-    color: #ffffff;
     font-weight: 300;
-    display: flex;
+  }
+  .login a {
+    font-family: "Microsoft YaHei", "微软雅黑", STXihei;
+    color: #ffffff;
+    font-size: 14px;
   }
 }
 .nav {
-  display: block;
-  margin-top: 50px;
-  height: fit-content;
-  a {
-    color: #fff !important;
+  position: relative;
+  img {
+    position: absolute;
+    left: 255px;
+    top: 5px;
+    z-index: 4;
+    width: 70px;
+    height: 68px;
   }
 }
-.el-header {
-  background-color: #00a1e9;
-  color: #333;
-  text-align: left;
-  height: 20px !important;
-}
 .el-menu-demo2 {
-  width: 100%;
-  position: absolute;
-  top: 50px;
-  left: 0;
   display: flex;
   justify-content: center;
   z-index: 3;
-  border: none !important;
-}
-.el-menu--horizontal > .el-menu {
-  line-height: 80px;
+  height: 80px;
+  align-items: center;
+  li {
+    border: none !important;
+  }
 }
 </style>
