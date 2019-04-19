@@ -9,6 +9,18 @@ export const login = (info) => {
     url: `/userLoginVerify?userName=${info.userName}&password=${info.password}&tel=${info.tel}`
   })
 }
+export const person = (info) => {
+  return axios.request({
+    method: 'get',
+    url: `/userLoginVerify/user/${info.userId}`
+  })
+}
+export const record = (info) => {
+  return axios.request({
+    method: 'get',
+    url: `/userLoginVerify/orders/userName?userName=${info.userName}`
+  })
+}
 export const register = (info) => {
   return axios.request({
     method: 'get',
@@ -48,7 +60,7 @@ export const detail = (detailInfo) => {
 export const doctor = (doctorInfo) => {
   return axios.request({
     method: 'get',
-    url: `/userLoginVerify/getDoctor/0/10?doctorName=${doctorInfo.doctorName}&department=${doctorInfo.department}&keShi=${doctorInfo.keShi}&ranks=${doctorInfo.ranks}`,
+    url: `/userLoginVerify/getDoctor/0/50?doctorName=${doctorInfo.doctorName}&department=${doctorInfo.department}&keShi=${doctorInfo.keShi}&ranks=${doctorInfo.ranks}`,
   })
 }
 export const doctordetail = (doctorInfo) => {

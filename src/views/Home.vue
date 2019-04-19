@@ -3,7 +3,7 @@
     <menuNav></menuNav>
     <el-carousel :interval="5000" arrow="always">
       <el-carousel-item v-for="(item,index) in imgList" :key="index">
-        <img :src="item.url">
+        <img :src="item.url" style="height:300px">
       </el-carousel-item>
     </el-carousel>
     <div class="xinwen">
@@ -119,7 +119,7 @@ export default {
     return {
       imgList: [
         {
-          url: require("../assets/a1.jpg")
+          url: require("../assets/a9.jpg")
         },
         {
           url: require("../assets/a2.jpg")

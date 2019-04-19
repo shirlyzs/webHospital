@@ -9,7 +9,7 @@
       <div class="author">{{newsList.type}}</div>
       <!-- <div class="image">
         <img  v-for="(item,index) in newsList.image" :key="index" :src="item">
-      </div> -->
+      </div>-->
       <div class="content">{{newsList.content}}</div>
     </div>
     <Footer></Footer>
@@ -46,7 +46,8 @@ export default {
     }
   },
   created() {
-    this.getId(this.$route.query.newId);  }
+    this.getId(this.$route.query.newId);
+  }
 };
 </script>
 
@@ -84,7 +85,7 @@ export default {
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
-  img{
+  img {
     height: 400px;
     width: 400px;
     margin: 10px;

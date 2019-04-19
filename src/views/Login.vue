@@ -86,7 +86,7 @@ export default {
           if (res.code !== 200) {
             alert(res.message);
           } else {
-            alert("注册成功");
+            // alert("注册成功");
             setTimeout(
               function() {
                 this.showLogin = true;
@@ -120,15 +120,17 @@ export default {
           if (res.code !== 200) {
             alert(res.message);
           } else {
-            alert("登录成功");
+            // alert("登录成功");
             setTimeout(
               function() {
                 this.$router.push("/");
               }.bind(this),
               1000
             );
-            let loginName = res.result.userName;
+            let loginName = res.result[0].userName;
+            let loginId=res.result[0].userId;
             window.sessionStorage.setItem("loginKey", loginName);
+            window.sessionStorage.setItem("loginKey1", loginId);
           }
         });
       }
@@ -137,24 +139,17 @@ export default {
       if (this.userName == "" || this.password == "") {
         alert("请输入用户名或密码");
       } else {
-        // let info = {
-        //   adminName: this.userName,
-        //   password : this.password,
-        // };
-
         AdminLogin(this.userName, this.password).then(res => {
           if (res.code !== 200) {
             alert(res.message);
           } else {
-            alert("登录成功");
-            // let loginName = res.result.userName;
+            // alert("登录成功");
             setTimeout(
               function() {
                 this.$router.push("/admin");
               }.bind(this),
               1000
             );
-            // window.sessionStorage.setItem("loginKey", loginName);
           }
         });
       }

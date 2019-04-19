@@ -27,52 +27,49 @@
         </el-menu-item>
         <el-submenu index="2">
           <template slot="title">医院概况</template>
-          <el-menu-item index="2-1">
-            <router-link to="/hos/intro">医院简介</router-link>
-          </el-menu-item>
-          <el-menu-item index="2-2">
-            <router-link to="/hos/leader">历任领导</router-link>
-          </el-menu-item>
-          <el-menu-item index="2-3">
-            <router-link to="/hos/culture">医院文化</router-link>
-          </el-menu-item>
+          <router-link to="/hos/intro">
+            <el-menu-item index="2-1">医院简介</el-menu-item>
+          </router-link>
+          <router-link to="/hos/leader">
+            <el-menu-item index="2-2">历任领导</el-menu-item>
+          </router-link>
+          <router-link to="/hos/culture">
+            <el-menu-item index="2-3">医院文化</el-menu-item>
+          </router-link>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title">新闻动态</template>
-          <el-menu-item index="3-1">
-            <router-link to="/more">医院要闻</router-link>
-          </el-menu-item>
-          <!-- <el-menu-item index="3-2">
-            <router-link to="/notice">医院公告</router-link>
-          </el-menu-item> -->
-          <el-menu-item index="3-2">
-            <router-link to="/study">健康讲堂</router-link>
-          </el-menu-item>
+          <router-link to="/more">
+            <el-menu-item index="3-1">医院要闻</el-menu-item>
+          </router-link>
+          <router-link to="/study">
+            <el-menu-item index="3-2">健康讲堂</el-menu-item>
+          </router-link>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title">就诊指南</template>
-          <el-menu-item index="4-1">
-            <router-link to="/reserve">预约挂号</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-2">
-            <router-link to="/guide/know">就诊须知</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-3">
-            <router-link to="/guide/process">就医流程</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-4">
-            <router-link to="/guide/location">医院布局</router-link>
-          </el-menu-item>
-          <el-menu-item index="4-5">
-            <router-link to="/guide/transport">交通指南</router-link>
-          </el-menu-item>
+          <router-link to="/reserve">
+            <el-menu-item index="4-1">预约挂号</el-menu-item>
+          </router-link>
+          <router-link to="/guide/know">
+            <el-menu-item index="4-2">就诊须知</el-menu-item>
+          </router-link>
+          <router-link to="/guide/process">
+            <el-menu-item index="4-3">就医流程</el-menu-item>
+          </router-link>
+          <router-link to="/guide/location">
+            <el-menu-item index="4-4">医院布局</el-menu-item>
+          </router-link>
+          <router-link to="/guide/transport">
+            <el-menu-item index="4-5">交通指南</el-menu-item>
+          </router-link>
         </el-submenu>
-        <el-menu-item index="5">
-          <router-link to="/roomintro">科室介绍</router-link>
-        </el-menu-item>
-        <el-menu-item index="6">
-          <router-link to="/master">专家介绍</router-link>
-        </el-menu-item>
+        <router-link to="/roomintro">
+          <el-menu-item index="5">科室介绍</el-menu-item>
+        </router-link>
+        <router-link to="/master">
+          <el-menu-item index="6">专家介绍</el-menu-item>
+        </router-link>
       </el-menu>
     </div>
   </div>
@@ -92,7 +89,7 @@ export default {
     },
     shanchu() {
       window.sessionStorage.clear();
-      this.loginName="";
+      this.loginName = "";
     }
   },
   created() {
