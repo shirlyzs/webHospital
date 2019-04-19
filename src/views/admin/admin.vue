@@ -40,15 +40,30 @@
         </el-col>
         <!-- 右侧表格 -->
         <el-col :span="20" class="navi">
-          <div style="margin: 15px 0; width: 280px">
+          <div class="search-box">
             <el-input
+              size="small"
               placeholder="请输入搜索内容"
               v-model="searchData"
               class="input-with-select"
               @keyup.enter.native="searchMethod"
+              style="width:250px;margin-right: 70px;"
             >
               <el-button slot="append" icon="el-icon-search" @click="searchMethod"></el-button>
             </el-input>
+            <el-select
+              v-model="searchSelect"
+              placeholder="请选择"
+              size="small"
+              @change="selectMethod"
+              v-if="type == 'Doctor'"
+              style="width:220px"
+            >
+              <el-option label="内科" value="内科"></el-option>
+              <el-option label="外科" value="外科"></el-option>
+              <el-option label="医技" value="医技"></el-option>
+              <el-option label="其他" value="其他"></el-option>
+            </el-select>
           </div>
           <!-- 用户 -->
           <div v-if="type == 'User'">
@@ -160,7 +175,7 @@
               :form="fromNews"
               :hasType="true"
               @cancelAdd="changeShow"
-              @toUP="upNews"
+              @toUP="upArticle"
             ></newsForm>
             <el-table :data="tableData" style="width: 100%" height="650">
               <el-table-column prop="title" label="标题"></el-table-column>
@@ -245,6 +260,7 @@ export default {
   data() {
     return {
       searchData: "",
+      searchSelect: "",
       tableData: [],
       type: "User",
       showAdd: false,
@@ -281,10 +297,26 @@ export default {
         }
       });
     },
+    selectMethod(e) {
+      // this.getDoctor().then(res => {
+      //   this.tableData = this.tableData.filter(item => {
+      //     return item["department"] == e;
+      //   });
+      // });
+      //   } else if (this.type == "News") {
+      //     return item["title"].indexOf(this.searchData) > -1;
+      //   } else if (this.type == "Article") {
+      //     return item["title"].indexOf(this.searchData) > -1;
+      //   } else if (this.type == "Orders") {
+      //     return item["doctorName"].indexOf(this.searchData) > -1;
+      //   }
+      // });
+    },
     // dialog
     changeShow(e, text, row) {
       this.showAdd = e;
       this.searchData = "";
+      this.searchSelect = "";
       if (text == "NEW") {
         this.fromDoctor = {
           doctorName: "",
@@ -328,6 +360,7 @@ export default {
     getDoctor() {
       findDoctor(0, 50).then(res => {
         this.tableData = res.result[0].content;
+        // return Promise.resolve("get");
       });
       // let that = this;
       // axios.get("http://localhost:8081/mock.json").then(function(res) {
@@ -589,8 +622,8 @@ export default {
     }
   },
   created() {
-    this.type = "User";
-    this.getUser();
+    this.type = "Doctor";
+    this.getDoctor();
   }
 };
 </script>
@@ -675,5 +708,11 @@ export default {
   padding: 20px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
   margin-top: 15px;
+}
+
+.search-box {
+  margin: 15px 0;
+  display: flex;
+  // justify-content: space-between;
 }
 </style>
