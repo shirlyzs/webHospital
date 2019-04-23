@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-dialog title="添加" :visible.sync="showAdd" :show-close="no">
+    <el-dialog title="" :visible.sync="showAdd" :show-close="no">
       <!-- :rules="rules" -->
       <el-form ref="form" :model="from" label-width="80px" :rules="rules">
-        <el-form-item label="医生名字" prop="doctorName">
+        <el-form-item label="医生名字" prop="doctorName" v-if="!from.doctorName">
           <el-input v-model="from.doctorName"></el-input>
         </el-form-item>
         <el-form-item label="职称" prop="ranks">
@@ -63,7 +63,7 @@
 
 <script>
 export default {
-  name: "diaLog",
+  name: 'diaLog',
   props: {
     showAdd: {
       type: Boolean,
@@ -79,55 +79,56 @@ export default {
       no: false,
       rules: {
         doctorName: [
-          { required: true, message: "请输入医生名字", trigger: "blur" },
-          { min: 1, max: 5, message: "长度在 1 到 5 个字符", trigger: "blur" }
+          { required: true, message: '请输入医生名字', trigger: 'blur' },
+          { min: 1, max: 5, message: '长度在 1 到 5 个字符', trigger: 'blur' }
         ],
 
-        keShi: [{ required: true, trigger: "change", message: "请选择" }],
+        keShi: [{ required: true, trigger: 'change', message: '请选择' }],
         department: [
           {
             required: true,
-            trigger: "change",
-            message: "请选择"
+            trigger: 'change',
+            message: '请选择'
           }
         ],
         resume: [
           {
             required: true,
-            trigger: "blur",
-            message: "请输入简介"
+            trigger: 'blur',
+            message: '请输入简介'
           }
         ],
         ranks: [
           {
             required: true,
-            trigger: "change",
-            message: "请选择职称"
+            trigger: 'change',
+            message: '请选择职称'
           }
         ]
       }
-    };
+    }
   },
   methods: {
     changeKeShi() {
-      this.from.keShi = "";
+      this.from.keShi = ''
     },
     cancelAdd() {
-      this.$refs["form"].clearValidate();
-      this.$emit("cancelAdd", false, "NEW");
+      this.$refs['form'].clearValidate()
+      this.$emit('cancelAdd', false, 'NEW')
     },
     toUP(e) {
       this.$refs[e].validate(valid => {
         if (valid) {
-          console.log(this.from, "dialog提交的");
-          this.$emit("toUP", this.from);
-          this.$refs["form"].clearValidate();
+          console.log(this.from, 'dialog提交的')
+          this.$emit('toUP', this.from)
+          this.$refs['form'].clearValidate()
         } else {
-          return false;
+          this.$refs['form'].clearValidate()
+          return false
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 

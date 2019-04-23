@@ -37,10 +37,17 @@ export const delUser = userId => {
   })
 }
 // 修改用户信息 参数userId，password，tel，info，balance  res.message res.result
-export const updateUser = (userId, password, tel, info, balance) => {
+export const updateUser = (userId, password, tel, info) => {
   return axios.request({
     method: 'get',
-    url: `/adminLoginUpdateUser?userId=${userId}&password=${password}&tel=${tel}&info=${info}&balance=${balance}`
+    url: `/adminLoginUpdateUser?userId=${userId}&password=${password}&tel=${tel}&info=${info}`
+  })
+}
+// 充值
+export const chongzhiUser = (userId, balance) => {
+  return axios.request({
+    method: 'get',
+    url: `/adminLogin/chongZhi?userId=${userId}&balance=${balance}`
   })
 }
 
@@ -105,11 +112,18 @@ export const findNews = (pageNum, pageSize) => {
   })
 }
 //添加新闻
-export const updateNews = (author, title, content) => {
-  return axios.request({
-    method: 'get',
-    url: `/adminLoginAddNews?author=${author}&title=${title}&content=${content}`
-  })
+export const updateNews = (newsId, author, title, content) => {
+  if (newsId == 'new') {
+    return axios.request({
+      method: 'get',
+      url: `/adminLoginAddNews?author=${author}&title=${title}&content=${content}`
+    })
+  } else {
+    return axios.request({
+      method: 'get',
+      url: `/adminLoginUpdateNews?newsId=${newsId}&author=${author}&title=${title}&content=${content}`
+    })
+  }
 }
 // 删除新闻
 export const delNews = newsId => {
@@ -127,11 +141,19 @@ export const findArticle = (pageNum, pageSize) => {
   })
 }
 //添加文章
-export const updateArticle = (author, title, content, type) => {
-  return axios.request({
-    method: 'get',
-    url: `/adminLoginAddArticle?author=${author}&title=${title}&content=${content}&type=${type}`
-  })
+export const updateArticle = (articleId, author, title, content, type) => {
+  if (articleId == 'new') {
+    // 新增
+    return axios.request({
+      method: 'get',
+      url: `/adminLoginAddArticle?author=${author}&title=${title}&content=${content}&type=${type}`
+    })
+  } else {
+    return axios.request({
+      method: 'get',
+      url: `/adminLoginUpdateArticle?articleId=${articleId}&author=${author}&title=${title}&content=${content}&type=${type}`
+    })
+  }
 }
 // 删除文章
 export const delArticle = articleId => {

@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <menuNav></menuNav>
-    <el-carousel :interval="5000" arrow="always">
-      <el-carousel-item v-for="(item,index) in imgList" :key="index">
-        <img :src="item.url" style="height:300px">
+    <el-carousel :interval="5000" arrow="always" class="lunbotu">
+      <el-carousel-item v-for="(item,index) in imgList" :key="index" style="height:400px">
+        <img :src="item.url">
       </el-carousel-item>
     </el-carousel>
     <div class="xinwen">
@@ -38,13 +38,7 @@
       <div v-for="item in roomList" :key="item.id">
         <div class="room-name" @mouseenter="showSub(item.id)" slot="title">{{item.name}}</div>
         <div class="room-sub">
-          <div
-            class="sub-name"
-            v-for="(itam,index) in subList"
-            :key="index"
-            @click="toRoomdetail(itam)"
-            v-show="item.isShow && itam.department === item.name"
-          >{{itam.keShiName}}</div>
+          <div class="sub-name" v-for="(itam,index) in subList" :key="index" @click="toRoomdetail(itam)" v-show="item.isShow && itam.department === item.name">{{itam.keShiName}}</div>
         </div>
       </div>
     </div>
@@ -109,48 +103,45 @@
 </template>
 
 <script>
-import menuNav from "@/components/menuNav.vue";
-import Footer from "@/components/Footer.vue";
+import menuNav from '@/components/menuNav.vue'
+import Footer from '@/components/Footer.vue'
 
-import { video, news, ming, room, doctor } from "@/api/api";
+import { video, news, ming, room, doctor } from '@/api/api'
 
 export default {
   data() {
     return {
       imgList: [
         {
-          url: require("../assets/a9.jpg")
+          url: require('../assets/a9.jpg')
         },
         {
-          url: require("../assets/a2.jpg")
+          url: require('../assets/12.jpg')
         },
         {
-          url: require("../assets/a3.jpg")
-        },
-        {
-          url: require("../assets/a4.jpg")
+          url: require('../assets/121.jpg')
         }
       ],
       imgaList: [],
       newsList: [],
       roomList: [
         {
-          name: "内科",
+          name: '内科',
           id: 1,
           isShow: false
         },
         {
-          name: "外科",
+          name: '外科',
           isShow: false,
           id: 2
         },
         {
-          name: "医技",
+          name: '医技',
           isShow: false,
           id: 3
         },
         {
-          name: "其他",
+          name: '其他',
           isShow: false,
           id: 4
         }
@@ -159,7 +150,7 @@ export default {
       mingList: [],
       docList: [],
       healtList: []
-    };
+    }
   },
   components: {
     menuNav,
@@ -168,119 +159,123 @@ export default {
   methods: {
     getImage() {
       let newInfo = {
-        newsId: "",
-        title: "",
-        author: "",
-        content: ""
-      };
+        newsId: '',
+        title: '',
+        author: '',
+        content: ''
+      }
       news(newInfo).then(res => {
         res.result[0].content.forEach(ele => {
-          ele.image = ele.image.split("||")[0];
-        });
-        this.imgaList = res.result[0].content;
-      });
+          ele.image = ele.image.split('||')[0]
+        })
+        this.imgaList = res.result[0].content
+      })
     },
     getDoctor() {
       let doctorInfo = {
-        doctorName: "",
-        department: "",
-        keShi: "",
-        ranks: ""
-      };
+        doctorName: '',
+        department: '',
+        keShi: '',
+        ranks: ''
+      }
       doctor(doctorInfo).then(res => {
-        this.docList = res.result[0].content;
-      });
+        this.docList = res.result[0].content
+      })
     },
     getRoom() {
       let roomInfo = {
-        keShiName: "",
-        department: "",
-        keShiId: "",
-        info: ""
-      };
+        keShiName: '',
+        department: '',
+        keShiId: '',
+        info: ''
+      }
       room(roomInfo).then(res => {
-        this.subList = res.result[0].content;
-        this.roomList[0].isShow = true;
-      });
+        this.subList = res.result[0].content
+        this.roomList[0].isShow = true
+      })
     },
     getMing() {
       ming().then(res => {
-        this.mingList = res.data.mingList;
-        this.mingList[0].isShow = true;
-      });
+        this.mingList = res.data.mingList
+        this.mingList[0].isShow = true
+      })
     },
     getNews() {
       let newInfo = {
-        newsId: "",
-        title: "",
-        author: "",
-        content: ""
-      };
+        newsId: '',
+        title: '',
+        author: '',
+        content: ''
+      }
       news(newInfo).then(res => {
-        this.newsList = res.result[0].content;
-      });
+        this.newsList = res.result[0].content
+      })
     },
     getVideo() {
       video().then(
         res => {
-          this.healtList = res.data.healtList;
-          this.healtList[0].isShow = true;
+          this.healtList = res.data.healtList
+          this.healtList[0].isShow = true
         },
         rej => {
-          console.log(rej);
+          console.log(rej)
         }
-      );
+      )
     },
     toNewsDetail(item) {
-      this.$router.push({ path: "/detail", query: { newId: item.newsId } });
+      this.$router.push({ path: '/detail', query: { newId: item.newsId } })
     },
     toImgdetail(item) {
-      this.$router.push({ path: "/detail", query: { newId: item.newsId } });
+      this.$router.push({ path: '/detail', query: { newId: item.newsId } })
     },
     toRoomdetail(keshi) {
       this.$router.push({
-        path: "/roomdetail",
+        path: '/roomdetail',
         query: { newId: keshi.keShiId }
-      });
+      })
     },
-    toProdetail(zhuanjia){
+    toProdetail(zhuanjia) {
       this.$router.push({
-        path: "/prodetail",
+        path: '/prodetail',
         query: { newId: zhuanjia.doctorId }
-      });
+      })
     },
     showSub(id) {
       // console.log(id);
       this.roomList.forEach(i => {
-        i.isShow = false;
-      });
-      this.roomList[id - 1].isShow = !this.roomList[id - 1].isShow;
+        i.isShow = false
+      })
+      this.roomList[id - 1].isShow = !this.roomList[id - 1].isShow
     },
     showHealth(id) {
-      console.log(id);
+      console.log(id)
       this.healtList.forEach(i => {
-        i.isShow = false;
-      });
-      this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow;
+        i.isShow = false
+      })
+      this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow
     }
   },
   created() {
     // 接口初始化数据
-    this.getVideo();
-    this.getNews();
-    this.getMing();
-    this.getRoom();
-    this.getDoctor();
-    this.getImage();
+    this.getVideo()
+    this.getNews()
+    this.getMing()
+    this.getRoom()
+    this.getDoctor()
+    this.getImage()
 
     // this.roomList[0].isShow = true;
   }
-};
+}
 </script>
 <style scoped lang="less">
-.el-carousel__item img {
+.lunbotu {
+  margin-top: -10x;
   height: 400px;
-  width: 100%;
+  img {
+    height: 400px;
+    width: 100%;
+  }
 }
 a {
   text-decoration: none;
@@ -313,7 +308,7 @@ a {
 .leftnews {
   border-radius: 3px;
   width: 400px;
-  margin: 50px 0 30px 50px;
+  margin: 50px 0 30px 110px;
   height: 300px;
   padding: 10px;
   float: left;
@@ -357,7 +352,7 @@ a {
   border-bottom: 7px solid transparent;
   width: 0px;
   height: 0px;
-  content: " ";
+  content: ' ';
   position: absolute;
   left: -11px;
   top: -7px;
