@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="container">
-      <div class="wel">欢迎来到山东省立医院</div>
+      <div class="wel">欢迎来到山东医院</div>
       <div class="login" v-if="!loginName">
         <router-link to="/Login">登录 / 注册</router-link>
-        <router-link :to="{name:'login',query:{type:'admin'}}" style="margin-left:20px;">管理员</router-link>
+        <router-link :to="{name:'login',query:{type:'admin'}}" style="margin-left:20px;">员工版</router-link>
         <router-link :to="{name:'login',query:{type:'doctor'}}" style="margin-left:20px;">医生</router-link>
       </div>
       <div class="login" v-else>
@@ -120,6 +120,7 @@ export default {
   .login {
     float: right;
     font-weight: 300;
+    display: -webkit-box;
   }
   .login a {
     font-family: "Microsoft YaHei", "微软雅黑", STXihei;

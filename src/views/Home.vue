@@ -308,7 +308,7 @@ a {
 .leftnews {
   border-radius: 3px;
   width: 400px;
-  margin: 50px 0 30px 110px;
+  margin: 50px 0 30px 50px;
   height: 300px;
   padding: 10px;
   float: left;
@@ -446,11 +446,16 @@ a {
   width: 140px;
   height: 30px;
   line-height: 30px;
-  color: #ffffff;
+  color: black;
+  border:solid 1px #ece9e9;
   padding: 8px 10px;
   margin: 10px 20px;
   border-radius: 10px;
-  background: #0087cd;
+  background: #ffffff;
+}
+.room-name:hover{
+  background:#0087cd;
+  color: #ffffff
 }
 .health-sub {
   position: absolute;

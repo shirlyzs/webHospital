@@ -18,6 +18,8 @@ import Personal from "./views/Personal.vue";
 import More from "./views/More.vue";
 import Prodetail from "./views/Prodetail.vue";
 import Showdetail from "./views/Showdetail.vue";
+import Doctor from "./views/Doctor.vue";
+
 
 
 
@@ -118,6 +120,11 @@ export default new Router({
       path: "/showdetail",
       name: "showdetail",
       component: Showdetail
+    },
+    {
+      path: "/doctor",
+      name: "doctor",
+      component: Doctor
     },
     // 管理员系列
     {

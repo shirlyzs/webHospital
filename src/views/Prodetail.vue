@@ -28,6 +28,9 @@
             {{docList.price}}
           </div>
           <button class="yuyue" @click="changeVisible">预约</button>
+          <span
+            style="font-weight: 600; color: #e79128;font-size: 15px;margin-left:40px"
+          >就诊需提前一天预约，请您合理安排时间！</span>
         </div>
       </div>
       <div class="content">{{docList.resume}}</div>
@@ -48,15 +51,19 @@
           <span>序号:</span>
           {{userList.orderId}}
         </div>
-        <el-date-picker
-          v-model="value1"
-          type="date"
-          placeholder="选择日期"
-          :picker-options="pickerOptions0"
-        ></el-date-picker>
+        <div>
+          <textarea
+            placeholder="请描述病情"
+            style="width: 450px;font-size: 15px;height: 120px;"
+            placeholder-style="color: #8a8a8a"
+            v-model="bingqing"
+          ></textarea>
+        </div>
+        <!-- <el-date-picker v-model="value1" type="datetime" placeholder="选择日期时间"></el-date-picker> -->
+
         <span slot="footer" class="dialog-footer">
           <!-- <el-button @click="dialogVisible = false">取 消</el-button> -->
-          <el-button type="primary" @click="dialogVisible = false">确 定 预 约</el-button>
+          <el-button type="primary" @click="miaoshu">确 定 预 约</el-button>
         </span>
       </el-dialog>
     </div>
@@ -69,7 +76,7 @@
 import menuNav from "@/components/menuNav.vue";
 import Footer from "@/components/Footer.vue";
 import { doctordetail } from "@/api/api";
-import { getReserve } from "@/api/reserve";
+import { getReserve, updateUser } from "@/api/reserve";
 
 export default {
   data() {
@@ -81,6 +88,7 @@ export default {
       },
       docList: [],
       userList: [],
+      bingqing: "",
       value1: "",
       dialogVisible: false
     };
@@ -109,6 +117,22 @@ export default {
     },
     back() {
       this.$router.go(-1); //返回上一层
+    },
+    miaoshu() {
+      this.dialogVisible = false;
+      let userinfo = {
+        info: this.bingqing,
+        userId: this.userId,
+        // password:userinfo.password,
+        // tel: userinfo.tel,
+        balance: ""
+      };
+      updateUser(userinfo).then(res => {
+        if (res.code == 200) {
+          // alert(res.message);
+          this.dialogVisible = false;
+        }
+      });
     },
     toReserve(id1, id2) {
       let doctor = {

@@ -18,11 +18,31 @@
         v-model="password"
       >
 
-      <button class="btn" v-if="userType !== '管理员'" @click="login">登录</button>
+      <!-- <el-select v-model="value4" clearable placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>-->
+      <input
+        v-if="userType == '医生'"
+        class="input"
+        type="keShi"
+        placeholder="科室"
+        placeholder-style="color: #8a8a8a;"
+        v-model="keShi"
+      >
       <!-- 管理员登录 -->
-      <button class="btn" v-else @click="loginAdmin">登录</button>
+      <button class="btn" v-if="userType == '管理员'" @click="loginAdmin">登录</button>
+      <!-- 医生登录 -->
 
-      <span v-on:click="ToRegister" v-if="userType !== '管理员'">没有账号？马上注册</span>
+      <button class="btn" v-else-if="userType == '医生'" @click="loginDoctor">登录</button>
+
+      <button class="btn" v-else @click="login">登录</button>
+
+      <span v-on:click="ToRegister" v-if="userType !== '管理员'& userType!=='医生'">没有账号？马上注册</span>
     </div>
     <div class="register-box" v-show="showRegister">
       <h3 class="title">用户注册</h3>
@@ -51,7 +71,7 @@
 </template>
 
 <script>
-import { login, register } from "@/api/api";
+import { login, register, doctorLogin } from "@/api/api";
 import axios from "@/api/index";
 import { AdminLogin } from "@/api/admin";
 
@@ -65,7 +85,9 @@ export default {
       newUsername: "",
       newPassword: "",
       newPassword2: "",
-      userType: "用户"
+      userType: "用户",
+      keShi: ""
+      // options:[]
     };
   },
   methods: {
@@ -86,7 +108,6 @@ export default {
           if (res.code !== 200) {
             alert(res.message);
           } else {
-            // alert("注册成功");
             setTimeout(
               function() {
                 this.showLogin = true;
@@ -128,7 +149,7 @@ export default {
               1000
             );
             let loginName = res.result[0].userName;
-            let loginId=res.result[0].userId;
+            let loginId = res.result[0].userId;
             window.sessionStorage.setItem("loginKey", loginName);
             window.sessionStorage.setItem("loginKey1", loginId);
           }
@@ -153,12 +174,41 @@ export default {
           }
         });
       }
+    },
+    loginDoctor() {
+      if (this.userName == "" || this.password == "") {
+        alert("请输入用户名或密码");
+      } else {
+        let info = {
+          doctorName: this.userName,
+          password: this.password,
+          keShi: this.keShi
+        };
+        doctorLogin(info).then(res => {
+          if (res.code !== 200) {
+            alert(res.message);
+          } else {
+            // alert("登录成功");
+            setTimeout(
+              function() {
+                this.$router.push("/doctor");
+              }.bind(this),
+              1000
+            );
+            let doctorId = res.result[0].doctorId;
+            window.sessionStorage.setItem("loginKey2", doctorId);
+          }
+        });
+      }
     }
   },
   created() {
     console.log(this.$route.query);
     if (this.$route.query.type == "admin") {
       this.userType = "管理员";
+    }
+    if (this.$route.query.type == "doctor") {
+      this.userType = "医生";
     }
   }
 };
