@@ -7,7 +7,12 @@
     <div class="navi">
       <div class="daohang">健康科普</div>
       <div v-for="item in healtList" :key="item.id" :index="item.id">
-        <div class="health-name" @click="showHealth(item.id)" slot="title">{{item.name}}</div>
+        <div
+          class="health-name"
+          @click="showHealth(item.id)"
+          :class="{active : item.isShow}"
+          slot="title"
+        >{{item.name}}</div>
         <div class="hea-name">
           <div class="vid" v-for="vide in item.videoList" :key="vide.id" v-show="item.isShow">
             <video id="myvideo" width="250px" height="250px" controls="controls">
@@ -27,16 +32,15 @@ import menuNav from "@/components/menuNav.vue";
 import Footer from "@/components/Footer.vue";
 import { video } from "@/api/api";
 
-
 export default {
   data() {
     return {
-      healtList: [
-      ]
+      healtList: []
     };
   },
   components: {
-    menuNav,Footer
+    menuNav,
+    Footer
   },
   methods: {
     getVideo() {
@@ -54,6 +58,7 @@ export default {
       console.log(id);
       this.healtList.forEach(i => {
         i.isShow = false;
+        this.active = id;
       });
       this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow;
     },
@@ -63,7 +68,7 @@ export default {
   },
   created() {
     // 接口初始化数据
-        this.getVideo();
+    this.getVideo();
   }
 };
 </script>
@@ -71,7 +76,7 @@ export default {
 .backTo {
   position: absolute;
   top: 120px;
-  left:180px;
+  left: 180px;
   font-size: 13px;
   color: #0087cd;
 }
@@ -94,11 +99,17 @@ export default {
   width: 140px;
   height: 30px;
   line-height: 30px;
-  color: #ffffff;
+  color: black;
   padding: 8px 10px;
   margin: 10px 20px;
   border-radius: 10px;
+  border: solid 1px #ece9e9;
+  background: #ffffff;
+  text-align: center;
+}
+.active {
   background: #0087cd;
+  color: #ffffff;
 }
 .hea-name {
   position: absolute;
@@ -108,7 +119,7 @@ export default {
   flex-wrap: wrap;
   .vid {
     margin: 10px 25px;
-    padding:0 30px;
+    padding: 0 30px;
     border: 1px solid #e6e6e6;
   }
   .vid-name {
@@ -117,17 +128,5 @@ export default {
     display: flex;
     flex-wrap: wrap;
   }
-}
-.footer {
-  padding: 60px 0px;
-  display: flex;
-  height: 150px;
-  line-height: 28px;
-  width: 100%;
-  color: #ffffff;
-  justify-content: center;
-  margin-top: 20px;
-  background: url(../assets/a1.jpg);
-  // no-repeat center
 }
 </style>

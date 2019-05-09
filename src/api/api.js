@@ -18,10 +18,10 @@ export const doctorLogin = (info) => {
   })
 }
 //修改用户信息
-export const updateUser = (userId, tel, info) => {
+export const updateUser = (userinfo) => {
   return axios.request({
     method: 'get',
-    url: `/adminLoginUpdateUser?userId=${userId}&tel=${tel}&info=${info}`
+    url: `/adminLoginUpdateUser?userId=${userinfo.userId}&tel=${userinfo.tel}&info=${userinfo.info}`
   })
 }
 //用户个人信息查询
@@ -29,6 +29,13 @@ export const person = (userinfo) => {
   return axios.request({
     method: 'get',
     url: `/userLoginVerify/user/${userinfo.userId}`
+  })
+}
+//病情描述查询
+export const search = (userinfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/adminLoginVerify/getUser/0/1?userName=${userinfo.userName}`
   })
 }
 //按用户名查询订单
@@ -69,7 +76,7 @@ export const news = (newInfo) => {
 export const xinwen = (newInfo) => {
   return axios.request({
     method: 'get',
-    url: `/adminLoginVerify/getNews/0/15?newsId=${newInfo.newsId}&title=${newInfo.title}&author=${newInfo.author}&content=${newInfo.content}`,
+    url: `/adminLoginVerify/getNews/0/50?newsId=${newInfo.newsId}&title=${newInfo.title}&author=${newInfo.author}&content=${newInfo.content}`,
   })
 }
 //按id查询新闻详情
@@ -86,6 +93,12 @@ export const doctor = (doctorInfo) => {
     url: `/userLoginVerify/getDoctor/0/50?doctorName=${doctorInfo.doctorName}&department=${doctorInfo.department}&keShi=${doctorInfo.keShi}&ranks=${doctorInfo.ranks}`,
   })
 }
+export const doc = (doctorInfo) => {
+  return axios.request({
+    method: 'get',
+    url: `/userLoginVerify/getDoctor/0/6?doctorName=${doctorInfo.doctorName}&department=${doctorInfo.department}&keShi=${doctorInfo.keShi}&ranks=${doctorInfo.ranks}`,
+  })
+}
 //按id查询医生信息     /adminLoginUpdateDoctor
 export const doctordetail = (doctorInfo) => {
   return axios.request({
@@ -100,11 +113,32 @@ export const board = (Info) => {
     url: `/doctorLoginVerify/doctorBoard?doctorId=${Info.doctorId}`,
   })
 }
-//修改最大预约数
-export const changeDoctor = () => {
+//按用户ID查询留言
+export const searchText = (Info) => {
   return axios.request({
     method: 'get',
-    url: `/adminLoginUpdateDoctor`,
+    url: `/doctorLoginVerify/userBoard?userId=${Info.userId}`,
+  })
+}
+//用户添加留言
+export const addText = (Info) => {
+  return axios.request({
+    method: 'get',
+    url: `/userLoginAddBoard?userId=${Info.userId}&doctorId=${Info.doctorId}&content=${Info.content}`,
+  })
+}
+//删除留言
+export const delText = (Info) => {
+  return axios.request({
+    method: 'get',
+    url: `/adminLoginVerify/board/delete?boardId=${Info.boardId}`,
+  })
+}
+//修改最大预约数
+export const changeDoctor = (info) => {
+  return axios.request({
+    method: 'get',
+    url: `/doctorLoginVerify/maxOrdersNum?doctorId=${info.doctorId}&maxOrdersNum=${info.maxOrdersNum}`,
   })
 }
 //查询所有科室

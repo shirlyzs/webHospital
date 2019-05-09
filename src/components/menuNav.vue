@@ -4,6 +4,7 @@
       <div class="wel">欢迎来到山东医院</div>
       <div class="login" v-if="!loginName">
         <router-link to="/Login">登录 / 注册</router-link>
+        <!-- <router-link to="/poster" style="margin-left:20px;">员工版</router-link> -->
         <router-link :to="{name:'login',query:{type:'admin'}}" style="margin-left:20px;">员工版</router-link>
         <router-link :to="{name:'login',query:{type:'doctor'}}" style="margin-left:20px;">医生</router-link>
       </div>
@@ -23,7 +24,6 @@
         active-text-color="#00a1e9"
         text-align="center"
       >
-        <!-- background-color="rgba(24, 116, 205)" -->
         <el-menu-item index="1">
           <router-link to="/">网站首页</router-link>
         </el-menu-item>
@@ -39,38 +39,35 @@
             <el-menu-item index="2-3">医院文化</el-menu-item>
           </router-link>
         </el-submenu>
-        <el-submenu index="3">
-          <template slot="title">新闻动态</template>
-          <router-link to="/more">
-            <el-menu-item index="3-1">医院要闻</el-menu-item>
-          </router-link>
-          <router-link to="/study">
-            <el-menu-item index="3-2">健康讲堂</el-menu-item>
-          </router-link>
-        </el-submenu>
+        <el-menu-item index="3">
+          <router-link to="/more">医院要闻</router-link>
+        </el-menu-item>
         <el-submenu index="4">
           <template slot="title">就诊指南</template>
-          <router-link to="/reserve">
-            <el-menu-item index="4-1">预约挂号</el-menu-item>
-          </router-link>
           <router-link to="/guide/know">
-            <el-menu-item index="4-2">就诊须知</el-menu-item>
+            <el-menu-item index="4-1">就诊须知</el-menu-item>
           </router-link>
           <router-link to="/guide/process">
-            <el-menu-item index="4-3">就医流程</el-menu-item>
+            <el-menu-item index="4-2">就医流程</el-menu-item>
           </router-link>
           <router-link to="/guide/location">
-            <el-menu-item index="4-4">医院布局</el-menu-item>
+            <el-menu-item index="4-3">医院布局</el-menu-item>
           </router-link>
           <router-link to="/guide/transport">
-            <el-menu-item index="4-5">交通指南</el-menu-item>
+            <el-menu-item index="4-4">交通指南</el-menu-item>
           </router-link>
         </el-submenu>
         <el-menu-item index="5">
-          <router-link to="/roomintro">科室介绍</router-link>
+          <router-link to="/reserve">预约挂号</router-link>
         </el-menu-item>
         <el-menu-item index="6">
+          <router-link to="/roomintro">科室介绍</router-link>
+        </el-menu-item>
+        <el-menu-item index="7">
           <router-link to="/master">专家介绍</router-link>
+        </el-menu-item>
+        <el-menu-item index="8">
+          <router-link to="/study">健康讲堂</router-link>
         </el-menu-item>
       </el-menu>
     </div>
@@ -132,7 +129,7 @@ export default {
   position: relative;
   img {
     position: absolute;
-    left: 255px;
+    left: 205px;
     top: 5px;
     z-index: 4;
     width: 70px;

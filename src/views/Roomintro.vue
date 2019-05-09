@@ -21,11 +21,13 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import menuNav from "@/components/menuNav.vue";
+import Footer from "@/components/Footer.vue";
 import { room } from "@/api/api";
 
 export default {
@@ -57,7 +59,8 @@ export default {
     };
   },
   components: {
-    menuNav
+    menuNav,
+    Footer
   },
   methods: {
     getRoom() {
@@ -79,8 +82,11 @@ export default {
       });
       this.roomList[id - 1].isShow = !this.roomList[id - 1].isShow;
     },
-    toRoomdetail(keshi){
-      this.$router.push({ path: "/roomdetail", query: { newId: keshi.keShiId } });
+    toRoomdetail(keshi) {
+      this.$router.push({
+        path: "/roomdetail",
+        query: { newId: keshi.keShiId }
+      });
     },
     back() {
       this.$router.go(-1); //返回上一层
@@ -118,11 +124,16 @@ export default {
   width: 140px;
   height: 30px;
   line-height: 30px;
-  color: #ffffff;
+  color: black;
+  border: solid 1px #ece9e9;
   padding: 8px 10px;
   margin: 10px 20px;
   border-radius: 10px;
+  background: #ffffff;
+}
+.room-name:hover {
   background: #0087cd;
+  color: #ffffff;
 }
 .room-sub {
   position: absolute;

@@ -37,19 +37,19 @@
       <el-dialog title="预约挂号" :visible.sync="dialogVisible">
         <div class="author">
           <span>姓名:</span>
-          {{userList.userName}}
+          {{userList.username}}
         </div>
         <div class="author">
           <span>医生:</span>
-          {{userList.doctorName}}
+          {{docList.doctorName}}
         </div>
         <div class="author">
           <span>价格:</span>
-          {{userList.price}}
+          {{docList.price}}
         </div>
         <div class="author">
           <span>序号:</span>
-          {{userList.orderId}}
+          <!-- {{userList.orderId}} -->
         </div>
         <div>
           <textarea
@@ -59,10 +59,7 @@
             v-model="bingqing"
           ></textarea>
         </div>
-        <!-- <el-date-picker v-model="value1" type="datetime" placeholder="选择日期时间"></el-date-picker> -->
-
         <span slot="footer" class="dialog-footer">
-          <!-- <el-button @click="dialogVisible = false">取 消</el-button> -->
           <el-button type="primary" @click="miaoshu">确 定 预 约</el-button>
         </span>
       </el-dialog>
@@ -99,12 +96,19 @@ export default {
   },
   methods: {
     changeVisible() {
-      // this.dialogVisible = true;
+      this.dialogVisible = true;
       if (window.sessionStorage["loginKey1"]) {
         this.userId = window.sessionStorage["loginKey1"];
-        this.toReserve(this.userId, this.$route.query.newId);
+        this.userList.username = window.sessionStorage.loginKey;
       } else {
-        alert("请先登录");
+        this.$alert("请先登录", "提示", {
+          confirmButtonText: "确定",
+          callback: action => {
+            this.$router.push({
+              path: "/login",
+            });
+          }
+        });
       }
     },
     getName(doctorId) {
@@ -120,16 +124,13 @@ export default {
     },
     miaoshu() {
       this.dialogVisible = false;
-      let userinfo = {
-        info: this.bingqing,
+      let xinxi = {
         userId: this.userId,
-        // password:userinfo.password,
-        // tel: userinfo.tel,
-        balance: ""
+        info: this.bingqing
       };
-      updateUser(userinfo).then(res => {
+      this.toReserve(this.userId, this.$route.query.newId);
+      updateUser(xinxi).then(res => {
         if (res.code == 200) {
-          // alert(res.message);
           this.dialogVisible = false;
         }
       });

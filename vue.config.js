@@ -19,7 +19,7 @@ module.exports = {
     open: true, //配置自动启动浏览器
     proxy: {
       '/api': {
-        target: 'http://192.168.1.113:8080',
+        target: 'http://192.168.1.108:8080',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

@@ -13,8 +13,8 @@
         </div>
         <el-carousel class="imga-all" height="250px">
           <el-carousel-item class="imga" v-for="(imga,index) in imgaList" :key="index">
-            <img :src="imga.image">
-            <div class="imga-name" @click="toImgdetail(imga)">{{imga.title}}</div>
+            <img :src="imga.image" @click="toImgdetail(imga)">
+            <div class="imga-name">{{imga.title}}</div>
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -22,7 +22,7 @@
         <div class="tt2">
           <h4 class="word">医院新闻</h4>
           <span class="right2">
-            <router-link to="/more">更多</router-link>
+            <router-link to="/more">查看更多</router-link>
           </span>
         </div>
         <div class="new" v-for="(news, index) in newsList" :key="index">
@@ -36,9 +36,20 @@
         <h2 class="daohang">科室导航</h2>
       </div>
       <div v-for="item in roomList" :key="item.id">
-        <div class="room-name" @mouseenter="showSub(item.id)" slot="title">{{item.name}}</div>
+        <div
+          class="room-name"
+          @mouseenter="showSub(item.id)"
+          :class="{active : item.isShow}"
+          slot="title"
+        >{{item.name}}</div>
         <div class="room-sub">
-          <div class="sub-name" v-for="(itam,index) in subList" :key="index" @click="toRoomdetail(itam)" v-show="item.isShow && itam.department === item.name">{{itam.keShiName}}</div>
+          <div
+            class="sub-name"
+            v-for="(itam,index) in subList"
+            :key="index"
+            @click="toRoomdetail(itam)"
+            v-show="item.isShow && itam.department === item.name"
+          >{{itam.keShiName}}</div>
         </div>
       </div>
     </div>
@@ -58,9 +69,17 @@
     <div class="jiuyi">
       <div>
         <h2 class="zhinann">专家介绍</h2>
+        <span class="right2">
+          <router-link to="/master">查看更多</router-link>
+        </span>
       </div>
       <div class="zhuanjia-content">
-        <div class="zhuanjia-item" @click="toProdetail(item)" v-for="(item,index) in docList" :key="index">
+        <div
+          class="zhuanjia-item"
+          @click="toProdetail(item)"
+          v-for="(item,index) in docList"
+          :key="index"
+        >
           <div class="flex-row">
             <img :src="item.image">
             <div style="text-align:left">
@@ -76,6 +95,7 @@
           <div style="text-align:left;margin-top:15px;">
             <span>简介：</span>
             <p>{{item.resume}}</p>
+            <span>更多</span>
           </div>
         </div>
       </div>
@@ -86,7 +106,12 @@
           <h2 class="zhinan">健康科普</h2>
         </div>
         <div v-for="item in healtList" :key="item.id">
-          <div class="health-name" @mouseenter="showHealth(item.id)" slot="title">{{item.name}}</div>
+          <div
+            class="health-name"
+            @mouseenter="showHealth(item.id)"
+            :class="{dongtai : item.isShow}"
+            slot="title"
+          >{{item.name}}</div>
           <div class="hea-name">
             <div class="vid" v-for="vide in item.videoList" :key="vide.id" v-show="item.isShow">
               <video id="myvideo" width="300px" height="250px" controls="controls">
@@ -103,45 +128,44 @@
 </template>
 
 <script>
-import menuNav from '@/components/menuNav.vue'
-import Footer from '@/components/Footer.vue'
-
-import { video, news, ming, room, doctor } from '@/api/api'
+import menuNav from "@/components/menuNav.vue";
+import Footer from "@/components/Footer.vue";
+import { video, news, ming, room, doc } from "@/api/api";
 
 export default {
   data() {
     return {
       imgList: [
         {
-          url: require('../assets/a9.jpg')
+          url: require("../assets/a9.jpg")
         },
         {
-          url: require('../assets/12.jpg')
+          url: require("../assets/12.jpg")
         },
         {
-          url: require('../assets/121.jpg')
+          url: require("../assets/121.jpg")
         }
       ],
       imgaList: [],
       newsList: [],
       roomList: [
         {
-          name: '内科',
+          name: "内科",
           id: 1,
           isShow: false
         },
         {
-          name: '外科',
+          name: "外科",
           isShow: false,
           id: 2
         },
         {
-          name: '医技',
+          name: "医技",
           isShow: false,
           id: 3
         },
         {
-          name: '其他',
+          name: "其他",
           isShow: false,
           id: 4
         }
@@ -150,7 +174,7 @@ export default {
       mingList: [],
       docList: [],
       healtList: []
-    }
+    };
   },
   components: {
     menuNav,
@@ -159,114 +183,113 @@ export default {
   methods: {
     getImage() {
       let newInfo = {
-        newsId: '',
-        title: '',
-        author: '',
-        content: ''
-      }
+        newsId: "",
+        title: "",
+        author: "",
+        content: ""
+      };
       news(newInfo).then(res => {
         res.result[0].content.forEach(ele => {
-          ele.image = ele.image.split('||')[0]
-        })
-        this.imgaList = res.result[0].content
-      })
+          ele.image = ele.image.split("||")[0];
+        });
+        this.imgaList = res.result[0].content;
+      });
     },
     getDoctor() {
       let doctorInfo = {
-        doctorName: '',
-        department: '',
-        keShi: '',
-        ranks: ''
-      }
-      doctor(doctorInfo).then(res => {
-        this.docList = res.result[0].content
-      })
+        doctorName: "",
+        department: "",
+        keShi: "",
+        ranks: ""
+      };
+      doc(doctorInfo).then(res => {
+        this.docList = res.result[0].content;
+      });
     },
     getRoom() {
       let roomInfo = {
-        keShiName: '',
-        department: '',
-        keShiId: '',
-        info: ''
-      }
+        keShiName: "",
+        department: "",
+        keShiId: "",
+        info: ""
+      };
       room(roomInfo).then(res => {
-        this.subList = res.result[0].content
-        this.roomList[0].isShow = true
-      })
+        this.subList = res.result[0].content;
+        this.roomList[0].isShow = true;
+      });
     },
     getMing() {
       ming().then(res => {
-        this.mingList = res.data.mingList
-        this.mingList[0].isShow = true
-      })
+        this.mingList = res.data.mingList;
+        this.mingList[0].isShow = true;
+      });
     },
     getNews() {
       let newInfo = {
-        newsId: '',
-        title: '',
-        author: '',
-        content: ''
-      }
+        newsId: "",
+        title: "",
+        author: "",
+        content: ""
+      };
       news(newInfo).then(res => {
-        this.newsList = res.result[0].content
-      })
+        this.newsList = res.result[0].content;
+      });
     },
     getVideo() {
       video().then(
         res => {
-          this.healtList = res.data.healtList
-          this.healtList[0].isShow = true
+          this.healtList = res.data.healtList;
+          this.healtList[0].isShow = true;
         },
         rej => {
-          console.log(rej)
+          console.log(rej);
         }
-      )
+      );
     },
     toNewsDetail(item) {
-      this.$router.push({ path: '/detail', query: { newId: item.newsId } })
+      this.$router.push({ path: "/detail", query: { newId: item.newsId } });
     },
     toImgdetail(item) {
-      this.$router.push({ path: '/detail', query: { newId: item.newsId } })
+      this.$router.push({ path: "/detail", query: { newId: item.newsId } });
     },
     toRoomdetail(keshi) {
       this.$router.push({
-        path: '/roomdetail',
+        path: "/roomdetail",
         query: { newId: keshi.keShiId }
-      })
+      });
     },
     toProdetail(zhuanjia) {
       this.$router.push({
-        path: '/prodetail',
+        path: "/prodetail",
         query: { newId: zhuanjia.doctorId }
-      })
+      });
     },
     showSub(id) {
-      // console.log(id);
       this.roomList.forEach(i => {
-        i.isShow = false
-      })
-      this.roomList[id - 1].isShow = !this.roomList[id - 1].isShow
+        i.isShow = false;
+      });
+      this.roomList[id - 1].isShow = !this.roomList[id - 1].isShow;
     },
     showHealth(id) {
-      console.log(id)
+      console.log(id);
       this.healtList.forEach(i => {
-        i.isShow = false
-      })
-      this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow
+        i.isShow = false;
+      });
+      this.healtList[id - 1].isShow = !this.healtList[id - 1].isShow;
     }
   },
   created() {
     // 接口初始化数据
-    this.getVideo()
-    this.getNews()
-    this.getMing()
-    this.getRoom()
-    this.getDoctor()
-    this.getImage()
+    this.getVideo();
+    this.getNews();
+    this.getMing();
+    this.getRoom();
+    this.getDoctor();
+    this.getImage();
 
     // this.roomList[0].isShow = true;
   }
-}
+};
 </script>
 <style scoped lang="less">
 .lunbotu {
@@ -352,7 +375,7 @@ a {
   border-bottom: 7px solid transparent;
   width: 0px;
   height: 0px;
-  content: ' ';
+  content: " ";
   position: absolute;
   left: -11px;
   top: -7px;
@@ -437,7 +460,15 @@ a {
 }
 .right2 {
   float: right;
-  color: black !important;
+  color: #333;
+  font: 18px/33px "微软雅黑";
+  border-radius: 20px;
+  text-align: center;
+  width: 124px;
+  border: 1px solid #999;
+  height: 33px;
+  transition: all 0.2s;
+  float: right;
 }
 .daohang {
   float: left;
@@ -447,15 +478,15 @@ a {
   height: 30px;
   line-height: 30px;
   color: black;
-  border:solid 1px #ece9e9;
+  border: solid 1px #ece9e9;
   padding: 8px 10px;
   margin: 10px 20px;
   border-radius: 10px;
   background: #ffffff;
 }
-.room-name:hover{
-  background:#0087cd;
-  color: #ffffff
+.active {
+  background: #0087cd;
+  color: #ffffff;
 }
 .health-sub {
   position: absolute;
@@ -466,7 +497,7 @@ a {
 }
 .room-sub {
   position: absolute;
-  top: 50px;
+  top: 82px;
   left: 250px;
   // display: flex;
   flex-direction: row;
@@ -549,18 +580,23 @@ a {
   padding: 20px 20px;
   box-sizing: border-box;
   margin: 0 20px;
-  overflow: hidden;
+  // overflow: hidden;
   border: 1px solid #ddd;
   background: #fff;
   display: inline-block;
   span {
     color: #0087cd;
     font-size: 14px;
-    margin-left: 10px;
+    // margin-left: 10px;
     line-height: 21px;
   }
   p {
     white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
   img {
     width: 120px;
@@ -591,12 +627,21 @@ a {
   width: 140px;
   height: 30px;
   line-height: 30px;
-  color: #ffffff;
   padding: 8px 10px;
   margin: 10px 20px;
   border-radius: 10px;
-  background: #0087cd;
+  color: black;
+  border: solid 1px #ece9e9;
+  background: #ffffff;
 }
+.dongtai {
+  background: #0087cd;
+  color: #ffffff;
+}
+// .health-name:hover {
+//   background: #0087cd;
+//   color: #ffffff;
+// }
 .footer {
   display: flex;
   height: 50px;

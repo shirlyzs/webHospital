@@ -17,16 +17,19 @@
             v-for="(itom,index) in docList"
             :key="index"
             v-show="itom.keShi === itam.keShiName"
-            @click="toDoctor"
+            @click="toDoctor(itom)"
           >{{itom.doctorName}}</div>
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import menuNav from "@/components/menuNav.vue";
+import Footer from "@/components/Footer.vue";
+import { video } from "@/api/api";
 import { room, doctor } from "@/api/api";
 export default {
   data() {
@@ -55,7 +58,7 @@ export default {
     };
   },
   components: {
-    menuNav
+    menuNav,Footer
   },
   methods: {
     getRoom() {

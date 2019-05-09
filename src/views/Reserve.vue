@@ -10,17 +10,19 @@
       >就诊需提前一天预约，请您合理安排时间！</span>
     </div>
     <div>
+      <!-- <el-cascader placeholder="试试搜索" :options="options" filterable change-on-select></el-cascader> -->
       <el-select v-model="searchData" clearable placeholder="主科室">
         <el-option v-for="item in bumen" :key="item.id" :label="item.value" :value="item.name"></el-option>
       </el-select>
-      <!-- <el-select v-model="keshi" clearable placeholder="科室">
+      <el-select v-model="keshi" clearable placeholder="科室">
         <el-option
-          v-for="item in Room"
-          :key="item.keShiId"
-          :label="item.value"
-          :value="item.keShiName"
+          v-for="(itam,index) in Room"
+          :key="index"
+          :label="itam.value"
+          v-show="itam.department === searchData"
+          :value="itam.keShiName"
         ></el-option>
-      </el-select> -->
+      </el-select>
       <el-button slot="append" icon="el-icon-search" @click="searchMethod"></el-button>
     </div>
     <el-table class="table" :data="test" stripe border style="width: 100%">
@@ -175,14 +177,13 @@ export default {
     searchMethod() {
       if (this.searchData) {
         this.test = this.test.filter(item => {
-          if (item["department"].indexOf(this.searchData) > -1) {
-            return this.test;
+          if(!this.keshi){
+            return item['department'].indexOf(this.searchData) > -1
+          }else if(this.keshi){
+            return item['keShi'].indexOf(this.keshi) > -1
           }
-          //  else if (item["keShi"].indexOf(this.keshi) > -1) {
-          //   return this.test;
-          // }
         });
-      } else if (!this.searchData) {
+      } else if (!this.searchData||!this.keshi) {
         this.getReserve();
       }
     },

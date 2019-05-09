@@ -6,9 +6,16 @@
     </div>
     <div class="navi">
       <div class="daohang">医院新闻</div>
-      <div class="new" v-for="(news,index) in newsList" :key="index">
+      <div class="new" v-for="(news,index) in newsList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="index">
         <div class="news-name" @click="toNewsDetail(news)">{{news.title}}</div>
       </div>
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="newsList.length"
+      ></el-pagination>
     </div>
     <Footer></Footer>
   </div>
@@ -22,7 +29,9 @@ import { xinwen } from "@/api/api";
 export default {
   data() {
     return {
-      newsList: []
+      newsList: [],
+      currentPage: 1 ,//初始页
+      pagesize:10
     };
   },
   components: {
@@ -46,6 +55,11 @@ export default {
     },
     back() {
       this.$router.go(-1); //返回上一层
+    },
+    handleCurrentChange: function(currentPage) {
+      // this.newsList.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+      this.currentPage = currentPage;
+      console.log(this.currentPage); //点击第几页
     }
   },
   created() {
@@ -78,8 +92,8 @@ export default {
   width: 1000px;
   margin: 50px auto;
   text-align: left;
-  height: 1000px;
-  padding: 10px;
+  height: fit-content;
+  padding: 10px 10px 50px 10px;
   position: relative;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
   .daohang {

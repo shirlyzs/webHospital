@@ -44,23 +44,30 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="isShow = false">取 消</el-button>
-              <!-- <el-button type="primary" @click="changeInfo">确 定</el-button> -->
+              <el-button type="primary" @click="changeInfo">确 定</el-button>
             </div>
           </el-dialog>
         </el-tab-pane>
         <el-tab-pane label="订单记录" name="second">
           <span style="color:blue">预约记录：</span>
           <el-table :data="orderList" style="width: 80%" border>
-            <el-table-column prop="createTime" label="预约时间" width="180"></el-table-column>
+            <el-table-column
+              prop="createTime"
+              format="{0,date,dd-MM-yyyy}"
+              label="预约时间"
+              width="180"
+            ></el-table-column>
             <el-table-column prop="createTime" label="预约日期" width="180"></el-table-column>
             <el-table-column prop="userName" label="患者" width="180"></el-table-column>
+            <el-table-column prop="userName" label="病情描述" width="180"></el-table-column>
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="留言板" name="third">
           <div v-for="item in messageList" :key="item.boardId">
-            <div  slot="title">{{item.createTime}}</div>
-            <div  slot="title">{{item.userName}}</div>
-            <div  slot="title">{{item.content}}</div>        
+            <div slot="title">{{item.boardId}}</div>
+            <div slot="title">{{item.createTime}}</div>
+            <div slot="title">{{item.userName}}</div>
+            <div slot="title">{{item.content}}</div>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -69,7 +76,7 @@
 </template>
 
 <script>
-import { doctordetail, changeDoctor, board } from "@/api/api";
+import { doctordetail, changeDoctor, board, delText, search } from "@/api/api";
 import { docOrder } from "@/api/reserve";
 
 export default {
@@ -105,13 +112,16 @@ export default {
         console.log(res.result);
         this.orderList = res.result;
         this.userName = res.result;
-        this.getUser(this.userName);
+        // this.getUser(this.userName);
       });
     },
     getUser(name) {
       let userinfo = {
         userName: name
-      };
+      }
+      search(userinfo).then(res =>{
+        console.log(res.result);
+      })
     },
     getBoard(id) {
       let info = {
@@ -119,22 +129,22 @@ export default {
       };
       board(info).then(res => {
         console.log(res.result);
-
         this.messageList = res.result;
+        this.userName=res.result.userName;
+        // this.getUser(this.userName)
       });
     },
-    // changeInfo() {
-    //   let doctorInfo = {
-    //     doctorId: this.doctorId,
-    //     maxOrdersNum: ""
-    //   };
-    //   changeDoctor(doctorInfo).then(res => {
-    //     if (res.code == 200) {
-    //       alert(res.message);
-    //     }
-    //   });
-    //   this.isshow = false;
-    // },
+    changeInfo() {
+      let doctorInfo = {
+        doctorId: this.doctorId,
+        maxOrdersNum: this.doctorList.maxOrdersNum
+      };
+      changeDoctor(doctorInfo).then(res => {
+        if (res.code == 200) {
+          this.isShow = false;
+        }
+      });
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },

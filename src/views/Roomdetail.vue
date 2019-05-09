@@ -6,9 +6,8 @@
     </div>
     <div class="navi">
       <div class="title">{{roomList.keShiName}}</div>
-      <!-- <div class="author">{{roomList.author}}</div> -->
       <div class="image">
-      <img :src="roomList.image"/>
+        <img :src="roomList.image">
       </div>
       <div class="content">{{roomList.info}}</div>
     </div>
@@ -19,7 +18,7 @@
 <script>
 import menuNav from "@/components/menuNav.vue";
 import Footer from "@/components/Footer.vue";
-import { room,roomdetail } from "@/api/api";
+import { room, roomdetail } from "@/api/api";
 
 export default {
   data() {
@@ -36,7 +35,7 @@ export default {
       let roomInfo = {
         // keShiName:"",
         // department: "",
-        keShiId: keShiId,
+        keShiId: keShiId
         // info: ""
       };
       roomdetail(roomInfo).then(res => {
@@ -44,7 +43,8 @@ export default {
       });
     },
     back() {
-      this.$router.go(-1); //返回上一层 
+      // this.$router.go(-1); //返回上一层
+      window.history.back();
     }
   },
   created() {
@@ -60,7 +60,6 @@ export default {
   margin: 50px auto;
   text-align: left;
   height: fit-content;
-  min-height: 1000px;
   padding: 50px;
   position: relative;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);

@@ -17,15 +17,19 @@
         placeholder-style="color: #8a8a8a;"
         v-model="password"
       >
-
-      <!-- <el-select v-model="value4" clearable placeholder="请选择">
+      <!-- <el-select v-model="searchData" clearable placeholder="主科室">
+        <el-option v-for="item in bumen" :key="item.id" :label="item.value" :value="item.name"></el-option>
+      </el-select>
+      <el-select v-model="keshi" clearable placeholder="科室">
         <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+          v-for="(itam,index) in Room"
+          :key="index"
+          :label="itam.value"
+          v-show="itam.department === searchData"
+          :value="itam.keShiName"
         ></el-option>
-      </el-select>-->
+      </el-select> -->
+
       <input
         v-if="userType == '医生'"
         class="input"
@@ -34,6 +38,7 @@
         placeholder-style="color: #8a8a8a;"
         v-model="keShi"
       >
+
       <!-- 管理员登录 -->
       <button class="btn" v-if="userType == '管理员'" @click="loginAdmin">登录</button>
       <!-- 医生登录 -->
@@ -144,7 +149,7 @@ export default {
             // alert("登录成功");
             setTimeout(
               function() {
-                this.$router.push("/");
+                this.$router.go(-1);
               }.bind(this),
               1000
             );
@@ -197,6 +202,7 @@ export default {
             );
             let doctorId = res.result[0].doctorId;
             window.sessionStorage.setItem("loginKey2", doctorId);
+            window.sessionStorage.setItem("loginKey3", doctorName);
           }
         });
       }

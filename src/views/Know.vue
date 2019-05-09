@@ -7,18 +7,22 @@
     <div class="navi">
       <div class="daohang">就诊指南</div>
       <div v-for="item in artList" :key="item.id">
-        <div class="art-name" @click="showArt(item.id)" slot="title">{{item.name}}</div>
+        <div
+          class="art-name"
+          @click="showArt(item.id)"
+          :class="{active : item.isShow}"
+          slot="title"
+        >{{item.name}}</div>
         <div class="art-sub">
           <div class="sub-con" v-for="itam in item.subList" :key="itam.id" v-show="item.isShow">
             <div class="align">{{itam.name}}</div>
-            <img v-if="itam.name=='医院布局'" :src="itam.content" alt="医院布局" />
+            <img v-if="itam.name=='医院布局'" :src="itam.content" alt="医院布局">
             <div v-else-if="itam.name=='交通指南'">
               <div v-html="itam.content"></div>
               <Map></Map>
             </div>
             <!-- <div v-else>&nbsp;&nbsp;&nbsp;{{itam.content}}</div> -->
             <div class="content" v-else v-html="itam.content"></div>
-
           </div>
         </div>
       </div>
@@ -56,6 +60,7 @@ export default {
       console.log(id);
       this.artList.forEach(i => {
         i.isShow = false;
+        this.active = id;
       });
       this.artList[id - 1].isShow = !this.artList[id - 1].isShow;
     },
@@ -107,11 +112,17 @@ export default {
   width: 140px;
   height: 30px;
   line-height: 30px;
-  color: #ffffff;
   padding: 8px 10px;
   margin: 10px 20px;
   border-radius: 10px;
+  color: black;
+  border: solid 1px #ece9e9;
+  background: #ffffff;
+  text-align: center
+}
+.active {
   background: #0087cd;
+  color: #ffffff;
 }
 .art-sub {
   position: absolute;
@@ -130,7 +141,7 @@ export default {
   box-sizing: border-box;
   border-radius: 5px;
   position: relative;
-  img{
+  img {
     height: 700px;
     width: 500px;
   }

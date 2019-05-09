@@ -37,12 +37,15 @@ export default {
         newsId: newsId
       };
       detail(detailInfo).then(res => {
-        res.result.image = res.result.image.split("||");
+        if (res.result.image != null) {
+          res.result.image = res.result.image.split("||");
+        }
         this.newsList = res.result;
       });
     },
     back() {
-      this.$router.go(-1); //返回上一层
+      // this.$router.go(-1); //返回上一层
+      window.history.back();
     }
   },
   created() {
@@ -58,7 +61,6 @@ export default {
   margin: 50px auto;
   text-align: left;
   height: fit-content;
-  min-height: 1000px;
   padding: 50px;
   position: relative;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);

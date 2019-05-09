@@ -19,6 +19,7 @@ import More from "./views/More.vue";
 import Prodetail from "./views/Prodetail.vue";
 import Showdetail from "./views/Showdetail.vue";
 import Doctor from "./views/Doctor.vue";
+import Poster from "./views/Poster.vue";
 
 
 
@@ -33,12 +34,20 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
+      meta: {
+        keepAlive: true, //此组件不需要被缓存
+      }
     },
     {
       path: "/login",
       name: "login",
       component: Login
+    },
+    {
+      path: "/poster",
+      name: "poster",
+      component: Poster
     },
     {
       path: "/hos/:name",
