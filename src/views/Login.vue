@@ -28,7 +28,11 @@
           v-show="itam.department === searchData"
           :value="itam.keShiName"
         ></el-option>
-      </el-select> -->
+      </el-select>-->
+      <div v-if="userType == '员工'">
+        <el-radio v-model="staffType" label="医生">医生</el-radio>
+        <el-radio v-model="staffType" label="管理员">管理员</el-radio>
+      </div>
 
       <input
         v-if="userType == '医生'"
@@ -38,17 +42,14 @@
         placeholder-style="color: #8a8a8a;"
         v-model="keShi"
       >
-
-      <!-- 管理员登录 -->
-      <button class="btn" v-if="userType == '管理员'" @click="loginAdmin">登录</button>
-      <!-- 医生登录 -->
-
-      <button class="btn" v-else-if="userType == '医生'" @click="loginDoctor">登录</button>
-
+      <div v-if="userType=='员工'">
+        <button class="btn" v-if="staffType == '管理员'" @click="loginAdmin">登录</button>
+        <button class="btn" v-else-if="staffType == '医生'" @click="loginDoctor">登录</button>
+      </div>
       <button class="btn" v-else @click="login">登录</button>
-
-      <span v-on:click="ToRegister" v-if="userType !== '管理员'& userType!=='医生'">没有账号？马上注册</span>
+      <span v-on:click="ToRegister" v-if="userType != '员工'">没有账号？马上注册</span>
     </div>
+    <!-- 注册 -->
     <div class="register-box" v-show="showRegister">
       <h3 class="title">用户注册</h3>
       <input
@@ -91,6 +92,7 @@ export default {
       newPassword: "",
       newPassword2: "",
       userType: "用户",
+      staffType: "医生",
       keShi: ""
       // options:[]
     };
@@ -210,12 +212,12 @@ export default {
   },
   created() {
     console.log(this.$route.query);
-    if (this.$route.query.type == "admin") {
-      this.userType = "管理员";
+    if (this.$route.query.type == "staff") {
+      this.userType = "员工";
     }
-    if (this.$route.query.type == "doctor") {
-      this.userType = "医生";
-    }
+    // if (this.$route.query.type == "doctor") {
+    //   this.userType = "医生";
+    // }
   }
 };
 </script>

@@ -5,8 +5,8 @@
       <div class="login" v-if="!loginName">
         <router-link to="/Login">登录 / 注册</router-link>
         <!-- <router-link to="/poster" style="margin-left:20px;">员工版</router-link> -->
-        <router-link :to="{name:'login',query:{type:'admin'}}" style="margin-left:20px;">员工版</router-link>
-        <router-link :to="{name:'login',query:{type:'doctor'}}" style="margin-left:20px;">医生</router-link>
+        <router-link :to="{name:'login',query:{type:'staff'}}" style="margin-left:20px;">员工版</router-link>
+        <!-- <router-link :to="{name:'login',query:{type:'doctor'}}" style="margin-left:20px;">医生</router-link> -->
       </div>
       <div class="login" v-else>
         <router-link to="/personal" style="color:#ffffff;margin-right:20px;">欢迎您，{{loginName}}</router-link>
@@ -88,9 +88,6 @@ export default {
     };
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
     shanchu() {
       window.sessionStorage.clear();
       this.loginName = "";
