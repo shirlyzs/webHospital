@@ -50,7 +50,7 @@
           <div v-if="type === 'Doctor'">
             <el-button @click="changeShow(true,'NEW')" type="primary" icon="el-icon-plus" circle style="float:right"></el-button>
             <!-- dialog -->
-            <addForm :showAdd="showAdd" @cancelAdd="changeShow" @toUP="upDoctor" :from="fromDoctor"></addForm>
+            <addForm :showAdd="showAdd" @cancelAdd="changeShow" @toUP="upDoctor" :from="fromDoctor" :showName="showName"></addForm>
             <el-table :data="tableData" style="width: 100%" height="650">
               <el-table-column prop="doctorName" label="名字"></el-table-column>
               <el-table-column prop="ranks" label="职称"></el-table-column>
@@ -181,7 +181,8 @@ export default {
       type: 'User',
       showAdd: false,
       fromNews: {},
-      fromDoctor: {}
+      fromDoctor: {},
+      showName: false
     }
   },
   watch: {
@@ -230,6 +231,7 @@ export default {
       this.searchData = ''
       this.searchSelect = ''
       if (text == 'NEW') {
+        this.showName = true
         this.fromDoctor = {
           doctorName: '',
           password: '',
@@ -248,6 +250,7 @@ export default {
           content: ''
         }
       } else {
+        this.showName = false
         this.fromNews = row
         this.fromDoctor = row
       }
@@ -385,7 +388,7 @@ export default {
       // 参数doctorName,password,resume,department,keShi,ranks,price
       updateDoctor(
         row.doctorName,
-        row.password,
+        '123456',
         row.resume,
         row.department,
         row.keShi,

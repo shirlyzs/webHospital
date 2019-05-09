@@ -2,8 +2,8 @@
   <div>
     <el-dialog title="" :visible.sync="showAdd" :show-close="no">
       <!-- :rules="rules" -->
-      <el-form ref="form" :model="from" label-width="80px" :rules="rules">
-        <el-form-item label="医生名字" prop="doctorName" v-if="!from.doctorName">
+      <el-form ref="form" :model="from" label-width="80px">
+        <el-form-item label="医生名字" prop="doctorName" v-if="showName">
           <el-input v-model="from.doctorName"></el-input>
         </el-form-item>
         <el-form-item label="职称" prop="ranks">
@@ -69,6 +69,10 @@ export default {
       type: Boolean,
       required: true
     },
+    showName: {
+      type: Boolean,
+      default: false
+    },
     from: {
       type: Object,
       required: true
@@ -113,20 +117,23 @@ export default {
       this.from.keShi = ''
     },
     cancelAdd() {
-      this.$refs['form'].clearValidate()
       this.$emit('cancelAdd', false, 'NEW')
     },
     toUP(e) {
-      this.$refs[e].validate(valid => {
-        if (valid) {
-          console.log(this.from, 'dialog提交的')
-          this.$emit('toUP', this.from)
-          this.$refs['form'].clearValidate()
-        } else {
-          this.$refs['form'].clearValidate()
-          return false
-        }
-      })
+      // this.$refs[e].validate(valid => {
+      //   if (valid) {
+      //     console.log(this.from, 'dialog提交的')
+      this.$emit('toUP', this.from)
+      // this.$nextTick(() => {
+      //   this.$refs['form'].resetFields()
+      // })
+      // } else {
+      //   this.$nextTick(() => {
+      //     this.$refs['form'].resetFields()
+      //   })
+      //   return false
+      // }
+      // })
     }
   }
 }
