@@ -21,14 +21,15 @@
         mode="horizontal"
         @select.capture="handleSelect"
         text-color="#333"
-        active-text-color="#00a1e9"
         text-align="center"
       >
         <el-menu-item index="1">
-          <router-link to="/">网站首页</router-link>
+          <router-link to="/" :class="mainpath=='/'?'ison':''">网站首页</router-link>
         </el-menu-item>
         <el-submenu index="2">
-          <template slot="title" style="font-size:16px">医院概况</template>
+          <template slot="title" style="border: none;">
+            <span :class="mainpath.indexOf('/hos')>-1?'ison':''">医院概况</span>
+          </template>
           <router-link to="/hos/intro">
             <el-menu-item index="2-1">医院简介</el-menu-item>
           </router-link>
@@ -40,10 +41,12 @@
           </router-link>
         </el-submenu>
         <el-menu-item index="3">
-          <router-link to="/more">医院要闻</router-link>
+          <router-link to="/more" :class="mainpath=='/more'?'ison':''">医院要闻</router-link>
         </el-menu-item>
         <el-submenu index="4">
-          <template slot="title">就诊指南</template>
+          <template slot="title" style="border:none">
+            <span :class="mainpath.indexOf('/guide')>-1?'ison':''">就诊指南</span>
+          </template>
           <router-link to="/guide/know">
             <el-menu-item index="4-1">就诊须知</el-menu-item>
           </router-link>
@@ -57,16 +60,16 @@
             <el-menu-item index="4-4">交通指南</el-menu-item>
           </router-link>
         </el-submenu>
-        <el-menu-item index="5">
+        <el-menu-item index="5" :class="mainpath=='/reserve'?'ison':''">
           <router-link to="/reserve">预约挂号</router-link>
         </el-menu-item>
-        <el-menu-item index="6">
+        <el-menu-item index="6" :class="mainpath=='/roomintro'?'ison':''">
           <router-link to="/roomintro">科室介绍</router-link>
         </el-menu-item>
-        <el-menu-item index="7">
+        <el-menu-item index="7" :class="mainpath=='/master'?'ison':''">
           <router-link to="/master">专家介绍</router-link>
         </el-menu-item>
-        <el-menu-item index="8">
+        <el-menu-item index="8" :class="mainpath=='/study'?'ison':''">
           <router-link to="/study">健康讲堂</router-link>
         </el-menu-item>
       </el-menu>
@@ -80,7 +83,8 @@ export default {
     return {
       activeIndex: "1",
       loginName: "",
-      logoIMG: require("../assets/logo.png")
+      logoIMG: require("../assets/logo.png"),
+      mainpath: ""
     };
   },
   methods: {
@@ -96,7 +100,8 @@ export default {
     if (window.sessionStorage["loginKey"]) {
       this.loginName = window.sessionStorage["loginKey"];
     }
-    console.log(window.sessionStorage["loginKey"], 666);
+    console.log(window.sessionStorage["loginKey"], "loginkey");
+    this.mainpath = this.$route.path;
   }
 };
 </script>
@@ -145,5 +150,11 @@ export default {
   li {
     border: none !important;
   }
+}
+.el-submenu__title {
+  border: none !important;
+}
+.ison {
+  color: #00a1e9 !important;
 }
 </style>
